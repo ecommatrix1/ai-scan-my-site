@@ -17,6 +17,7 @@ import {
   Download,
   RefreshCw,
   Zap,
+  Gauge,
   TrendingDown,
   DollarSign,
   Code2,
@@ -53,6 +54,7 @@ import {
   AlertCircle,
   Settings,
   Save,
+  Cookie,
 } from "lucide-react";
 
 type AppState = "HERO" | "SCANNING" | "GATED_PREVIEW" | "UNLOCKED_DASHBOARD";
@@ -233,7 +235,14 @@ export default function AIScanMySite() {
   const [isBookModalOpen, setIsBookModalOpen] = useState(false);
   const [isTermsModalOpen, setIsTermsModalOpen] = useState(false);
   const [isPrivacyModalOpen, setIsPrivacyModalOpen] = useState(false);
+  const [isCookieModalOpen, setIsCookieModalOpen] = useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const [showCookieBanner, setShowCookieBanner] = useState<boolean>(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("aiscan_cookie_consent") !== "accepted";
+    }
+    return false;
+  });
   const [inputError, setInputError] = useState("");
   const [isProActive, setIsProActive] = useState(false);
   const [detectedSiteType, setDetectedSiteType] = useState<"saas" | "ecommerce" | "blog" | "generic">("generic");
@@ -248,6 +257,7 @@ export default function AIScanMySite() {
     return true;
   });
   const [showSettings, setShowSettings] = useState(false);
+  const [showActivationSuccessModal, setShowActivationSuccessModal] = useState(false);
   const [settingsPageSpeedKey, setSettingsPageSpeedKey] = useState("");
   const [settingsBingKey, setSettingsBingKey] = useState("");
   const [settingsSaving, setSettingsSaving] = useState(false);
@@ -264,6 +274,37 @@ export default function AIScanMySite() {
     score: number; lcp: string; fcp: string; cls: string; inp: string; ttfb: string; isLiveGoogleData: boolean;
   } | null>(null);
   const [isPageSpeedLoading, setIsPageSpeedLoading] = useState(false);
+  const [psiProgress, setPsiProgress] = useState(0);
+  const [psiElapsedTime, setPsiElapsedTime] = useState(0);
+  const [psiStageText, setPsiStageText] = useState("Connecting to Google Lighthouse API...");
+  const [psiFetchTime, setPsiFetchTime] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (!isPageSpeedLoading) return;
+    setPsiProgress(8);
+    setPsiElapsedTime(0);
+    setPsiStageText("Connecting to Google Lighthouse v11 API...");
+
+    const startTime = Date.now();
+    const timer = setInterval(() => {
+      const elapsedSec = (Date.now() - startTime) / 1000;
+      setPsiElapsedTime(elapsedSec);
+
+      setPsiProgress((prev) => {
+        if (prev >= 94) return 94;
+        const increment = Math.max(0.4, (96 - prev) * 0.07);
+        const next = Math.min(94, prev + increment);
+        if (next < 25) setPsiStageText("Connecting to Google Lighthouse v11 API...");
+        else if (next < 48) setPsiStageText("Fetching mobile viewport & network traces...");
+        else if (next < 70) setPsiStageText("Evaluating LCP, FCP & INP metrics...");
+        else if (next < 88) setPsiStageText("Analyzing Cumulative Layout Shifts (CLS)...");
+        else setPsiStageText("Finalizing Lighthouse score calculation...");
+        return next;
+      });
+    }, 70);
+
+    return () => clearInterval(timer);
+  }, [isPageSpeedLoading]);
 
   const cleanedDomain = useMemo(() => {
     if (!scannedDomain) return "yourstore.com";
@@ -370,12 +411,23 @@ export default function AIScanMySite() {
     let isMounted = true;
     const fetchData = async () => {
       setIsPageSpeedLoading(true);
+      const startTime = Date.now();
       try {
         const res = await fetch(`/api/pagespeed?url=${encodeURIComponent(cleanedDomain)}`);
         const json = await res.json();
         if (isMounted && json.success && json.data) setPageSpeedMetrics(json.data);
       } catch (err) { console.error("PageSpeed fetch error:", err); }
-      finally { if (isMounted) setIsPageSpeedLoading(false); }
+      finally {
+        if (isMounted) {
+          const totalSec = Math.max(0.8, (Date.now() - startTime) / 1000);
+          setPsiFetchTime(totalSec);
+          setPsiProgress(100);
+          setPsiStageText("Google PageSpeed fetch complete!");
+          setTimeout(() => {
+            if (isMounted) setIsPageSpeedLoading(false);
+          }, 400);
+        }
+      }
     };
     fetchData();
     return () => { isMounted = false; };
@@ -539,7 +591,7 @@ export default function AIScanMySite() {
   const sevIcon = (sev: string, passed: boolean) => passed ? <CheckCircle2 className="w-4 h-4 text-success mt-0.5 shrink-0" /> : sev === "critical" || sev === "high" ? <XCircle className="w-4 h-4 text-danger mt-0.5 shrink-0" /> : <AlertTriangle className="w-4 h-4 text-warning mt-0.5 shrink-0" />;
 
   return (
-    <div className="min-h-screen font-sans transition-colors duration-300 antialiased">
+    <div className={`min-h-screen font-sans transition-colors duration-300 antialiased ${!lightTheme ? "bg-cosmic-space bg-cosmic-grid text-white" : ""}`}>
       {/* TOP PROMO BANNER */}
       <div className={`text-center py-3.5 px-6 border-b relative z-50 transition-colors duration-300 ${
         lightTheme 
@@ -548,7 +600,7 @@ export default function AIScanMySite() {
       }`}>
         <p className="text-sm sm:text-base md:text-lg font-bold tracking-wide text-ink flex flex-wrap items-center justify-center gap-3">
           <Sparkles className="w-5 h-5 animate-bounce shrink-0 text-amber-300" />
-          <span>⚡ LIMITED TIME LAUNCH PROMO: PRO ACCESS IS 100% FREE! DOWNLOAD CUSTOM FIX GUIDES INSTANTLY (NO CARD REQUIRED)</span>
+          <span>⚡ LAUNCH OFFER: USE PROMO CODE "FREEPRO" FOR 100% FREE PRO ACCESS & UNLIMITED AUDITS!</span>
           <Sparkles className="w-5 h-5 animate-bounce shrink-0 text-amber-300" />
         </p>
       </div>
@@ -589,7 +641,7 @@ export default function AIScanMySite() {
             </button>
             <div className="hidden md:flex items-center gap-2 px-3 py-1 rounded-full border border-success/30 bg-success-weak text-success text-sm font-bold transition-colors duration-300">
               <span className="w-2 h-2 rounded-full bg-success animate-pulse" />
-              <span>Unlimited Free Scan Access (Launch Promo)</span>
+              <span>⚡ Unlimited Free Access (Limited Time Offer with Email)</span>
             </div>
             {appState !== "HERO" && (
               <button onClick={() => setAppState("HERO")} className="flex items-center gap-2 text-xs font-bold px-3 py-1.5 rounded-lg border border-border bg-surface-2 hover:bg-surface text-ink-2 hover:text-ink transition-colors duration-300">
@@ -613,30 +665,54 @@ export default function AIScanMySite() {
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-success opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-success"></span>
                   </span>
-                  Unlimited Free Scan Access (Promo)
+                  ✨ UNLIMITED FREE SCANS — LIMITED TIME OFFER (WITH EMAIL)
                 </motion.div>
 
                 <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="text-5xl sm:text-6xl font-heading font-extrabold tracking-tight leading-[1.1] mb-6 text-ink">
-                  Is Your Store<br />
-                  <span className="text-accent">Invisible to AI?</span>
+                  Instant AI Audits &<br />
+                  <span className="text-accent">AI-Powered Code Guides</span>
                 </motion.h1>
 
                 <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="text-lg sm:text-xl font-normal leading-relaxed mb-10 text-ink-2">
-                  ChatGPT, Perplexity, and Gemini drive millions in sales. Verify if AI bots can read your product catalog with our advanced technical scanner.
+                  Analyze SEO, performance, accessibility, and security in seconds. Receive AI-generated code guides to fix issues step-by-step.
                 </motion.p>
 
                 <motion.form initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} onSubmit={handleStartScan} className="w-full">
-                  <div className="card p-2 rounded-2xl">
+                  <div className={`card p-2 rounded-2xl ${!lightTheme ? "input-glowing-neon bg-[#070b14]/90" : ""}`}>
                     <div className="flex flex-col sm:flex-row items-center gap-2">
                       <Globe className="hidden sm:block w-6 h-6 text-accent ml-4" />
                       <input type="text" value={urlInput} onChange={(e) => { setUrlInput(e.target.value); if (inputError) setInputError(""); }} placeholder="e.g. yourwebsite.com" className="input flex-1 bg-transparent border-none focus:outline-none focus:ring-0 text-lg py-3 px-4 font-mono" />
-                      <button type="submit" className="btn-primary w-full sm:w-auto px-8 py-4 text-lg">
-                        Scan Now
+                      <button type="submit" className="btn-primary w-full sm:w-auto px-8 py-4 text-lg font-bold">
+                        Run AI Scan 🚀
                       </button>
                     </div>
                   </div>
                   {inputError && <p className="mt-2 text-sm text-danger font-mono pl-4">{inputError}</p>}
                 </motion.form>
+
+                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }} className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-4 w-full">
+                  {[
+                    { label: "Performance", score: 78, icon: Gauge, sub: "Speed & Load Times", color: "#3B82F6" },
+                    { label: "SEO", score: 77, icon: Search, sub: "Keyword & Search Health", color: "#3B82F6" },
+                    { label: "Accessibility", score: 83, icon: Eye, sub: "Inclusive User Experience", color: "#3B82F6" },
+                    { label: "Security", score: 86, icon: ShieldCheck, sub: "Robust Threat Protection", color: "#3B82F6" },
+                  ].map((g, i) => (
+                    <div key={i} className="card p-4 flex flex-col items-center justify-center text-center relative overflow-hidden bg-surface border border-border shadow-md hover:border-accent/50 transition-all">
+                      <div className="flex items-center justify-between w-full mb-2">
+                        <span className="text-xs font-heading font-extrabold uppercase text-ink tracking-wider">{g.label}</span>
+                        <g.icon className="w-4 h-4 text-accent" />
+                      </div>
+                      <div className="relative w-20 h-20 flex items-center justify-center my-1">
+                        <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                          <circle cx="50" cy="50" r="38" className="text-border" strokeWidth="7" stroke="currentColor" fill="none" />
+                          <circle cx="50" cy="50" r="38" className="text-accent" strokeWidth="7" strokeDasharray="238.76" strokeDashoffset={238.76 - (238.76 * g.score) / 100} strokeLinecap="round" stroke="currentColor" fill="none" />
+                        </svg>
+                        <span className="absolute text-lg font-heading font-extrabold font-mono text-ink">{g.score}%</span>
+                      </div>
+                      <span className="text-[10px] text-ink-3 font-medium truncate w-full mt-1">{g.sub}</span>
+                    </div>
+                  ))}
+                </motion.div>
 
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }} className="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 text-lg text-ink-3">
                   <div className="flex -space-x-3">
@@ -716,12 +792,12 @@ export default function AIScanMySite() {
                       <div className="text-sm text-ink-3 font-mono">Stage {currentStageIndex + 1} of 4</div>
                     </div>
                   </div>
-                  <div className="text-3xl font-mono font-bold text-accent">{scanProgress}%</div>
+                  <div className="text-3xl font-mono font-bold text-blue-500 dark:text-cyan-400 drop-shadow-md">{scanProgress}%</div>
                 </div>
 
-                <div className="w-full bg-bg-subtle h-3 rounded-full overflow-hidden p-0.5 border border-border mb-8 relative">
-                  <motion.div className="bg-accent h-full rounded-full relative" style={{ width: `${scanProgress}%` }} transition={{ ease: "easeOut" }}>
-                    <div className="absolute right-0 top-0 bottom-0 w-3 bg-accent blur-sm" />
+                <div className="w-full bg-slate-200 dark:bg-slate-800/80 h-3.5 rounded-full overflow-hidden p-0.5 border border-blue-500/30 mb-8 relative shadow-inner">
+                  <motion.div className="bg-gradient-to-r from-blue-600 via-cyan-500 to-emerald-400 h-full rounded-full relative shadow-lg" style={{ width: `${scanProgress}%` }} transition={{ ease: "easeOut" }}>
+                    <div className="absolute right-0 top-0 bottom-0 w-3 bg-white/60 blur-sm" />
                   </motion.div>
                 </div>
 
@@ -810,17 +886,88 @@ export default function AIScanMySite() {
                   </div>
                   <div className="flex items-center gap-2">
                     {isPageSpeedLoading ? (
-                      <span className="badge-warning text-sm font-mono flex items-center gap-1.5 animate-pulse"><RefreshCw className="w-3 h-3 animate-spin" /><span>Fetching PSI Data...</span></span>
+                      <span className="badge-warning text-sm font-mono flex items-center gap-1.5 animate-pulse"><RefreshCw className="w-3.5 h-3.5 animate-spin" /><span>Fetching Lighthouse ({psiElapsedTime.toFixed(1)}s)...</span></span>
                     ) : pageSpeedMetrics?.isLiveGoogleData ? (
-                      <span className="badge-success text-sm font-mono flex items-center gap-1.5"><CheckCircle2 className="w-3 h-3" /><span>Live Google API Data</span></span>
+                      <span className="badge-success text-sm font-mono flex items-center gap-1.5"><CheckCircle2 className="w-3.5 h-3.5 text-success" /><span>Live Google API Data {psiFetchTime ? `(${psiFetchTime.toFixed(2)}s)` : ""}</span></span>
                     ) : (
-                      <span className="badge-warning text-sm font-mono flex items-center gap-1.5"><AlertTriangle className="w-3 h-3" /><span>Estimated Metrics (API Rate Limited)</span></span>
+                      <span className="badge-warning text-sm font-mono flex items-center gap-1.5"><AlertTriangle className="w-3.5 h-3.5" /><span>Estimated Metrics (API Rate Limited)</span></span>
                     )}
                   </div>
                 </div>
                 {isPageSpeedLoading ? (
-                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 animate-pulse">
-                    {[1,2,3,4,5,6].map((n) => <div key={n} className="p-3 rounded-xl bg-bg-subtle border border-border h-20 flex flex-col justify-between"><div className="w-16 h-3 bg-border rounded" /><div className="w-24 h-6 bg-border rounded" /></div>)}
+                  <div className="space-y-4 py-2 border border-border/60 rounded-2xl p-4 sm:p-5 bg-surface-2/40 backdrop-blur-sm">
+                    <div className="flex flex-wrap items-center justify-between gap-2 text-sm font-mono">
+                      <div className="flex items-center gap-2 text-amber-500 dark:text-amber-400 font-bold">
+                        <RefreshCw className="w-4 h-4 animate-spin text-amber-500" />
+                        <span className="truncate max-w-[280px] sm:max-w-md">{psiStageText}</span>
+                      </div>
+                      <div className="flex items-center gap-2 sm:gap-3">
+                        <span className="text-ink-2 font-mono text-xs sm:text-sm font-semibold bg-surface px-2.5 py-1 rounded-lg border border-border flex items-center gap-1.5 shadow-sm">
+                          <Clock className="w-3.5 h-3.5 text-indigo-500" />
+                          <span>{psiFetchTime ? `${psiFetchTime.toFixed(2)}s` : `${psiElapsedTime.toFixed(1)}s elapsed`}</span>
+                        </span>
+                        <span className="text-xs sm:text-sm font-bold font-mono bg-amber-500/10 text-amber-600 dark:text-amber-400 px-2.5 py-1 rounded-lg border border-amber-500/20">
+                          {Math.round(psiProgress)}%
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Running Progress Bar Track */}
+                    <div className="w-full h-3.5 bg-surface-3 rounded-full overflow-hidden p-0.5 border border-border/80 shadow-inner relative">
+                      <div
+                        className="h-full bg-gradient-to-r from-amber-500 via-indigo-500 to-cyan-400 rounded-full transition-all duration-150 ease-out relative overflow-hidden shadow-sm"
+                        style={{ width: `${Math.min(100, Math.max(0, psiProgress))}%` }}
+                      >
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent animate-shimmer" />
+                      </div>
+                    </div>
+
+                    {/* Metric Evaluation Pills */}
+                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 pt-1">
+                      {[
+                        { label: "PSI Score", activeRange: [0, 25] },
+                        { label: "LCP (Paint)", activeRange: [25, 48] },
+                        { label: "INP (Latency)", activeRange: [48, 70] },
+                        { label: "CLS (Shift)", activeRange: [70, 85] },
+                        { label: "FCP", activeRange: [85, 95] },
+                        { label: "TTFB", activeRange: [95, 100] },
+                      ].map((m, i) => {
+                        const isEvaluating = psiProgress >= m.activeRange[0] && psiProgress < m.activeRange[1];
+                        const isDone = psiProgress >= m.activeRange[1];
+                        return (
+                          <div
+                            key={i}
+                            className={`p-3 rounded-xl border transition-all duration-300 flex flex-col justify-between min-h-[75px] ${
+                              isEvaluating
+                                ? "bg-amber-500/15 border-amber-500/50 shadow-md scale-[1.02]"
+                                : isDone
+                                ? "bg-surface-2 border-border text-ink"
+                                : "bg-surface-2/30 border-border/40 text-ink-3 opacity-60"
+                            }`}
+                          >
+                            <div className="text-[11px] sm:text-xs uppercase font-mono font-extrabold text-ink-3 flex items-center justify-between">
+                              <span>{m.label}</span>
+                              {isEvaluating ? (
+                                <RefreshCw className="w-3 h-3 text-amber-500 animate-spin" />
+                              ) : isDone ? (
+                                <CheckCircle2 className="w-3 h-3 text-emerald-500" />
+                              ) : (
+                                <div className="w-1.5 h-1.5 rounded-full bg-border" />
+                              )}
+                            </div>
+                            <div className="text-xs font-bold font-mono mt-1.5">
+                              {isEvaluating ? (
+                                <span className="text-amber-500 dark:text-amber-400 font-extrabold animate-pulse">Evaluating...</span>
+                              ) : isDone ? (
+                                <span className="text-emerald-600 dark:text-emerald-400 font-bold">Ready ✓</span>
+                              ) : (
+                                <span className="text-ink-3 font-normal">Pending...</span>
+                              )}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
                 ) : (
                   <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
@@ -995,13 +1142,86 @@ export default function AIScanMySite() {
                     <p className="text-sm text-ink-3 mt-0.5">Real-time performance metrics evaluated via Google Lighthouse API.</p>
                   </div>
                   <div className="flex items-center gap-2">
-                    {isPageSpeedLoading ? <span className="badge-warning text-sm font-mono flex items-center gap-1.5 animate-pulse"><RefreshCw className="w-3 h-3 animate-spin" /><span>Fetching...</span></span>
-                    : pageSpeedMetrics?.isLiveGoogleData ? <span className="badge-success text-sm font-mono flex items-center gap-1.5"><CheckCircle2 className="w-3 h-3" /><span>Live Google API Data</span></span>
-                    : <span className="badge-warning text-sm font-mono flex items-center gap-1.5"><AlertTriangle className="w-3 h-3" /><span>Estimated (Rate Limited)</span></span>}
+                    {isPageSpeedLoading ? <span className="badge-warning text-sm font-mono flex items-center gap-1.5 animate-pulse"><RefreshCw className="w-3.5 h-3.5 animate-spin" /><span>Fetching Lighthouse ({psiElapsedTime.toFixed(1)}s)...</span></span>
+                    : pageSpeedMetrics?.isLiveGoogleData ? <span className="badge-success text-sm font-mono flex items-center gap-1.5"><CheckCircle2 className="w-3.5 h-3.5 text-success" /><span>Live Google API Data {psiFetchTime ? `(${psiFetchTime.toFixed(2)}s)` : ""}</span></span>
+                    : <span className="badge-warning text-sm font-mono flex items-center gap-1.5"><AlertTriangle className="w-3.5 h-3.5" /><span>Estimated (Rate Limited)</span></span>}
                   </div>
                 </div>
                 {isPageSpeedLoading ? (
-                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 animate-pulse">{[1,2,3,4,5,6].map((n) => <div key={n} className="p-3 rounded-xl bg-bg-subtle border border-border h-20"><div className="w-16 h-3 bg-border rounded" /><div className="w-24 h-6 bg-border rounded mt-2" /></div>)}</div>
+                  <div className="space-y-4 py-2 border border-border/60 rounded-2xl p-4 sm:p-5 bg-surface-2/40 backdrop-blur-sm">
+                    <div className="flex flex-wrap items-center justify-between gap-2 text-sm font-mono">
+                      <div className="flex items-center gap-2 text-amber-500 dark:text-amber-400 font-bold">
+                        <RefreshCw className="w-4 h-4 animate-spin text-amber-500" />
+                        <span className="truncate max-w-[280px] sm:max-w-md">{psiStageText}</span>
+                      </div>
+                      <div className="flex items-center gap-2 sm:gap-3">
+                        <span className="text-ink-2 font-mono text-xs sm:text-sm font-semibold bg-surface px-2.5 py-1 rounded-lg border border-border flex items-center gap-1.5 shadow-sm">
+                          <Clock className="w-3.5 h-3.5 text-indigo-500" />
+                          <span>{psiFetchTime ? `${psiFetchTime.toFixed(2)}s` : `${psiElapsedTime.toFixed(1)}s elapsed`}</span>
+                        </span>
+                        <span className="text-xs sm:text-sm font-bold font-mono bg-amber-500/10 text-amber-600 dark:text-amber-400 px-2.5 py-1 rounded-lg border border-amber-500/20">
+                          {Math.round(psiProgress)}%
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Running Progress Bar Track */}
+                    <div className="w-full h-3.5 bg-surface-3 rounded-full overflow-hidden p-0.5 border border-border/80 shadow-inner relative">
+                      <div
+                        className="h-full bg-gradient-to-r from-amber-500 via-indigo-500 to-cyan-400 rounded-full transition-all duration-150 ease-out relative overflow-hidden shadow-sm"
+                        style={{ width: `${Math.min(100, Math.max(0, psiProgress))}%` }}
+                      >
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent animate-shimmer" />
+                      </div>
+                    </div>
+
+                    {/* Metric Evaluation Pills */}
+                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 pt-1">
+                      {[
+                        { label: "PSI Score", activeRange: [0, 25] },
+                        { label: "LCP (Paint)", activeRange: [25, 48] },
+                        { label: "INP (Latency)", activeRange: [48, 70] },
+                        { label: "CLS (Shift)", activeRange: [70, 85] },
+                        { label: "FCP", activeRange: [85, 95] },
+                        { label: "TTFB", activeRange: [95, 100] },
+                      ].map((m, i) => {
+                        const isEvaluating = psiProgress >= m.activeRange[0] && psiProgress < m.activeRange[1];
+                        const isDone = psiProgress >= m.activeRange[1];
+                        return (
+                          <div
+                            key={i}
+                            className={`p-3 rounded-xl border transition-all duration-300 flex flex-col justify-between min-h-[75px] ${
+                              isEvaluating
+                                ? "bg-amber-500/15 border-amber-500/50 shadow-md scale-[1.02]"
+                                : isDone
+                                ? "bg-surface-2 border-border text-ink"
+                                : "bg-surface-2/30 border-border/40 text-ink-3 opacity-60"
+                            }`}
+                          >
+                            <div className="text-[11px] sm:text-xs uppercase font-mono font-extrabold text-ink-3 flex items-center justify-between">
+                              <span>{m.label}</span>
+                              {isEvaluating ? (
+                                <RefreshCw className="w-3 h-3 text-amber-500 animate-spin" />
+                              ) : isDone ? (
+                                <CheckCircle2 className="w-3 h-3 text-emerald-500" />
+                              ) : (
+                                <div className="w-1.5 h-1.5 rounded-full bg-border" />
+                              )}
+                            </div>
+                            <div className="text-xs font-bold font-mono mt-1.5">
+                              {isEvaluating ? (
+                                <span className="text-amber-500 dark:text-amber-400 font-extrabold animate-pulse">Evaluating...</span>
+                              ) : isDone ? (
+                                <span className="text-emerald-600 dark:text-emerald-400 font-bold">Ready ✓</span>
+                              ) : (
+                                <span className="text-ink-3 font-normal">Pending...</span>
+                              )}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
                 ) : (
                   <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
                     {[
@@ -1108,7 +1328,7 @@ export default function AIScanMySite() {
                                   </div>
                                 )}
                                 {!item.passed && (
-                                  <button onClick={(e) => { e.stopPropagation(); downloadFixGuide({ category: item.rawCategory, severity: item.severity === "critical" || item.severity === "high" ? "critical" : "warning", title: item.title, description: item.description, passed: item.passed, weight: 1, evidence: item.evidence, fixCode: item.fixCode }, scannedDomain); }} className="mt-3 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface border border-border text-ink-2 hover:text-ink text-sm font-medium transition-colors">
+                                  <button onClick={(e) => { e.stopPropagation(); handleDownloadCompleteFixReport(); }} className="mt-3 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface border border-border text-ink-2 hover:text-ink text-sm font-medium transition-colors">
                                     <Download className="w-3.5 h-3.5" /><span>Download Fix Guide (.txt)</span>
                                   </button>
                                 )}
@@ -1363,21 +1583,56 @@ export default function AIScanMySite() {
                 <div className="max-w-xl mx-auto mt-8 card p-6 sm:p-8 text-left relative">
                   <div className="absolute top-0 right-6 -translate-y-1/2 bg-accent text-ink text-xs uppercase font-mono font-bold px-2.5 py-0.5 rounded-full shadow">PRO ACTIVATION</div>
                   <h3 className="text-lg font-heading font-bold text-ink flex items-center gap-2 mb-2"><ShieldCheck className="w-5 h-5 text-accent" /><span>Unlock Unlimited Pro Scan Access</span></h3>
-                  <p className="text-sm text-ink-3 mb-6 leading-relaxed">Enter your activation credentials below to unlock lifetime access to unlimited scans, schema guides, and PDF report downloads.</p>
+                  <p className="text-sm text-ink-3 mb-6 leading-relaxed">Enter your email and claim your free launch promo code to unlock lifetime access to unlimited scans, schema guides, and PDF report downloads.</p>
                   <div className="space-y-4">
                     <div>
-                      <label className="block text-xs font-mono uppercase text-ink-3 mb-2">Work Email</label>
-                      <input type="email" id="pro-email" placeholder="name@company.com" className="input text-sm" />
+                      <div className="flex items-center justify-between mb-2">
+                        <label className="block text-sm font-bold font-mono uppercase text-ink tracking-wider">Promo Code</label>
+                        <span className="text-xs bg-success/20 text-success border border-success/30 px-2 py-0.5 rounded-md font-mono font-bold flex items-center gap-1">
+                          <CheckCircle2 className="w-3 h-3" />
+                          <span>FREEPRO Applied (100% OFF)</span>
+                        </span>
+                      </div>
+                      <input type="text" id="pro-promo-code" defaultValue="FREEPRO" readOnly className="input text-base font-mono font-bold text-accent bg-surface-2 border-accent/40 cursor-not-allowed" />
                     </div>
                     <div>
-                      <label className="block text-xs font-mono uppercase text-ink-3 mb-2">Activation Passcode</label>
-                      <input type="password" id="pro-passcode" placeholder="••••••••" className="input text-sm" />
+                      <label className="block text-sm font-bold font-mono uppercase text-ink tracking-wider mb-2">Work Email Address</label>
+                      <input type="email" id="pro-email" placeholder="name@company.com" className="input text-base font-semibold" required />
                     </div>
-                    <button onClick={() => { const emailInputEl = document.getElementById("pro-email") as HTMLInputElement; if (emailInputEl?.value.includes("@")) { setIsProActive(true); setScansLeft(999); } else alert("Please enter a valid email address."); }} className={`w-full py-3.5 rounded-xl text-ink text-xs font-bold transition-all shadow-lg flex items-center justify-center gap-2 ${isProActive ? "bg-success hover:bg-success/90 shadow-success/30" : "bg-accent hover:bg-accent-strong shadow-accent/30"}`}>
-                      <span>{isProActive ? "Pro Account Activated" : "Activate Pro Access Now"}</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
+                    <button 
+                      onClick={async () => { 
+                        const emailInputEl = document.getElementById("pro-email") as HTMLInputElement; 
+                        const emailVal = emailInputEl?.value?.trim();
+                        if (emailVal && emailVal.includes("@")) { 
+                          setIsProActive(true); 
+                          setScansLeft(999); 
+                          setShowActivationSuccessModal(true);
+                          // Send email lead asynchronously to Formspree or custom lead endpoint
+                          try {
+                            const endpoint = process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT || "https://formspree.io/f/mljelvvw";
+                            await fetch(endpoint, {
+                              method: "POST",
+                              headers: { "Content-Type": "application/json", "Accept": "application/json" },
+                              body: JSON.stringify({
+                                email: emailVal,
+                                domain: scannedDomain || "aiscanmysite.com",
+                                promoCode: "FREEPRO",
+                                timestamp: new Date().toISOString()
+                              })
+                            });
+                          } catch (err) {
+                            console.log("Email captured locally:", emailVal, err);
+                          }
+                        } else {
+                          alert("Please enter a valid email address."); 
+                        }
+                      }} 
+                      className={`w-full py-4 rounded-xl text-white text-base font-extrabold tracking-wide transition-all shadow-xl flex items-center justify-center gap-2 cursor-pointer ${isProActive ? "bg-emerald-600 hover:bg-emerald-500 shadow-emerald-500/30" : "bg-gradient-to-r from-blue-600 via-blue-500 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 shadow-blue-500/40 hover:shadow-blue-500/60 hover:scale-[1.01] active:scale-[0.99]"}`}
+                    >
+                      <span>{isProActive ? "Pro Account Activated 🚀" : "Activate Free Pro Access Now 🚀"}</span>
+                      <ArrowRight className="w-5 h-5" />
                     </button>
-                    {isProActive && <p className="text-success text-center text-xs font-mono mt-3">Pro activation successful! Unlimited downloads are enabled.</p>}
+                    {isProActive && <p className="text-emerald-400 text-center text-xs font-mono font-bold mt-3">✓ Pro activation successful! Unlimited scans and downloads are now enabled.</p>}
                   </div>
                 </div>
               </div>
@@ -1472,9 +1727,10 @@ export default function AIScanMySite() {
             </div>
           </div>
           <div className="flex flex-wrap items-center justify-center gap-6 text-ink-3 font-mono">
-            <a href="/terms" className="hover:text-ink transition-colors underline decoration-border">Terms of Service</a>
-            <a href="/privacy" className="hover:text-ink transition-colors underline decoration-border">Privacy Policy</a>
-            <a href="/contact" className="hover:text-ink transition-colors underline decoration-border">Contact Us</a>
+            <button onClick={() => setIsTermsModalOpen(true)} className="hover:text-ink transition-colors underline decoration-border cursor-pointer">Terms of Service</button>
+            <button onClick={() => setIsPrivacyModalOpen(true)} className="hover:text-ink transition-colors underline decoration-border cursor-pointer">Privacy Policy</button>
+            <button onClick={() => setIsCookieModalOpen(true)} className="hover:text-ink transition-colors underline decoration-border cursor-pointer">Cookie Policy</button>
+            <button onClick={() => setIsContactModalOpen(true)} className="hover:text-ink transition-colors underline decoration-border cursor-pointer">Contact Us</button>
             <span>5 Free Scans/Day</span>
           </div>
         </div>
@@ -1482,6 +1738,78 @@ export default function AIScanMySite() {
 
       {/* MODALS */}
       <AnimatePresence>
+        {showActivationSuccessModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md">
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9, y: 20 }} 
+              animate={{ opacity: 1, scale: 1, y: 0 }} 
+              exit={{ opacity: 0, scale: 0.9, y: 20 }} 
+              transition={{ type: "spring", stiffness: 300, damping: 25 }}
+              className="card p-6 sm:p-8 max-w-lg w-full text-center relative border-2 border-emerald-500/50 shadow-2xl shadow-emerald-500/20 bg-surface overflow-hidden"
+            >
+              {/* Background celebration glow */}
+              <div className="absolute -top-24 -left-24 w-48 h-48 bg-emerald-500/20 rounded-full blur-3xl pointer-events-none" />
+              <div className="absolute -bottom-24 -right-24 w-48 h-48 bg-blue-500/20 rounded-full blur-3xl pointer-events-none" />
+
+              <button 
+                onClick={() => setShowActivationSuccessModal(false)} 
+                className="absolute top-4 right-4 text-ink-3 hover:text-ink transition-colors p-1"
+              >
+                <XCircle className="w-6 h-6" />
+              </button>
+
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-emerald-500 to-teal-400 p-0.5 mx-auto mb-5 shadow-lg shadow-emerald-500/30">
+                <div className="w-full h-full bg-surface rounded-[14px] flex items-center justify-center">
+                  <CheckCircle2 className="w-8 h-8 text-emerald-400" />
+                </div>
+              </div>
+
+              <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono font-bold mb-3">
+                <Sparkles className="w-3.5 h-3.5 animate-bounce text-amber-300" />
+                <span>PROMO CODE "FREEPRO" ACTIVATED (100% OFF)</span>
+              </div>
+
+              <h3 className="text-2xl sm:text-3xl font-heading font-extrabold text-ink tracking-tight">
+                🎉 Pro Account Activated!
+              </h3>
+              <p className="text-sm text-ink-2 mt-2 leading-relaxed max-w-md mx-auto">
+                Thank you for activating! You now have lifetime access to <b>Unlimited Scans</b> and <b>Instant Fix Guide Downloads</b> unlocked.
+              </p>
+
+              <div className="my-6 p-4 rounded-xl bg-surface-2 border border-border text-left space-y-3 font-mono text-xs">
+                <div className="flex items-center gap-2.5 text-emerald-400 font-semibold">
+                  <Check className="w-4 h-4 shrink-0 font-extrabold" />
+                  <span>Unlimited Store & Website AI Audits</span>
+                </div>
+                <div className="flex items-center gap-2.5 text-emerald-400 font-semibold">
+                  <Check className="w-4 h-4 shrink-0 font-extrabold" />
+                  <span>Instant llms.txt, Schema.org & agents.json Downloads</span>
+                </div>
+                <div className="flex items-center gap-2.5 text-emerald-400 font-semibold">
+                  <Check className="w-4 h-4 shrink-0 font-extrabold" />
+                  <span>Priority AI Search Engine Visibility Testing</span>
+                </div>
+              </div>
+
+              <button
+                onClick={() => {
+                  setShowActivationSuccessModal(false);
+                  const scanInput = document.getElementById("scan-input");
+                  if (scanInput) {
+                    scanInput.focus();
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                  } else {
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                  }
+                }}
+                className="w-full py-4 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-500 to-emerald-600 hover:from-emerald-500 hover:to-teal-400 text-white font-extrabold text-base shadow-xl shadow-emerald-500/25 hover:scale-[1.01] active:scale-[0.99] transition-all flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <span>🚀 Start Unlimited Scanning Now</span>
+                <ArrowRight className="w-5 h-5" />
+              </button>
+            </motion.div>
+          </div>
+        )}
         {isBookModalOpen && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-surface/85 backdrop-blur-md">
             <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} className="card p-6 sm:p-8 max-w-md w-full shadow-2xl relative border-accent/40">
@@ -1523,6 +1851,26 @@ export default function AIScanMySite() {
                 <p><b>2. How We Use Data:</b> Submitted URLs are processed in real-time to generate AI readability reports. We do NOT sell or share your data.</p>
                 <p><b>3. Data Security:</b> All connections are encrypted via TLS 1.3/HTTPS.</p>
                 <p><b>4. Your Rights:</b> You may request deletion of your submitted domain history or email at any time.</p>
+              </div>
+            </motion.div>
+          </div>
+        )}
+        {isCookieModalOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-surface/85 backdrop-blur-md">
+            <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} className="card p-6 sm:p-8 max-w-xl w-full max-h-[85vh] overflow-y-auto shadow-2xl relative">
+              <button onClick={() => setIsCookieModalOpen(false)} className="absolute top-4 right-4 text-ink-3 hover:text-ink"><XCircle className="w-5 h-5" /></button>
+              <div className="w-12 h-12 rounded-xl bg-accent-weak border border-accent/30 flex items-center justify-center mb-4"><Cookie className="w-6 h-6 text-accent" /></div>
+              <h3 className="text-xl font-heading font-bold text-ink mb-2">Cookie Policy & Preferences</h3>
+              <p className="text-sm text-ink-3 mb-4">Last Updated: September 5, 2026</p>
+              <div className="space-y-4 text-xs text-ink-2 leading-relaxed text-left">
+                <p><b>1. What Are Cookies & Local Storage:</b> Cookies and local storage are small text files stored in your browser to remember user preferences, maintain state across pages, and save free scan limits.</p>
+                <p><b>2. Essential Storage:</b> We use strictly necessary local storage to remember your light/dark theme (`theme`), your daily free scan count (`aiscan_limit_count`), and your Pro activation state (`isProActive`). These are essential for the application to function.</p>
+                <p><b>3. Analytics & Performance:</b> Request origins are verified server-side to enforce API rate-limiting and cache Google PageSpeed Insights data for 1 hour. We do NOT track individual users across third-party websites or sell advertising profile data.</p>
+                <p><b>4. Managing Your Preferences:</b> You can clear browser local storage or block cookies via your browser settings at any time. Clearing storage will reset local scan counters.</p>
+              </div>
+              <div className="mt-6 pt-4 border-t border-border flex items-center gap-3">
+                <button onClick={() => { if (typeof window !== "undefined") localStorage.setItem("aiscan_cookie_consent", "accepted"); setShowCookieBanner(false); setIsCookieModalOpen(false); }} className="btn-primary flex-1 py-3">Accept All Cookies</button>
+                <button onClick={() => setIsCookieModalOpen(false)} className="btn-secondary py-3 px-6">Close</button>
               </div>
             </motion.div>
           </div>
@@ -1620,6 +1968,43 @@ export default function AIScanMySite() {
               </div>
             </motion.div>
           </div>
+        )}
+      </AnimatePresence>
+
+      {/* COOKIE CONSENT BANNER */}
+      <AnimatePresence>
+        {showCookieBanner && (
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 50 }}
+            className="fixed bottom-4 left-4 right-4 md:left-auto md:right-6 md:max-w-md z-40 card p-4 border border-accent/40 shadow-2xl bg-surface/95 backdrop-blur-xl flex flex-col sm:flex-row items-center gap-4 text-left"
+          >
+            <div className="flex items-start gap-3 min-w-0">
+              <Cookie className="w-6 h-6 text-accent shrink-0 mt-0.5" />
+              <div className="text-xs text-ink-2">
+                <span className="font-bold text-ink">We value your privacy.</span> We use essential cookies to save your audit progress and daily free scan quota. See our{" "}
+                <button onClick={() => setIsCookieModalOpen(true)} className="text-accent hover:underline font-medium">Cookie Policy</button>.
+              </div>
+            </div>
+            <div className="flex items-center gap-2 shrink-0 w-full sm:w-auto">
+              <button
+                onClick={() => {
+                  if (typeof window !== "undefined") localStorage.setItem("aiscan_cookie_consent", "accepted");
+                  setShowCookieBanner(false);
+                }}
+                className="btn-primary text-xs px-4 py-2 flex-1 sm:flex-initial"
+              >
+                Accept
+              </button>
+              <button
+                onClick={() => setShowCookieBanner(false)}
+                className="btn-ghost text-xs px-3 py-2 text-ink-3 hover:text-ink"
+              >
+                Dismiss
+              </button>
+            </div>
+          </motion.div>
         )}
       </AnimatePresence>
     </div>

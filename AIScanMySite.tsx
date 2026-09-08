@@ -338,26 +338,66 @@ export default function AIScanMySite() {
     return scannedDomain.replace(/^(https?:\/\/)?(www\.)?/, "").replace(/\/.*$/, "") || "yourstore.com";
   }, [scannedDomain]);
 
-  const [scansLeft, setScansLeft] = useState<number>(() => {
+  const [isUnlimitedPro, setIsUnlimitedPro] = useState<boolean>(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("aiscan_unlimited_unlocked") === "true";
+    }
+    return false;
+  });
+
+  const [dailyScansCount, setDailyScansCount] = useState<number>(() => {
     if (typeof window !== "undefined") {
       const today = new Date().toDateString();
-      const savedDate = localStorage.getItem("aiscan_limit_date");
-      const savedCount = localStorage.getItem("aiscan_limit_count");
-      if (savedDate !== today || savedCount) return 999;
+      const savedDate = localStorage.getItem("aiscan_daily_date");
+      const savedCount = localStorage.getItem("aiscan_daily_count");
+      if (savedDate === today && savedCount) {
+        return parseInt(savedCount, 10) || 0;
+      }
     }
-    return 999;
+    return 0;
   });
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       const today = new Date().toDateString();
-      const savedDate = localStorage.getItem("aiscan_limit_date");
+      const savedDate = localStorage.getItem("aiscan_daily_date");
       if (savedDate !== today) {
-        localStorage.setItem("aiscan_limit_date", today);
-        localStorage.setItem("aiscan_limit_count", "999");
+        localStorage.setItem("aiscan_daily_date", today);
+        localStorage.setItem("aiscan_daily_count", "0");
+        setDailyScansCount(0);
       }
     }
   }, []);
+
+  const scrollToSection = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
+  const unlockUnlimitedPro = async (emailVal: string) => {
+    setIsUnlimitedPro(true);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("aiscan_unlimited_unlocked", "true");
+    }
+    setShowActivationSuccessModal(true);
+    try {
+      const endpoint = process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT || "https://formspree.io/f/mljelvvw";
+      await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify({
+          email: emailVal,
+          domain: scannedDomain || "aiscanmysite.com",
+          promoCode: "FREEPRO",
+          timestamp: new Date().toISOString()
+        })
+      });
+    } catch (err) {
+      console.log("Email captured locally:", emailVal, err);
+    }
+  };
 
   const handleStartScan = (e: React.FormEvent) => {
     e.preventDefault();
@@ -366,9 +406,23 @@ export default function AIScanMySite() {
     const domainPattern = /^([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/.*)?$/;
     const cleanCandidate = rawUrl.replace(/^(https?:\/\/)?(www\.)?/, "");
     if (!domainPattern.test(cleanCandidate)) { setInputError("Invalid domain format. Try e.g. yourwebsite.com"); return; }
-    const nextScansLeft = scansLeft - 1;
-    setScansLeft(nextScansLeft);
-    if (typeof window !== "undefined") localStorage.setItem("aiscan_limit_count", nextScansLeft.toString());
+    
+    if (!isUnlimitedPro && dailyScansCount >= 5) {
+      setInputError("You've reached your daily limit of 5 free scans for today. Enter your email with promo code FREEPRO below for Unlimited Pro Access!");
+      const proEmailEl = document.getElementById("pro-email");
+      if (proEmailEl) {
+        proEmailEl.scrollIntoView({ behavior: "smooth", block: "center" });
+        proEmailEl.focus();
+      }
+      return;
+    }
+
+    const nextCount = dailyScansCount + 1;
+    setDailyScansCount(nextCount);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("aiscan_daily_count", nextCount.toString());
+    }
+
     setInputError("");
     setScannedDomain(rawUrl);
     setLiveScanScore(null);
@@ -487,7 +541,9 @@ export default function AIScanMySite() {
 
   const handleUnlockDashboard = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!emailInput.trim() || !emailInput.includes("@")) return;
+    const val = emailInput.trim();
+    if (!val || !val.includes("@")) return;
+    unlockUnlimitedPro(val);
     setAppState("UNLOCKED_DASHBOARD");
   };
 
@@ -725,8 +781,8 @@ export default function AIScanMySite() {
               </AnimatePresence>
             </div>
 
-            <a href="#features" className="transition-colors hover:text-accent py-2">FEATURES</a>
-            <a href="#faq" className="transition-colors hover:text-accent py-2">FAQ</a>
+            <button onClick={() => scrollToSection("features")} className="transition-colors hover:text-accent py-2 cursor-pointer font-medium">FEATURES</button>
+            <button onClick={() => scrollToSection("faq")} className="transition-colors hover:text-accent py-2 cursor-pointer font-medium">FAQ</button>
           </div>
 
           {/* Right Action Items */}
@@ -739,10 +795,17 @@ export default function AIScanMySite() {
               {lightTheme ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
             </button>
 
-            <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full border border-success/30 bg-success-weak text-success text-xs font-bold">
-              <span className="w-2 h-2 rounded-full bg-success animate-pulse" />
-              <span>Unlimited Free Access</span>
-            </div>
+            {isUnlimitedPro ? (
+              <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full border border-emerald-500/40 bg-emerald-500/10 text-emerald-400 text-xs font-bold font-mono shadow-sm">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                <span>⚡ Unlimited Pro Access Active</span>
+              </div>
+            ) : (
+              <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full border border-amber-500/40 bg-amber-500/10 text-amber-300 text-xs font-bold font-mono shadow-sm">
+                <Clock className="w-3.5 h-3.5 text-amber-400" />
+                <span>{Math.max(0, 5 - dailyScansCount)} / 5 Free Scans Left Today</span>
+              </div>
+            )}
 
             {appState !== "HERO" && (
               <button 
@@ -1982,24 +2045,7 @@ export default function AIScanMySite() {
                         const emailVal = emailInputEl?.value?.trim();
                         if (emailVal && emailVal.includes("@")) { 
                           setIsProActive(true); 
-                          setScansLeft(999); 
-                          setShowActivationSuccessModal(true);
-                          // Send email lead asynchronously to Formspree or custom lead endpoint
-                          try {
-                            const endpoint = process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT || "https://formspree.io/f/mljelvvw";
-                            await fetch(endpoint, {
-                              method: "POST",
-                              headers: { "Content-Type": "application/json", "Accept": "application/json" },
-                              body: JSON.stringify({
-                                email: emailVal,
-                                domain: scannedDomain || "aiscanmysite.com",
-                                promoCode: "FREEPRO",
-                                timestamp: new Date().toISOString()
-                              })
-                            });
-                          } catch (err) {
-                            console.log("Email captured locally:", emailVal, err);
-                          }
+                          unlockUnlimitedPro(emailVal);
                         } else {
                           alert("Please enter a valid email address."); 
                         }
@@ -2017,6 +2063,128 @@ export default function AIScanMySite() {
           )}
         </AnimatePresence>
       </main>
+
+      {/* UNIVERSAL FEATURES SECTION */}
+      <section id="features" className="relative z-10 border-t border-border bg-surface py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto space-y-12">
+          <div className="text-center max-w-3xl mx-auto space-y-4">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full badge-info text-xs font-mono font-bold uppercase tracking-wider">
+              <Layers className="w-3.5 h-3.5 text-accent" />
+              <span>Engine Features & Capabilities</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-heading font-extrabold text-ink tracking-tight">
+              Everything You Need to Win <span className="text-accent">AI Search Engine Visibility</span>
+            </h2>
+            <p className="text-sm sm:text-base text-ink-3 leading-relaxed">
+              Complete technical auditing, robots crawler diagnostics, schema verification, and instant fix code generation for ChatGPT, Perplexity, Gemini & Claude.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Feature 1 */}
+            <div className="card p-6 flex flex-col justify-between hover:border-accent/40 transition-all duration-300 group">
+              <div>
+                <div className="w-12 h-12 rounded-xl bg-accent/10 border border-accent/30 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                  <Bot className="w-6 h-6 text-accent" />
+                </div>
+                <h3 className="text-lg font-heading font-bold text-ink mb-2">AI Bot Crawlability Diagnostic</h3>
+                <p className="text-xs text-ink-3 leading-relaxed">
+                  Deep inspection of your website's <code className="font-mono text-accent">robots.txt</code> file for rules affecting GPTBot, PerplexityBot, ClaudeBot, and Google-Extended.
+                </p>
+              </div>
+              <div className="mt-6 pt-4 border-t border-border/60 flex items-center justify-between text-xs font-mono text-accent">
+                <span>Robots.txt Analysis</span>
+                <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </div>
+            </div>
+
+            {/* Feature 2 */}
+            <div className="card p-6 flex flex-col justify-between hover:border-purple-500/40 transition-all duration-300 group">
+              <div>
+                <div className="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                  <Brain className="w-6 h-6 text-purple-400" />
+                </div>
+                <h3 className="text-lg font-heading font-bold text-ink mb-2">AEO & GEO Answer Engine Visibility</h3>
+                <p className="text-xs text-ink-3 leading-relaxed">
+                  Real-time query simulations across AI search engines to evaluate citation rank, snippet presence, and competitive content gaps.
+                </p>
+              </div>
+              <div className="mt-6 pt-4 border-t border-border/60 flex items-center justify-between text-xs font-mono text-purple-400">
+                <span>AI Search Rank</span>
+                <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </div>
+            </div>
+
+            {/* Feature 3 */}
+            <div className="card p-6 flex flex-col justify-between hover:border-emerald-500/40 transition-all duration-300 group">
+              <div>
+                <div className="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                  <Code2 className="w-6 h-6 text-emerald-400" />
+                </div>
+                <h3 className="text-lg font-heading font-bold text-ink mb-2">JSON-LD Structured Schema Audit</h3>
+                <p className="text-xs text-ink-3 leading-relaxed">
+                  Automated validation of Schema.org formats including Organization, SoftwareApplication, Product, and WebSite JSON-LD definitions.
+                </p>
+              </div>
+              <div className="mt-6 pt-4 border-t border-border/60 flex items-center justify-between text-xs font-mono text-emerald-400">
+                <span>Schema Verification</span>
+                <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </div>
+            </div>
+
+            {/* Feature 4 */}
+            <div className="card p-6 flex flex-col justify-between hover:border-amber-500/40 transition-all duration-300 group">
+              <div>
+                <div className="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                  <FileText className="w-6 h-6 text-amber-400" />
+                </div>
+                <h3 className="text-lg font-heading font-bold text-ink mb-2">llms.txt Context Standard Generator</h3>
+                <p className="text-xs text-ink-3 leading-relaxed">
+                  Instant auto-generation of <code className="font-mono text-amber-400">llms.txt</code> and <code className="font-mono text-amber-400">agents.json</code> manifests tailored for modern LLM indexers.
+                </p>
+              </div>
+              <div className="mt-6 pt-4 border-t border-border/60 flex items-center justify-between text-xs font-mono text-amber-400">
+                <span>Auto Code Generator</span>
+                <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </div>
+            </div>
+
+            {/* Feature 5 */}
+            <div className="card p-6 flex flex-col justify-between hover:border-cyan-500/40 transition-all duration-300 group">
+              <div>
+                <div className="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                  <Gauge className="w-6 h-6 text-cyan-400" />
+                </div>
+                <h3 className="text-lg font-heading font-bold text-ink mb-2">Core Web Vitals & Speed Performance</h3>
+                <p className="text-xs text-ink-3 leading-relaxed">
+                  Real Google Lighthouse v11 API diagnostics measuring LCP, FCP, INP, TTFB, and CLS performance metrics for fast AI crawler response.
+                </p>
+              </div>
+              <div className="mt-6 pt-4 border-t border-border/60 flex items-center justify-between text-xs font-mono text-cyan-400">
+                <span>Lighthouse Integration</span>
+                <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </div>
+            </div>
+
+            {/* Feature 6 */}
+            <div className="card p-6 flex flex-col justify-between hover:border-rose-500/40 transition-all duration-300 group">
+              <div>
+                <div className="w-12 h-12 rounded-xl bg-rose-500/10 border border-rose-500/30 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                  <Download className="w-6 h-6 text-rose-400" />
+                </div>
+                <h3 className="text-lg font-heading font-bold text-ink mb-2">1-Click Fix Code & Report Downloads</h3>
+                <p className="text-xs text-ink-3 leading-relaxed">
+                  Export ready-to-use drop-in code snippets and actionable step-by-step fix guides to resolve high-severity issues immediately.
+                </p>
+              </div>
+              <div className="mt-6 pt-4 border-t border-border/60 flex items-center justify-between text-xs font-mono text-rose-400">
+                <span>Actionable Fix Guides</span>
+                <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* ALWAYS-VISIBLE PRICING */}
       <section id="pricing" className="relative z-10 border-t border-border bg-surface-2 py-16 px-4 sm:px-6 lg:px-8">

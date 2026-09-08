@@ -661,10 +661,14 @@ export default function AIScanMySite() {
             </div>
           </div>
           <div className="flex items-center gap-4">
-            <div className="hidden md:flex items-center gap-6 text-sm font-extrabold text-ink-2 transition-colors duration-300 hover:text-ink">
-              <a href="#features" className="transition-colors">FEATURES</a>
-              <a href="#pricing" className="transition-colors">PRICING</a>
-              <a href="#faq" className="transition-colors">FAQ</a>
+            <div className="hidden lg:flex items-center gap-5 text-xs font-extrabold tracking-wider text-ink-2 transition-colors duration-300">
+              <a href="/blog" className="transition-colors hover:text-accent">BLOG</a>
+              <a href="/aeo-checker" className="transition-colors hover:text-accent">AEO CHECKER</a>
+              <a href="/geo-checker" className="transition-colors hover:text-accent">GEO CHECKER</a>
+              <a href="/llms-txt-generator" className="transition-colors hover:text-accent">LLMS.TXT</a>
+              <a href="/speed-test" className="transition-colors hover:text-accent">SPEED TEST</a>
+              <a href="#features" className="transition-colors hover:text-accent">FEATURES</a>
+              <a href="#faq" className="transition-colors hover:text-accent">FAQ</a>
             </div>
             <button onClick={() => setLightTheme(!lightTheme)} aria-label="Toggle Theme" className="p-2 rounded-lg border border-border bg-surface-2 hover:bg-surface transition-all duration-300 text-ink-2 hover:text-ink">
               {lightTheme ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
@@ -1783,24 +1787,80 @@ export default function AIScanMySite() {
       </section>
 
       {/* FOOTER */}
-      <footer className="relative z-10 border-t border-border bg-surface py-8 text-sm text-ink-3">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2"><Bot className="w-4 h-4 text-accent" /><span>&copy; {new Date().getFullYear()} AI Scan My Site. All rights reserved.</span></div>
-            <div className="flex items-center gap-3 border-l border-border pl-4 text-ink-3 font-mono">
-              <a href="https://x.com/FounderKraft" target="_blank" rel="noopener noreferrer" className="hover:text-ink transition-colors">X (Twitter)</a>
-              <span className="text-xs">·</span>
-              <a href="https://www.linkedin.com/in/ali-a-7b9a29428" target="_blank" rel="noopener noreferrer" className="hover:text-ink transition-colors">LinkedIn</a>
-              <span className="text-xs">·</span>
-              <a href="https://www.youtube.com/@FounderKraft" target="_blank" rel="noopener noreferrer" className="hover:text-ink transition-colors">YouTube</a>
+      <footer className="relative z-10 border-t border-border bg-surface py-12 text-sm text-ink-3">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+            
+            {/* Col 1: Brand & Tagline */}
+            <div className="lg:col-span-2 space-y-4">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-lg bg-accent p-0.5 shadow-md">
+                  <div className="w-full h-full rounded-md bg-surface flex items-center justify-center">
+                    <Bot className="w-4 h-4 text-accent" />
+                  </div>
+                </div>
+                <span className="font-heading font-extrabold text-lg tracking-tight text-ink">
+                  AI Scan <span className="text-accent font-black">My Site</span>
+                </span>
+              </div>
+              <p className="text-xs text-ink-3 leading-relaxed max-w-sm">
+                Analyze the technical and content signals that affect your website's visibility across ChatGPT, Perplexity, Gemini, Claude, and AI search engines.
+              </p>
+              <div className="flex items-center gap-3 text-xs text-ink-3 font-mono pt-2">
+                <a href="https://x.com/FounderKraft" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">X (Twitter)</a>
+                <span>·</span>
+                <a href="https://www.linkedin.com/in/ali-a-7b9a29428" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">LinkedIn</a>
+                <span>·</span>
+                <a href="https://www.youtube.com/@FounderKraft" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">YouTube</a>
+              </div>
             </div>
+
+            {/* Col 2: Free Tools */}
+            <div className="space-y-3">
+              <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-ink">Free AI Tools</h4>
+              <ul className="space-y-2 text-xs">
+                <li><a href="/aeo-checker" className="hover:text-accent transition-colors">Free AEO Checker</a></li>
+                <li><a href="/geo-checker" className="hover:text-accent transition-colors">Free GEO Checker</a></li>
+                <li><a href="/llms-txt-generator" className="hover:text-accent transition-colors">llms.txt Generator</a></li>
+                <li><a href="/speed-test" className="hover:text-accent transition-colors">AI Bot Speed Test</a></li>
+              </ul>
+            </div>
+
+            {/* Col 3: Articles & Guides */}
+            <div className="space-y-3">
+              <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-ink">Articles & Guides</h4>
+              <ul className="space-y-2 text-xs">
+                <li><a href="/blog" className="font-bold text-accent hover:underline">All Articles & Guides →</a></li>
+                <li><a href="/blog/why-isnt-my-website-showing-up-in-chatgpt" className="hover:text-accent transition-colors">Why Isn't My Site in ChatGPT?</a></li>
+                <li><a href="/blog/is-your-website-visible-to-chatgpt-how-to-check" className="hover:text-accent transition-colors">Is Your Site Visible to ChatGPT?</a></li>
+                <li><a href="/blog/what-is-aeo-answer-engine-optimization" className="hover:text-accent transition-colors">What is AEO?</a></li>
+                <li><a href="/blog/what-is-geo-generative-engine-optimization" className="hover:text-accent transition-colors">What is GEO?</a></li>
+                <li><a href="/blog/does-robotstxt-block-chatgpt" className="hover:text-accent transition-colors">Does robots.txt Block ChatGPT?</a></li>
+                <li><a href="/blog/does-llmstxt-actually-help-with-ai-search" className="hover:text-accent transition-colors">Does llms.txt Help AI Search?</a></li>
+              </ul>
+            </div>
+
+            {/* Col 4: Tool Comparisons */}
+            <div className="space-y-3">
+              <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-ink">Comparisons</h4>
+              <ul className="space-y-2 text-xs">
+                <li><a href="/vs/semrush" className="hover:text-accent transition-colors">vs Semrush</a></li>
+                <li><a href="/vs/ahrefs" className="hover:text-accent transition-colors">vs Ahrefs</a></li>
+                <li><a href="/vs/screaming-frog" className="hover:text-accent transition-colors">vs Screaming Frog</a></li>
+                <li><a href="/vs/hubspot-aeo" className="hover:text-accent transition-colors">vs HubSpot AEO</a></li>
+              </ul>
+            </div>
+
           </div>
-          <div className="flex flex-wrap items-center justify-center gap-6 text-ink-3 font-mono">
-            <button onClick={() => setIsTermsModalOpen(true)} className="hover:text-ink transition-colors underline decoration-border cursor-pointer">Terms of Service</button>
-            <button onClick={() => setIsPrivacyModalOpen(true)} className="hover:text-ink transition-colors underline decoration-border cursor-pointer">Privacy Policy</button>
-            <button onClick={() => setIsCookieModalOpen(true)} className="hover:text-ink transition-colors underline decoration-border cursor-pointer">Cookie Policy</button>
-            <button onClick={() => setIsContactModalOpen(true)} className="hover:text-ink transition-colors underline decoration-border cursor-pointer">Contact Us</button>
-            <span>5 Free Scans/Day</span>
+
+          <div className="pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-mono">
+            <div>&copy; {new Date().getFullYear()} AI Scan My Site. All rights reserved.</div>
+            <div className="flex flex-wrap items-center gap-6">
+              <button onClick={() => setIsTermsModalOpen(true)} className="hover:text-ink transition-colors underline decoration-border cursor-pointer">Terms of Service</button>
+              <button onClick={() => setIsPrivacyModalOpen(true)} className="hover:text-ink transition-colors underline decoration-border cursor-pointer">Privacy Policy</button>
+              <button onClick={() => setIsCookieModalOpen(true)} className="hover:text-ink transition-colors underline decoration-border cursor-pointer">Cookie Policy</button>
+              <button onClick={() => setIsContactModalOpen(true)} className="hover:text-ink transition-colors underline decoration-border cursor-pointer">Contact Us</button>
+            </div>
           </div>
         </div>
       </footer>

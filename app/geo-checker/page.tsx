@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import GEOCheckerClient from './GEOCheckerClient';
 
 export const metadata: Metadata = {
-  title: 'Free GEO Checker & Generative Engine Optimization Audit | AI Scan My Site',
+  title: 'Free GEO Checker & Generative Search Audit | AI Scan',
   description: 'Run a free GEO audit to test your website for Generative Engine Optimization. Check how Google AI Overviews, ChatGPT, Gemini & Perplexity cite your content.',
   keywords: [
     'GEO checker',

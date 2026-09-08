@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import SpeedTestClient from './SpeedTestClient';
 
 export const metadata: Metadata = {
-  title: 'Free Website Speed Test & PageSpeed Insights Analyzer | AI Scan My Site',
+  title: 'Free Website Speed Test & PageSpeed Analyzer | AI Scan',
   description: 'Test your website speed and Core Web Vitals (LCP, INP, CLS, TTFB) with live Google PageSpeed Insights data. Get instant speed scores and performance optimization guides.',
   keywords: [
     'page speed test',

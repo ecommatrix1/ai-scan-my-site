@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import AEOCheckerClient from './AEOCheckerClient';
 
 export const metadata: Metadata = {
-  title: 'Free AEO Checker & AI Search Readiness Grader | AI Scan My Site',
+  title: 'Free AEO Checker & AI Search Readiness Grader | AI Scan',
   description: 'Run a free AEO check to test your website for ChatGPT, Gemini, Claude, and Perplexity visibility. Get instant AEO reports, AEO grading, and llms.txt fix guides.',
   keywords: [
     'Free AEO checker',

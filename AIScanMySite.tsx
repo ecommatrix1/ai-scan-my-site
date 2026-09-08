@@ -880,9 +880,9 @@ export default function AIScanMySite() {
               {/* TOP 3 AUDIT SECTION: 4 BIG METRIC CARDS + 3-PILLAR SCORE BREAKDOWN (SEO | AEO | GEO) */}
               {(() => {
                 const computedOverall = liveScanScore !== null && liveScanScore > 0 ? liveScanScore : 89;
-                const computedSeo = Math.min(96, Math.max(78, Math.round(computedOverall * 1.35)));
-                const computedAeo = Math.min(88, Math.max(29, Math.round(computedOverall * 0.60)));
-                const computedGeo = Math.min(92, Math.max(36, Math.round(computedOverall * 0.75)));
+                const computedSeo = Math.min(98, Math.max(85, Math.round(computedOverall * 1.05)));
+                const computedAeo = Math.min(95, Math.max(80, Math.round(computedOverall * 0.95)));
+                const computedGeo = Math.min(92, Math.max(78, Math.round(computedOverall * 0.92)));
                 const criticalCount = liveAuditItems.filter(i => i.severity === "critical").length;
                 const totalFailed = liveAuditItems.filter(i => !i.passed).length;
                 const schemaItems = liveAuditItems.filter(i => i.category === "AEO Schema");
@@ -1235,9 +1235,9 @@ export default function AIScanMySite() {
 
                 {(() => {
                   const computedOverall = liveScanScore !== null && liveScanScore > 0 ? liveScanScore : 89;
-                  const computedSeo = Math.min(96, Math.max(78, Math.round(computedOverall * 1.35)));
-                  const computedAeo = Math.min(88, Math.max(29, Math.round(computedOverall * 0.60)));
-                  const computedGeo = Math.min(92, Math.max(36, Math.round(computedOverall * 0.75)));
+                  const computedSeo = Math.min(98, Math.max(85, Math.round(computedOverall * 1.05)));
+                  const computedAeo = Math.min(95, Math.max(80, Math.round(computedOverall * 0.95)));
+                  const computedGeo = Math.min(92, Math.max(78, Math.round(computedOverall * 0.92)));
                   const criticalCount = liveAuditItems.filter(i => i.severity === "critical").length;
                   const totalFailed = liveAuditItems.filter(i => !i.passed).length;
                   const schemaItems = liveAuditItems.filter(i => i.category === "AEO Schema");

@@ -263,6 +263,7 @@ export default function AIScanMySite() {
   const [settingsBingKey, setSettingsBingKey] = useState("");
   const [settingsSaving, setSettingsSaving] = useState(false);
   const [settingsSaved, setSettingsSaved] = useState(false);
+  const [isToolsDropdownOpen, setIsToolsDropdownOpen] = useState(false);
 
   const [weeklyAlertEmail, setWeeklyAlertEmail] = useState("");
   const [alertSubscribed, setAlertSubscribed] = useState(false);
@@ -623,62 +624,131 @@ export default function AIScanMySite() {
   return (
     <div className={`min-h-screen font-sans transition-colors duration-300 antialiased ${!lightTheme ? "bg-cosmic-space bg-cosmic-grid text-white" : ""}`}>
       {/* TOP PROMO BANNER */}
-      <div className={`text-center py-3.5 px-6 border-b relative z-50 transition-colors duration-300 ${
-        lightTheme 
-          ? "bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-600 border-indigo-700 shadow-md" 
-          : "bg-gradient-to-r from-violet-950 via-purple-900 to-violet-950 border-violet-800/40"
-      }`}>
-        <p className="text-sm sm:text-base md:text-lg font-bold tracking-wide text-ink flex flex-wrap items-center justify-center gap-3">
-          <Sparkles className="w-5 h-5 animate-bounce shrink-0 text-amber-300" />
-          <span>⚡ LAUNCH OFFER: USE PROMO CODE "FREEPRO" FOR 100% FREE PRO ACCESS & UNLIMITED AUDITS!</span>
-          <Sparkles className="w-5 h-5 animate-bounce shrink-0 text-amber-300" />
-        </p>
+      <div className="bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-600 border-b border-indigo-700/50 py-2 px-4 text-center z-50 relative">
+        <div className="max-w-7xl mx-auto flex items-center justify-center gap-2 text-xs sm:text-sm font-bold text-white tracking-wide">
+          <Sparkles className="w-4 h-4 text-amber-300 animate-pulse shrink-0" />
+          <span>⚡ LAUNCH OFFER: USE PROMO CODE <strong className="bg-white/20 px-2 py-0.5 rounded font-mono text-amber-200">"FREEPRO"</strong> FOR 100% FREE PRO ACCESS & UNLIMITED AUDITS!</span>
+          <Sparkles className="w-4 h-4 text-amber-300 animate-pulse shrink-0" />
+        </div>
       </div>
 
       {/* TOP NAVIGATION BAR */}
-      <header className={`sticky top-0 z-40 backdrop-blur-xl border-b border-border transition-all duration-300 ${
-        lightTheme
-          ? "bg-surface/95 shadow-sm"
-          : "bg-surface/95 shadow-lg"
-      }`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <div onClick={() => setAppState("HERO")} className="flex items-center gap-3 cursor-pointer group">
-            <div className="w-9 h-9 rounded-xl bg-accent p-0.5 shadow-lg shadow-accent/20 group-hover:scale-105 transition-transform">
-              <div className={`w-full h-full rounded-lg flex items-center justify-center transition-colors duration-300 bg-surface`}>
+      <header className="sticky top-0 z-40 backdrop-blur-xl border-b border-border bg-surface/95 shadow-sm transition-all duration-300">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+          {/* Logo */}
+          <div onClick={() => setAppState("HERO")} className="flex items-center gap-3 cursor-pointer group shrink-0">
+            <div className="w-10 h-10 rounded-xl bg-accent p-0.5 shadow-lg shadow-accent/20 group-hover:scale-105 transition-transform">
+              <div className="w-full h-full rounded-lg flex items-center justify-center bg-surface">
                 <Bot className="w-5 h-5 text-accent" />
               </div>
             </div>
             <div className="flex flex-col">
-              <span className={`font-heading font-extrabold text-lg tracking-tight transition-colors duration-300 ${
-                lightTheme ? "text-ink" : "text-ink"
-              }`}>
-                AI Scan
-                <span className="text-accent font-black"> My Site</span>
+              <span className="font-heading font-extrabold text-lg tracking-tight text-ink">
+                AI Scan<span className="text-accent font-black"> My Site</span>
               </span>
-              <span className={`text-[10px] font-mono tracking-wider font-bold transition-colors duration-300 text-ink-3`}>
-                100% FREE UNLIMITED SCANS
+              <span className="text-[10px] font-mono tracking-wider font-extrabold text-accent uppercase">
+                100% Free Audit Suite
               </span>
             </div>
           </div>
-          <div className="flex items-center gap-4">
-            <div className="hidden lg:flex items-center gap-5 text-xs font-extrabold tracking-wider text-ink-2 transition-colors duration-300">
-              <a href="/blog" className="transition-colors hover:text-accent">BLOG</a>
-              <a href="/aeo-checker" className="transition-colors hover:text-accent">AEO CHECKER</a>
-              <a href="/geo-checker" className="transition-colors hover:text-accent">GEO CHECKER</a>
-              <a href="/llms-txt-generator" className="transition-colors hover:text-accent">LLMS.TXT</a>
-              <a href="/speed-test" className="transition-colors hover:text-accent">SPEED TEST</a>
-              <a href="#features" className="transition-colors hover:text-accent">FEATURES</a>
-              <a href="#faq" className="transition-colors hover:text-accent">FAQ</a>
+
+          {/* Navigation Links with Dropdown */}
+          <div className="hidden lg:flex items-center gap-6 text-xs font-extrabold tracking-wider text-ink-2">
+            <a href="/blog" className="transition-colors hover:text-accent py-2">
+              BLOG
+            </a>
+
+            {/* FREE AI TOOLS DROPDOWN */}
+            <div 
+              className="relative"
+              onMouseEnter={() => setIsToolsDropdownOpen(true)}
+              onMouseLeave={() => setIsToolsDropdownOpen(false)}
+            >
+              <button 
+                onClick={() => setIsToolsDropdownOpen(!isToolsDropdownOpen)}
+                className="flex items-center gap-1.5 py-2 transition-colors hover:text-accent text-accent font-black focus:outline-none"
+              >
+                <span>FREE AI TOOLS</span>
+                <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${isToolsDropdownOpen ? "rotate-180" : ""}`} />
+              </button>
+
+              <AnimatePresence>
+                {isToolsDropdownOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 8 }}
+                    transition={{ duration: 0.15 }}
+                    className="absolute top-full left-0 mt-1 w-64 p-2 rounded-2xl bg-surface border border-border shadow-2xl z-50 space-y-1"
+                  >
+                    <a href="/aeo-checker" className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-surface-2 transition-colors group">
+                      <div className="w-7 h-7 rounded-lg bg-rose-500/10 border border-rose-500/30 flex items-center justify-center shrink-0 mt-0.5">
+                        <Bot className="w-4 h-4 text-rose-400" />
+                      </div>
+                      <div>
+                        <div className="text-xs font-bold text-ink group-hover:text-accent transition-colors">Free AEO Checker</div>
+                        <div className="text-[11px] text-ink-3 font-normal mt-0.5">Test ChatGPT & Claude visibility</div>
+                      </div>
+                    </a>
+
+                    <a href="/geo-checker" className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-surface-2 transition-colors group">
+                      <div className="w-7 h-7 rounded-lg bg-amber-500/10 border border-amber-500/30 flex items-center justify-center shrink-0 mt-0.5">
+                        <Brain className="w-4 h-4 text-amber-400" />
+                      </div>
+                      <div>
+                        <div className="text-xs font-bold text-ink group-hover:text-accent transition-colors">Free GEO Checker</div>
+                        <div className="text-[11px] text-ink-3 font-normal mt-0.5">Test Google AI Overviews & Perplexity</div>
+                      </div>
+                    </a>
+
+                    <a href="/llms-txt-generator" className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-surface-2 transition-colors group">
+                      <div className="w-7 h-7 rounded-lg bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center shrink-0 mt-0.5">
+                        <FileText className="w-4 h-4 text-indigo-400" />
+                      </div>
+                      <div>
+                        <div className="text-xs font-bold text-ink group-hover:text-accent transition-colors">llms.txt Generator</div>
+                        <div className="text-[11px] text-ink-3 font-normal mt-0.5">Generate clean AI search manifest</div>
+                      </div>
+                    </a>
+
+                    <a href="/speed-test" className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-surface-2 transition-colors group">
+                      <div className="w-7 h-7 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center shrink-0 mt-0.5">
+                        <Zap className="w-4 h-4 text-emerald-400" />
+                      </div>
+                      <div>
+                        <div className="text-xs font-bold text-ink group-hover:text-accent transition-colors">AI Bot Speed Test</div>
+                        <div className="text-[11px] text-ink-3 font-normal mt-0.5">Measure Google Lighthouse & bot load</div>
+                      </div>
+                    </a>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
-            <button onClick={() => setLightTheme(!lightTheme)} aria-label="Toggle Theme" className="p-2 rounded-lg border border-border bg-surface-2 hover:bg-surface transition-all duration-300 text-ink-2 hover:text-ink">
+
+            <a href="#features" className="transition-colors hover:text-accent py-2">FEATURES</a>
+            <a href="#faq" className="transition-colors hover:text-accent py-2">FAQ</a>
+          </div>
+
+          {/* Right Action Items */}
+          <div className="flex items-center gap-3">
+            <button 
+              onClick={() => setLightTheme(!lightTheme)} 
+              aria-label="Toggle Theme" 
+              className="p-2 rounded-xl border border-border bg-surface-2 hover:bg-surface transition-all duration-300 text-ink-2 hover:text-ink"
+            >
               {lightTheme ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
             </button>
-            <div className="hidden md:flex items-center gap-2 px-3 py-1 rounded-full border border-success/30 bg-success-weak text-success text-sm font-bold transition-colors duration-300">
+
+            <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full border border-success/30 bg-success-weak text-success text-xs font-bold">
               <span className="w-2 h-2 rounded-full bg-success animate-pulse" />
-              <span>⚡ Unlimited Free Access (Limited Time Offer with Email)</span>
+              <span>Unlimited Free Access</span>
             </div>
+
             {appState !== "HERO" && (
-              <button onClick={() => setAppState("HERO")} className="flex items-center gap-2 text-xs font-bold px-3 py-1.5 rounded-lg border border-border bg-surface-2 hover:bg-surface text-ink-2 hover:text-ink transition-colors duration-300">
+              <button 
+                onClick={() => setAppState("HERO")} 
+                className="flex items-center gap-1.5 text-xs font-bold px-3 py-2 rounded-xl border border-accent/40 bg-accent/10 hover:bg-accent/20 text-accent transition-colors"
+              >
                 <RefreshCw className="w-3.5 h-3.5" />
                 <span>New Audit</span>
               </button>

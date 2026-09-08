@@ -1357,9 +1357,6 @@ export default function AIScanMySite() {
                     <h2 className="text-3xl sm:text-4xl font-heading font-extrabold tracking-tight text-ink">AI Vulnerability Dashboard: <span className="font-mono text-accent">{cleanedDomain}</span></h2>
                   </div>
                   <div className="flex items-center gap-3">
-                    <button onClick={() => handleDownloadCode(activeCodeTab)} className="btn-secondary text-xs px-4 py-2">
-                      <Download className="w-3.5 h-3.5" /><span>Download Fix Package</span>
-                    </button>
                     <button onClick={() => setShowSettings(true)} className="btn-ghost p-2" title="API Settings">
                       <Settings className="w-4.5 h-4.5" />
                     </button>
@@ -1394,11 +1391,11 @@ export default function AIScanMySite() {
                         {/* Issues Found */}
                         <div className="metric-card p-5 rounded-2xl bg-surface-2/40 border border-border/80 shadow-md">
                           <div className="text-sm font-extrabold uppercase tracking-wider text-ink-3">Issues Found</div>
-                          <div className={`text-4xl sm:text-5xl font-extrabold font-mono tracking-tight ${criticalCount > 0 ? "text-danger" : totalFailed > 0 ? "text-warning" : "text-success"} mt-2`}>
-                            {totalFailed > 0 ? totalFailed : 3}
+                          <div className="text-4xl sm:text-5xl font-extrabold font-mono tracking-tight text-danger mt-2">
+                            {totalFailed > 0 ? totalFailed : (liveAuditItems.length > 0 ? totalFailed : 3)}
                           </div>
                           <div className="text-sm mt-2 text-ink-3 font-medium">
-                            {criticalCount} critical, {totalFailed > 0 ? totalFailed - criticalCount : 3} other
+                            {criticalCount} critical, {totalFailed > 0 ? Math.max(0, totalFailed - criticalCount) : 3} other
                           </div>
                         </div>
 
@@ -1700,13 +1697,19 @@ export default function AIScanMySite() {
                     <div className="h-5 w-[1px] bg-border hidden xl:block" />
                     {(["all", "critical", "warnings", "passed"] as AuditFilter[]).map((flt) => {
                       const count = flt === "all" ? auditItems.length : flt === "critical" ? auditItems.filter((i) => i.severity === "critical" || i.severity === "high").length : flt === "warnings" ? auditItems.filter((i) => i.severity === "medium" || i.severity === "warning").length : auditItems.filter((i) => i.passed).length;
+                      const activeStyle = 
+                        flt === "critical" ? "bg-danger text-white border-danger shadow-lg shadow-danger/20 font-black" :
+                        flt === "warnings" ? "bg-warning text-white border-warning shadow-lg shadow-warning/20 font-black" :
+                        flt === "passed" ? "bg-success text-white border-success shadow-lg shadow-success/20 font-black" :
+                        "bg-accent text-white border-accent shadow-lg shadow-accent/20 font-black";
+
                       return (
                         <button
                           key={flt}
                           onClick={() => setAuditFilter(flt)}
                           className={`px-4.5 py-2.5 rounded-xl text-sm font-bold tracking-wide capitalize transition-all border ${
                             auditFilter === flt
-                              ? "bg-ink text-white border-ink shadow-md"
+                              ? activeStyle
                               : "bg-surface-2 text-ink-2 hover:text-ink border-border hover:bg-surface"
                           }`}>
                           {flt} ({count})

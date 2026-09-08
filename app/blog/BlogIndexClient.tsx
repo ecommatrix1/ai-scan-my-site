@@ -9,6 +9,14 @@ export default function BlogIndexClient() {
 
   const articles = [
     {
+      slug: "how-to-check-if-website-visible-to-chatgpt",
+      title: "How to Check If Your Website Is Visible to ChatGPT (5-Minute Guide)",
+      desc: "Step-by-step 5-minute diagnostic guide for beginners to test if ChatGPT and AI search crawlers can read and cite your website.",
+      category: "Beginner Diagnostic",
+      readTime: "5 min read",
+      date: "Sept 8, 2026"
+    },
+    {
       slug: "why-isnt-my-website-showing-up-in-chatgpt",
       title: "Why Isn't My Website Showing Up in ChatGPT? (And How to Fix It)",
       desc: "Search your business on Google and you appear, but ask ChatGPT and your competitor shows up? Learn why ChatGPT isn't citing your website.",

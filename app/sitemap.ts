@@ -51,6 +51,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
+      url: 'https://aiscanmysite.com/blog/how-to-check-if-website-visible-to-chatgpt',
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
       url: 'https://aiscanmysite.com/blog/what-is-aeo-answer-engine-optimization',
       lastModified: new Date(),
       changeFrequency: 'weekly',

@@ -5,21 +5,21 @@
 @tailwind utilities;
 
 :root {
-  /* LIGHT THEME — Emerald & Warm Champagne Gold (Organic & Alive) */
-  --background: #f8fff9;
-  --surface: #c5f6d8;
-  --surface-secondary: #F4F0E8;
-  --surface-hover: #EBE5DA;
-  --surface-2: #FAF8F5;
-  --surface-2-hover: #F4F0E8;
-  --border: #E6E0D4;
-  --border-strong: #D4CBBC;
-  --border-hover: #059669;
+  /* LIGHT THEME — High Contrast, Dark Bold Text & Clean White Cards */
+  --background: #F8FAFC;
+  --surface: #FFFFFF;
+  --surface-secondary: #F1F5F9;
+  --surface-hover: #E2E8F0;
+  --surface-2: #F8FAFC;
+  --surface-2-hover: #F1F5F9;
+  --border: #CBD5E1;
+  --border-strong: #94A3B8;
+  --border-hover: #0284C7;
 
-  --text-primary: #062C24;
-  --text-secondary: #164E43;
-  --text-muted: #4B6B64;
-  --text-disabled: #8A9E98;
+  --text-primary: #0F172A;
+  --text-secondary: #1E293B;
+  --text-muted: #334155;
+  --text-disabled: #64748B;
 
   --primary: #059669;
   --primary-hover: #047857;

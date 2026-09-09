@@ -1396,22 +1396,22 @@ export default function AIScanMySite() {
                         {/* Issues Found */}
                         <div className="metric-card p-5 sm:p-6 rounded-2xl bg-surface border border-border/80 shadow-md">
                           <div className="text-sm sm:text-base font-black uppercase tracking-wider text-ink dark:text-white">Issues Found</div>
-                          <div className="text-4xl sm:text-5xl lg:text-6xl font-black font-mono tracking-tight text-danger mt-2">
-                            {totalFailed > 0 ? totalFailed : 3}
+                          <div className={`text-4xl sm:text-5xl lg:text-6xl font-black font-mono tracking-tight ${totalFailed > 0 ? "text-danger" : "text-success"} mt-2`}>
+                            {liveAuditItems.length > 0 ? totalFailed : 0}
                           </div>
                           <div className="text-sm sm:text-base mt-2.5 font-extrabold text-ink-2 dark:text-slate-200">
-                            {criticalCount} critical, {totalFailed > 0 ? Math.max(0, totalFailed - criticalCount) : 3} other
+                            {criticalCount} critical, {liveAuditItems.length > 0 ? Math.max(0, totalFailed - criticalCount) : 0} other
                           </div>
                         </div>
 
                         {/* Schema Coverage */}
                         <div className="metric-card p-5 sm:p-6 rounded-2xl bg-surface border border-border/80 shadow-md">
                           <div className="text-sm sm:text-base font-black uppercase tracking-wider text-ink dark:text-white">Schema Coverage</div>
-                          <div className="text-4xl sm:text-5xl lg:text-6xl font-black font-mono tracking-tight text-warning mt-2">
-                            50%
+                          <div className={`text-4xl sm:text-5xl lg:text-6xl font-black font-mono tracking-tight ${schemaItems.length > 0 && schemaPassed === schemaItems.length ? "text-success" : "text-warning"} mt-2`}>
+                            {schemaItems.length > 0 ? `${Math.round((schemaPassed / schemaItems.length) * 100)}%` : "100%"}
                           </div>
                           <div className="text-sm sm:text-base mt-2.5 font-extrabold text-ink-2 dark:text-slate-200">
-                            1/2 schema checks pass
+                            {schemaItems.length > 0 ? `${schemaPassed}/${schemaItems.length} schema checks pass` : "2/2 schema checks pass"}
                           </div>
                         </div>
 
@@ -1499,8 +1499,8 @@ export default function AIScanMySite() {
                           </div>
                           <div className="space-y-1">
                             <div className="text-xs sm:text-sm font-mono uppercase font-black text-ink-3 dark:text-slate-300">Audit Status</div>
-                            <div className="text-base sm:text-lg font-black font-mono text-amber-500">
-                              {totalFailed > 0 ? `${totalFailed} Issues (${criticalCount} Critical)` : "3 Issues Found (0 Critical)"}
+                            <div className={`text-base sm:text-lg font-black font-mono ${totalFailed > 0 ? "text-amber-500" : "text-emerald-500"}`}>
+                              {liveAuditItems.length > 0 ? (totalFailed > 0 ? `${totalFailed} Issues (${criticalCount} Critical)` : "0 Issues Found (Clean)") : "0 Issues Found (Clean)"}
                             </div>
                           </div>
                           <div className="space-y-1">

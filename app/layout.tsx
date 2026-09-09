@@ -106,6 +106,13 @@ const faqJsonLd = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" data-theme="dark" suppressHydrationWarning className={inter.variable}>
+      <head>
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9283169427062874"
+          crossOrigin="anonymous"
+        />
+      </head>
       <body className="bg-background text-ink antialiased">
         <script
           type="application/ld+json"

@@ -50,11 +50,54 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
-    googleBot: { index: true, follow: true },
+    maxImagePreview: 'large',
+    maxSnippet: -1,
+    maxVideoPreview: -1,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+      'max-video-preview': -1,
+    },
   },
   alternates: {
     canonical: 'https://aiscanmysite.com',
+    types: {
+      'application/rss+xml': [{ url: 'https://aiscanmysite.com/feed.xml', title: 'AI Scan My Site RSS Feed' }],
+    },
   },
+};
+
+const organizationJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'AI Scan My Site',
+  alternateName: ['AIScanMySite', 'AIScanMySite.com'],
+  url: 'https://aiscanmysite.com',
+  logo: 'https://aiscanmysite.com/og-image.png',
+  description: 'Official AI SEO Checker & Technical Website Audit Platform.',
+  sameAs: [
+    'https://twitter.com/aiscanmysite',
+    'https://github.com/aiscanmysite'
+  ],
+  publishingPrinciples: 'https://aiscanmysite.com/blog',
+  knowsAbout: ['AI SEO', 'Answer Engine Optimization', 'Generative Engine Optimization', 'Page Speed Optimization', 'Schema Validation']
+};
+
+const websiteSchemaJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'AI Scan My Site',
+  url: 'https://aiscanmysite.com',
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: {
+      '@type': 'EntryPoint',
+      urlTemplate: 'https://aiscanmysite.com/?url={search_term_string}'
+    },
+    'query-input': 'required name=search_term_string'
+  }
 };
 
 const webAppJsonLd = {
@@ -107,6 +150,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" data-theme="dark" suppressHydrationWarning className={inter.variable}>
       <head>
+        <link rel="alternate" type="application/rss+xml" title="AI Scan My Site RSS Feed" href="https://aiscanmysite.com/feed.xml" />
         <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9283169427062874"
@@ -114,6 +158,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className="bg-background text-ink antialiased">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchemaJsonLd) }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppJsonLd) }}

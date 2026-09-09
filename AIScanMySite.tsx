@@ -812,6 +812,11 @@ export default function AIScanMySite() {
               </div>
             )}
 
+            <div className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full border border-blue-500/40 bg-blue-500/10 text-blue-400 text-xs font-bold font-mono shadow-sm">
+              <CheckCircle2 className="w-3.5 h-3.5 text-blue-400" />
+              <span>Google Preferred Source</span>
+            </div>
+
             {appState !== "HERO" && (
               <button 
                 onClick={() => setAppState("HERO")} 
@@ -2262,7 +2267,7 @@ export default function AIScanMySite() {
               </div>
             </div>
           </div>
-          <p className="text-center text-sm text-ink-3 mt-8">All plans include core AI visibility audit Â· No hidden fees Â· Cancel anytime</p>
+          <p className="text-center text-sm text-ink-3 mt-8">All plans include core AI visibility audit · No hidden fees · Cancel anytime</p>
         </div>
       </section>
 
@@ -2286,7 +2291,14 @@ export default function AIScanMySite() {
               <p className="text-xs text-ink-3 leading-relaxed max-w-sm">
                 Analyze the technical and content signals that affect your website's visibility across ChatGPT, Perplexity, Gemini, Claude, and AI search engines.
               </p>
-              <div className="flex items-center gap-3 text-xs text-ink-3 font-mono pt-2">
+
+              {/* GOOGLE PREFERRED SOURCE BADGE */}
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-mono font-bold w-fit shadow-sm">
+                <CheckCircle2 className="w-4 h-4 text-blue-400 shrink-0" />
+                <span>Official Google Preferred Source &amp; RSS Indexing</span>
+              </div>
+
+              <div className="flex items-center gap-3 text-xs text-ink-3 font-mono pt-1">
                 <a href="https://x.com/FounderKraft" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">X (Twitter)</a>
                 <span>·</span>
                 <a href="https://www.linkedin.com/in/ali-a-7b9a29428" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">LinkedIn</a>
@@ -2334,7 +2346,10 @@ export default function AIScanMySite() {
           </div>
 
           <div className="pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-mono">
-            <div>&copy; {new Date().getFullYear()} AI Scan My Site. All rights reserved.</div>
+            <div className="flex flex-wrap items-center gap-2">
+              <span>&copy; {new Date().getFullYear()} AI Scan My Site. All rights reserved.</span>
+              <span className="text-blue-400 font-bold hidden sm:inline">· Official Google Preferred Source</span>
+            </div>
             <div className="flex flex-wrap items-center gap-6">
               <button onClick={() => setIsTermsModalOpen(true)} className="hover:text-ink transition-colors underline decoration-border cursor-pointer">Terms of Service</button>
               <button onClick={() => setIsPrivacyModalOpen(true)} className="hover:text-ink transition-colors underline decoration-border cursor-pointer">Privacy Policy</button>

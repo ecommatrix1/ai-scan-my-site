@@ -71,7 +71,7 @@
 }
 
 [data-theme="dark"] {
-  /* DARK THEME — Deep Velvet Emerald Forest */
+  /* DARK THEME — Deep Cosmic Midnight */
   --background: #04100D;
   --surface: #0B201B;
   --surface-secondary: #122E28;
@@ -82,10 +82,10 @@
   --border-strong: #255447;
   --border-hover: #34D399;
 
-  --text-primary: #F0FDF4;
-  --text-secondary: #A7F3D0;
-  --text-muted: #6EE7B7;
-  --text-disabled: #34D399;
+  --text-primary: #FFFFFF;
+  --text-secondary: #E2E8F0;
+  --text-muted: #CBD5E1;
+  --text-disabled: #94A3B8;
 
   --primary: #10B981;
   --primary-hover: #34D399;

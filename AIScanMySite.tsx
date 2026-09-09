@@ -293,6 +293,11 @@ export default function AIScanMySite() {
   useEffect(() => {
     if (typeof document !== "undefined") {
       document.documentElement.setAttribute("data-theme", lightTheme ? "light" : "dark");
+      if (lightTheme) {
+        document.documentElement.classList.remove("dark");
+      } else {
+        document.documentElement.classList.add("dark");
+      }
       localStorage.setItem("theme", lightTheme ? "light" : "dark");
     }
   }, [lightTheme]);
@@ -1379,44 +1384,44 @@ export default function AIScanMySite() {
                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                         {/* Overall Score */}
                         <div className="metric-card p-5 sm:p-6 rounded-2xl bg-surface border border-border/80 shadow-md">
-                          <div className="text-sm sm:text-base font-black uppercase tracking-wider text-slate-900 dark:text-slate-100">Overall AI Score</div>
+                          <div className="text-sm sm:text-base font-black uppercase tracking-wider text-ink dark:text-white">Overall AI Score</div>
                           <div className={`text-4xl sm:text-5xl lg:text-6xl font-black font-mono tracking-tight ${computedOverall >= 80 ? "text-success" : computedOverall >= 60 ? "text-warning" : "text-danger"} mt-2`}>
                             {computedOverall} / 100
                           </div>
-                          <div className="text-sm sm:text-base mt-2.5 font-extrabold text-slate-800 dark:text-slate-200">
+                          <div className="text-sm sm:text-base mt-2.5 font-extrabold text-ink-2 dark:text-slate-200">
                             Status: {computedOverall >= 80 ? "Good" : computedOverall >= 60 ? "Needs Work" : "At Risk"}
                           </div>
                         </div>
 
                         {/* Issues Found */}
                         <div className="metric-card p-5 sm:p-6 rounded-2xl bg-surface border border-border/80 shadow-md">
-                          <div className="text-sm sm:text-base font-black uppercase tracking-wider text-slate-900 dark:text-slate-100">Issues Found</div>
+                          <div className="text-sm sm:text-base font-black uppercase tracking-wider text-ink dark:text-white">Issues Found</div>
                           <div className="text-4xl sm:text-5xl lg:text-6xl font-black font-mono tracking-tight text-danger mt-2">
-                            {totalFailed > 0 ? totalFailed : (liveAuditItems.length > 0 ? totalFailed : 3)}
+                            {totalFailed > 0 ? totalFailed : 3}
                           </div>
-                          <div className="text-sm sm:text-base mt-2.5 font-extrabold text-slate-800 dark:text-slate-200">
+                          <div className="text-sm sm:text-base mt-2.5 font-extrabold text-ink-2 dark:text-slate-200">
                             {criticalCount} critical, {totalFailed > 0 ? Math.max(0, totalFailed - criticalCount) : 3} other
                           </div>
                         </div>
 
                         {/* Schema Coverage */}
                         <div className="metric-card p-5 sm:p-6 rounded-2xl bg-surface border border-border/80 shadow-md">
-                          <div className="text-sm sm:text-base font-black uppercase tracking-wider text-slate-900 dark:text-slate-100">Schema Coverage</div>
+                          <div className="text-sm sm:text-base font-black uppercase tracking-wider text-ink dark:text-white">Schema Coverage</div>
                           <div className="text-4xl sm:text-5xl lg:text-6xl font-black font-mono tracking-tight text-warning mt-2">
                             50%
                           </div>
-                          <div className="text-sm sm:text-base mt-2.5 font-extrabold text-slate-800 dark:text-slate-200">
+                          <div className="text-sm sm:text-base mt-2.5 font-extrabold text-ink-2 dark:text-slate-200">
                             1/2 schema checks pass
                           </div>
                         </div>
 
                         {/* Image ALT Coverage */}
                         <div className="metric-card p-5 sm:p-6 rounded-2xl bg-surface border border-border/80 shadow-md">
-                          <div className="text-sm sm:text-base font-black uppercase tracking-wider text-slate-900 dark:text-slate-100">Image ALT Coverage</div>
+                          <div className="text-sm sm:text-base font-black uppercase tracking-wider text-ink dark:text-white">Image ALT Coverage</div>
                           <div className="text-4xl sm:text-5xl lg:text-6xl font-black font-mono tracking-tight text-success mt-2">
                             Good
                           </div>
-                          <div className="text-sm sm:text-base mt-2.5 font-extrabold text-slate-800 dark:text-slate-200">
+                          <div className="text-sm sm:text-base mt-2.5 font-extrabold text-ink-2 dark:text-slate-200">
                             Vision AI ALT Tag Coverage
                           </div>
                         </div>
@@ -1433,7 +1438,7 @@ export default function AIScanMySite() {
                           {/* SEO BAR */}
                           <div className="p-4 sm:p-5 rounded-xl border border-border bg-surface-2 space-y-2.5">
                             <div className="flex items-center justify-between">
-                              <span className="text-sm sm:text-base font-mono font-extrabold uppercase text-slate-900 dark:text-slate-100 flex items-center gap-2">
+                              <span className="text-sm sm:text-base font-mono font-extrabold uppercase text-ink dark:text-white flex items-center gap-2">
                                 <Search className="w-4 h-4 text-emerald-500" />
                                 <span>SEO (Traditional)</span>
                               </span>
@@ -1442,13 +1447,13 @@ export default function AIScanMySite() {
                             <div className="w-full bg-border/80 h-3 rounded-full overflow-hidden">
                               <div className="bg-emerald-500 h-full rounded-full transition-all duration-1000" style={{ width: `${computedSeo}%` }} />
                             </div>
-                            <p className="text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-300">Google & Bing title, canonical, and indexing rules.</p>
+                            <p className="text-xs sm:text-sm font-bold text-ink-3 dark:text-slate-300">Google & Bing title, canonical, and indexing rules.</p>
                           </div>
 
                           {/* AEO BAR */}
                           <div className="p-4 sm:p-5 rounded-xl border border-border bg-surface-2 space-y-2.5">
                             <div className="flex items-center justify-between">
-                              <span className="text-sm sm:text-base font-mono font-extrabold uppercase text-slate-900 dark:text-slate-100 flex items-center gap-2">
+                              <span className="text-sm sm:text-base font-mono font-extrabold uppercase text-ink dark:text-white flex items-center gap-2">
                                 <Bot className="w-4 h-4 text-rose-500" />
                                 <span>AEO (Answer Engines)</span>
                               </span>
@@ -1457,13 +1462,13 @@ export default function AIScanMySite() {
                             <div className="w-full bg-border/80 h-3 rounded-full overflow-hidden">
                               <div className="bg-rose-500 h-full rounded-full transition-all duration-1000" style={{ width: `${computedAeo}%` }} />
                             </div>
-                            <p className="text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-300">ChatGPT & Claude GPTBot permissions & llms.txt.</p>
+                            <p className="text-xs sm:text-sm font-bold text-ink-3 dark:text-slate-300">ChatGPT & Claude GPTBot permissions & llms.txt.</p>
                           </div>
 
                           {/* GEO BAR */}
                           <div className="p-4 sm:p-5 rounded-xl border border-border bg-surface-2 space-y-2.5">
                             <div className="flex items-center justify-between">
-                              <span className="text-sm sm:text-base font-mono font-extrabold uppercase text-slate-900 dark:text-slate-100 flex items-center gap-2">
+                              <span className="text-sm sm:text-base font-mono font-extrabold uppercase text-ink dark:text-white flex items-center gap-2">
                                 <Brain className="w-4 h-4 text-amber-500" />
                                 <span>GEO (Generative Search)</span>
                               </span>
@@ -1472,7 +1477,7 @@ export default function AIScanMySite() {
                             <div className="w-full bg-border/80 h-3 rounded-full overflow-hidden">
                               <div className="bg-amber-500 h-full rounded-full transition-all duration-1000" style={{ width: `${computedGeo}%` }} />
                             </div>
-                            <p className="text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-300">Google AI Overviews & Perplexity entity density.</p>
+                            <p className="text-xs sm:text-sm font-bold text-ink-3 dark:text-slate-300">Google AI Overviews & Perplexity entity density.</p>
                           </div>
                         </div>
                       </div>
@@ -1484,26 +1489,26 @@ export default function AIScanMySite() {
                             <Cpu className="w-4.5 h-4.5 text-accent" />
                             <span>PAGE STATS & TECHNICAL DISCOVERY</span>
                           </span>
-                          <span className="text-xs font-mono font-bold text-slate-800 dark:text-slate-200">LIVE DOMAIN AUDIT</span>
+                          <span className="text-xs font-mono font-bold text-ink-3 dark:text-slate-300">LIVE DOMAIN AUDIT</span>
                         </div>
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5">
                           <div className="space-y-1">
-                            <div className="text-xs sm:text-sm font-mono uppercase font-black text-slate-900 dark:text-slate-100">Target Domain</div>
-                            <div className="text-base sm:text-lg font-black font-mono text-slate-950 dark:text-slate-50 truncate">{cleanedDomain}</div>
+                            <div className="text-xs sm:text-sm font-mono uppercase font-black text-ink-3 dark:text-slate-300">Target Domain</div>
+                            <div className="text-base sm:text-lg font-black font-mono text-ink dark:text-white truncate">{cleanedDomain}</div>
                           </div>
                           <div className="space-y-1">
-                            <div className="text-xs sm:text-sm font-mono uppercase font-black text-slate-900 dark:text-slate-100">Audit Status</div>
+                            <div className="text-xs sm:text-sm font-mono uppercase font-black text-ink-3 dark:text-slate-300">Audit Status</div>
                             <div className="text-base sm:text-lg font-black font-mono text-amber-500">
                               {totalFailed > 0 ? `${totalFailed} Issues (${criticalCount} Critical)` : "3 Issues Found (0 Critical)"}
                             </div>
                           </div>
                           <div className="space-y-1">
-                            <div className="text-xs sm:text-sm font-mono uppercase font-black text-slate-900 dark:text-slate-100">Vision AI Alt Coverage</div>
+                            <div className="text-xs sm:text-sm font-mono uppercase font-black text-ink-3 dark:text-slate-300">Vision AI Alt Coverage</div>
                             <div className="text-base sm:text-lg font-black font-mono text-emerald-500">100% Passed</div>
                           </div>
                           <div className="space-y-1">
-                            <div className="text-xs sm:text-sm font-mono uppercase font-black text-slate-900 dark:text-slate-100">Schema Validity</div>
+                            <div className="text-xs sm:text-sm font-mono uppercase font-black text-ink-3 dark:text-slate-300">Schema Validity</div>
                             <div className="text-base sm:text-lg font-black font-mono text-amber-500">
                               {schemaItems.length > 0 ? `${schemaPassed}/${schemaItems.length} Pass` : "1/2 Pass"}
                             </div>
@@ -1512,7 +1517,7 @@ export default function AIScanMySite() {
 
                         {/* DETECTED JSON-LD SCHEMAS */}
                         <div className="pt-4 border-t border-border/60">
-                          <div className="text-xs sm:text-sm font-mono uppercase text-slate-900 dark:text-slate-100 font-black mb-2.5">Detected Knowledge Graph Schemas</div>
+                          <div className="text-xs sm:text-sm font-mono uppercase text-ink-3 dark:text-slate-300 font-black mb-2.5">Detected Knowledge Graph Schemas</div>
                           <div className="flex flex-wrap items-center gap-2">
                             {["WebSite", "Organization", "SoftwareApplication", "FAQPage", "BreadcrumbList", "ItemPage"].map((sch) => (
                               <span key={sch} className="px-3 py-1.5 rounded-lg bg-accent/15 border border-accent/30 text-accent text-xs font-mono font-bold">

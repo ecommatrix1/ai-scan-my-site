@@ -801,19 +801,19 @@ export default function AIScanMySite() {
             </button>
 
             {isUnlimitedPro ? (
-              <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full border border-emerald-500/40 bg-emerald-500/10 text-emerald-400 text-xs font-bold font-mono shadow-sm">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full border border-emerald-500/50 bg-emerald-500/15 text-emerald-900 dark:text-emerald-300 text-xs font-bold font-mono shadow-sm">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                 <span>⚡ Unlimited Pro Access Active</span>
               </div>
             ) : (
-              <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full border border-amber-500/40 bg-amber-500/10 text-amber-300 text-xs font-bold font-mono shadow-sm">
-                <Clock className="w-3.5 h-3.5 text-amber-400" />
+              <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full border border-amber-500/50 bg-amber-500/15 text-amber-950 dark:text-amber-300 text-xs font-bold font-mono shadow-sm">
+                <Clock className="w-3.5 h-3.5 text-amber-700 dark:text-amber-400" />
                 <span>{Math.max(0, 5 - dailyScansCount)} / 5 Free Scans Left Today</span>
               </div>
             )}
 
-            <div className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full border border-blue-500/40 bg-blue-500/10 text-blue-400 text-xs font-bold font-mono shadow-sm">
-              <CheckCircle2 className="w-3.5 h-3.5 text-blue-400" />
+            <div className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full border border-blue-500/50 bg-blue-500/15 text-blue-950 dark:text-blue-300 text-xs font-bold font-mono shadow-sm">
+              <CheckCircle2 className="w-3.5 h-3.5 text-blue-700 dark:text-blue-400" />
               <span>Google Preferred Source</span>
             </div>
 
@@ -1375,9 +1375,9 @@ export default function AIScanMySite() {
 
                 {(() => {
                   const computedOverall = liveScanScore !== null && liveScanScore > 0 ? liveScanScore : 89;
-                  const computedSeo = Math.min(98, Math.max(85, Math.round(computedOverall * 1.05)));
-                  const computedAeo = Math.min(95, Math.max(80, Math.round(computedOverall * 0.95)));
-                  const computedGeo = Math.min(92, Math.max(78, Math.round(computedOverall * 0.92)));
+                  const computedSeo = Math.min(98, Math.max(0, Math.round(computedOverall * 1.05)));
+                  const computedAeo = Math.min(95, Math.max(0, Math.round(computedOverall * 0.95)));
+                  const computedGeo = Math.min(92, Math.max(0, Math.round(computedOverall * 0.92)));
                   const criticalCount = liveAuditItems.filter(i => i.severity === "critical").length;
                   const totalFailed = liveAuditItems.filter(i => !i.passed).length;
                   const schemaItems = liveAuditItems.filter(i => i.category === "AEO Schema");
@@ -1413,10 +1413,10 @@ export default function AIScanMySite() {
                         <div className="metric-card p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-surface border border-border/80 shadow-md">
                           <div className="text-xs sm:text-base font-black uppercase tracking-wider text-slate-900 dark:text-white">Schema Coverage</div>
                           <div className={`text-3xl sm:text-5xl lg:text-6xl font-black font-mono tracking-tight ${schemaItems.length > 0 && schemaPassed === schemaItems.length ? "text-success" : "text-warning"} mt-1 sm:mt-2`}>
-                            {schemaItems.length > 0 ? `${Math.round((schemaPassed / schemaItems.length) * 100)}%` : "100%"}
+                            {schemaItems.length > 0 ? `${Math.round((schemaPassed / schemaItems.length) * 100)}%` : "0%"}
                           </div>
                           <div className="text-xs sm:text-base mt-1.5 sm:mt-2.5 font-extrabold text-slate-900 dark:text-slate-100">
-                            {schemaItems.length > 0 ? `${schemaPassed}/${schemaItems.length} schema checks pass` : "2/2 schema checks pass"}
+                            {schemaItems.length > 0 ? `${schemaPassed}/${schemaItems.length} schema checks pass` : "0/2 schema checks pass"}
                           </div>
                         </div>
 

@@ -150,11 +150,25 @@ async function probe(initialUrl: string, timeoutMs = 8000): Promise<PageProbe> {
         return { url: initialUrl, ok: false, status: 0, contentType: "", body: "", headers: {}, finalUrl: currentUrl };
       }
 
-      const res = await fetch(currentUrl, {
+      let res = await fetch(currentUrl, {
         redirect: "manual",
         signal: controller.signal,
         headers: { "User-Agent": "AI-Scan-MySite/1.0 (+https://aiscanmysite.com)" },
       });
+
+      // If WAF blocks custom bot user-agent (403/401), retry with standard browser user-agent
+      if (res.status === 403 || res.status === 401) {
+        try {
+          res = await fetch(currentUrl, {
+            redirect: "manual",
+            signal: controller.signal,
+            headers: { 
+              "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
+              "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
+            },
+          });
+        } catch {}
+      }
 
       // Handle Redirects Manually (301, 302, 303, 307, 308)
       if ([301, 302, 303, 307, 308].includes(res.status)) {

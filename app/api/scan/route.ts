@@ -144,8 +144,8 @@ export async function POST(request: NextRequest) {
     }
 
     // Option A Balanced Score Breakdown: 40% AI Readiness, 40% SEO & Search Metadata, 20% Technical Security
-    const aiCheckIds = new Set(['robots-ai-bots', 'llms-txt', 'schema-jsonld', 'structured-content', 'faq-schema']);
-    const secCheckIds = new Set(['security-headers', 'ssl-certificate']);
+    const aiCheckIds = new Set(['robots-ai-bots', 'llms-txt', 'schema-jsonld', 'structured-content', 'faq-schema', 'schema-org-general', 'schema-org-faq']);
+    const secCheckIds = new Set(['security-headers', 'ssl-certificate', 'security-headers-hsts', 'https-enforcement']);
 
     const aiChecks = results.filter(r => aiCheckIds.has(r.id));
     const secChecks = results.filter(r => secCheckIds.has(r.id));
@@ -153,7 +153,7 @@ export async function POST(request: NextRequest) {
 
     const calcCategoryScore = (checks: typeof results): number => {
       const totalWeight = checks.reduce((sum, r) => sum + r.weight, 0);
-      if (totalWeight === 0) return 1.0;
+      if (totalWeight === 0) return 0;
       const passedWeight = checks.filter(r => r.passed).reduce((sum, r) => sum + r.weight, 0);
       return passedWeight / totalWeight;
     };

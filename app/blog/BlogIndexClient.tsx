@@ -3,11 +3,20 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { Bot, Zap, ArrowRight, Clock, BookOpen, Sun, Moon } from "lucide-react";
+import { GooglePreferredTrustBlock } from "@/components/GooglePreferredTrustBlock";
 
 export default function BlogIndexClient() {
   const [lightTheme, setLightTheme] = useState(false);
 
   const articles = [
+    {
+      slug: "ai-search-optimization-beginners",
+      title: "AI Search Optimization for Beginners: Rank in ChatGPT, Claude & SearchGPT",
+      desc: "Master Answer Engine Optimization (AEO) and Generative Engine Optimization (GEO). Complete beginner guide with first-party proof and zero fluff.",
+      category: "Featured Pillar Guide",
+      readTime: "12 min read",
+      date: "Sept 10, 2026"
+    },
     {
       slug: "how-to-check-if-website-visible-to-chatgpt",
       title: "How to Check If Your Website Is Visible to ChatGPT (5-Minute Guide)",
@@ -149,6 +158,11 @@ export default function BlogIndexClient() {
         <p className="text-lg sm:text-xl text-ink-2 max-w-3xl mx-auto leading-relaxed mb-8">
           Guides, tutorials, and technical insights on optimizing your website for ChatGPT, Gemini, Perplexity, and Google AI Overviews.
         </p>
+
+        {/* OFFICIAL GOOGLE PREFERRED SOURCE TRUST BLOCK */}
+        <div className="max-w-3xl mx-auto text-left">
+          <GooglePreferredTrustBlock />
+        </div>
       </section>
 
       {/* ARTICLES GRID */}

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
@@ -29,7 +29,22 @@ export default function AEOCheckerClient() {
   const [urlInput, setUrlInput] = useState("");
   const [inputError, setInputError] = useState("");
   const [openFaq, setOpenFaq] = useState<number | null>(0);
-  const [lightTheme, setLightTheme] = useState(false);
+  const [lightTheme, setLightTheme] = useState<boolean>(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("theme");
+      return saved ? saved === "light" : false;
+    }
+    return false;
+  });
+
+  useEffect(() => {
+    if (typeof document !== "undefined") {
+      document.documentElement.setAttribute("data-theme", lightTheme ? "light" : "dark");
+      if (lightTheme) document.documentElement.classList.remove("dark");
+      else document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", lightTheme ? "light" : "dark");
+    }
+  }, [lightTheme]);
 
   const handleStartScan = (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,7 +53,11 @@ export default function AEOCheckerClient() {
       setInputError("Please enter a website URL to run your free AEO check.");
       return;
     }
-    router.push(`/?url=${encodeURIComponent(rawUrl)}`);
+    const themeStr = lightTheme ? "light" : "dark";
+    if (typeof window !== "undefined") {
+      localStorage.setItem("theme", themeStr);
+    }
+    router.push(`/?url=${encodeURIComponent(rawUrl)}&theme=${themeStr}&tool=aeo&autostart=true`);
   };
 
   const faqs = [

@@ -8,13 +8,23 @@ import { Bot, Globe, ArrowRight, Zap, Clock, Sun, Moon, Cpu } from "lucide-react
 export default function ArticleClient() {
   const router = useRouter();
   const [urlInput, setUrlInput] = useState("");
-  const [lightTheme, setLightTheme] = useState(false);
+  const [lightTheme, setLightTheme] = useState<boolean>(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("theme");
+      return saved ? saved === "light" : false;
+    }
+    return false;
+  });
 
   const handleStartScan = (e: React.FormEvent) => {
     e.preventDefault();
     const rawUrl = urlInput.trim();
     if (!rawUrl) return;
-    router.push(`/?url=${encodeURIComponent(rawUrl)}`);
+    const themeStr = lightTheme ? "light" : "dark";
+    if (typeof window !== "undefined") {
+      localStorage.setItem("theme", themeStr);
+    }
+    router.push(`/?url=${encodeURIComponent(rawUrl)}&theme=${themeStr}&autostart=true`);
   };
 
   return (

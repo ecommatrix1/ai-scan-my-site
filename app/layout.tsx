@@ -19,8 +19,13 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: 'AI SEO Checker & Free Website Audit Tool | AI Scan My Site',
-  description: 'Run a free AI SEO audit to check website SEO, page speed, technical health, and AI search visibility for ChatGPT, Gemini & Google. Get instant fix guides.',
+  title: 'AI SEO Audit Tool: AEO, GEO & AI Crawlability Checker | AI Scan My Site',
+  description: 'Free AI readiness audit for ChatGPT, Gemini & Perplexity. Check AI bot crawlability, generate llms.txt, audit schema & boost AEO instantly.',
+  icons: {
+    icon: '/favicon.svg',
+    shortcut: '/favicon.svg',
+    apple: '/favicon.svg',
+  },
   keywords: [
     'AI SEO Checker',
     'free seo audit',
@@ -160,7 +165,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" data-theme="dark" suppressHydrationWarning className={inter.variable}>
       <head>
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="apple-touch-icon" href="/favicon.svg" />
         <link rel="alternate" type="application/rss+xml" title="AI Scan My Site RSS Feed" href="https://aiscanmysite.com/feed.xml" />
+        <script async src="https://news.google.com/swg/js/v1/publisher.js" />
         <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9283169427062874"

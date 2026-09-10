@@ -6,7 +6,7 @@ import * as cheerio from 'cheerio';
 // Simple in-memory rate limiter: max 3 scans per minute per IP
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
 const RATE_LIMIT_WINDOW_MS = 60_000;
-const RATE_LIMIT_MAX = 3;
+const RATE_LIMIT_MAX = 30;
 
 function checkRateLimit(ip: string): boolean {
   const now = Date.now();

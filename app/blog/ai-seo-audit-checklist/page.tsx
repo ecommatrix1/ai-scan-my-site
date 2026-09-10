@@ -358,7 +358,7 @@ export default function AISEOAuditChecklistArticle() {
               5. Generative Engine Optimization / GEO (6 Points)
             </h2>
             <p>
-              Generative Engine Optimization (GEO) focuses on building entity authority so generative AI search overviews cite your brand as an authoritative source.
+              Generative Engine Optimization (GEO) focuses on building entity authority to increase the likelihood that generative AI search overviews cite your brand as an authoritative source.
             </p>
             <ul className="space-y-3 font-normal text-slate-200 pl-2">
               <li className="p-3 rounded-xl bg-slate-900/50 border border-slate-800">
@@ -439,6 +439,13 @@ export default function AISEOAuditChecklistArticle() {
               <li><strong className="text-white">Limitations:</strong> <code>llms.txt</code> is an informational context feed—it does <strong>not</strong> override <code>robots.txt</code> block rules or guarantee indexing.</li>
               <li><strong className="text-white">Validation:</strong> Test markdown formatting to ensure links are absolute and syntactically clean. Generate your manifest using our free <Link href="/llms-txt-generator" className="text-emerald-400 underline">llms.txt Generator</Link>.</li>
             </ul>
+
+            <div className="p-4 rounded-xl bg-amber-950/40 border border-amber-600/30 text-xs text-slate-300 mb-6">
+              <strong className="text-amber-400 font-bold block mb-2">⚠️ Critical: llms.txt Does NOT Guarantee AI Citations</strong>
+              <p>
+                llms.txt is a <strong>voluntary opt-in informational feed</strong>. It does <strong>not</strong> guarantee that ChatGPT, Claude, Perplexity, Gemini, or other AI platforms will cite, index, or link to your website. It is not an automated ranking signal or citation mechanism. Treat it as documentation for LLM context optimization, not a substitute for content quality, backlinks, or traditional SEO.
+              </p>
+            </div>
           </section>
 
           {/* SECTION 8: AGENTS.JSON PROTOCOL */}

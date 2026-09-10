@@ -688,7 +688,7 @@ export default function AIScanMySite() {
     <div className={`min-h-screen font-sans transition-colors duration-300 antialiased ${!lightTheme ? "bg-cosmic-space bg-cosmic-grid text-white" : ""}`}>
       {/* TOP PROMO BANNER */}
       <div className="bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-600 border-b border-indigo-700/50 py-2 px-4 text-center z-50 relative">
-        <div className="max-w-7xl mx-auto flex items-center justify-center gap-2 text-xs sm:text-sm font-bold text-white tracking-wide">
+        <div className="max-w-[1600px] mx-auto flex items-center justify-center gap-2 text-xs sm:text-sm font-bold text-white tracking-wide">
           <Sparkles className="w-4 h-4 text-amber-300 animate-pulse shrink-0" />
           <span>⚡ LAUNCH OFFER: USE PROMO CODE <strong className="bg-white/20 px-2 py-0.5 rounded font-mono text-amber-200">"FREEPRO"</strong> FOR 100% FREE PRO ACCESS & UNLIMITED AUDITS!</span>
           <Sparkles className="w-4 h-4 text-amber-300 animate-pulse shrink-0" />
@@ -697,7 +697,7 @@ export default function AIScanMySite() {
 
       {/* TOP NAVIGATION BAR */}
       <header className="sticky top-0 z-40 backdrop-blur-xl border-b border-border bg-surface/95 shadow-sm transition-all duration-300">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
           {/* Logo */}
           <div onClick={() => setAppState("HERO")} className="flex items-center gap-3 cursor-pointer group shrink-0">
             <div className="w-10 h-10 rounded-xl bg-accent p-0.5 shadow-lg shadow-accent/20 group-hover:scale-105 transition-transform">
@@ -833,7 +833,7 @@ export default function AIScanMySite() {
       </header>
 
       {/* MAIN CONTENT AREA */}
-      <main className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+      <main className="relative z-10 max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
         <AnimatePresence mode="wait">
           {/* STATE 1: HERO */}
           {appState === "HERO" && (
@@ -2311,7 +2311,7 @@ export default function AIScanMySite() {
 
       {/* FOOTER */}
       <footer className="relative z-10 border-t border-border bg-surface py-12 text-sm text-ink-3">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
             
             {/* Col 1: Brand & Tagline */}

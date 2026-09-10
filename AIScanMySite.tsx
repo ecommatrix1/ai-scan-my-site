@@ -350,6 +350,8 @@ export default function AIScanMySite() {
     return false;
   });
 
+  const [heroEmailInput, setHeroEmailInput] = useState("");
+
   const [dailyScansCount, setDailyScansCount] = useState<number>(() => {
     if (typeof window !== "undefined") {
       const today = new Date().toDateString();
@@ -865,6 +867,42 @@ export default function AIScanMySite() {
                     </div>
                   </div>
                   {inputError && <p className="mt-2 text-sm text-danger font-mono pl-4">{inputError}</p>}
+
+                  {/* PROMO CODE FREEPRO UNLOCK BOX */}
+                  <div id="pro-email" className="mt-4 p-4 rounded-xl border border-emerald-500/50 bg-emerald-500/10 backdrop-blur-sm shadow-md">
+                    <div className="flex items-center gap-2 text-xs font-mono font-bold text-emerald-800 dark:text-emerald-300 mb-2">
+                      <Sparkles className="w-4 h-4 text-emerald-500 animate-pulse" />
+                      <span>Apply Promo Code <span className="underline decoration-emerald-400 font-extrabold">FREEPRO</span> for 100% Free Unlimited Scans</span>
+                    </div>
+                    {isUnlimitedPro ? (
+                      <div className="flex items-center gap-2 text-xs font-mono font-bold text-emerald-700 dark:text-emerald-400">
+                        <CheckCircle2 className="w-4 h-4" />
+                        <span>⚡ Promo Code FREEPRO Active — Unlimited Audits Unlocked!</span>
+                      </div>
+                    ) : (
+                      <form onSubmit={(e) => { e.preventDefault(); if (heroEmailInput.includes("@")) { unlockUnlimitedPro(heroEmailInput); setInputError(""); } }} className="flex flex-col sm:flex-row items-center gap-2">
+                        <input 
+                          type="email" 
+                          required
+                          value={heroEmailInput} 
+                          onChange={(e) => setHeroEmailInput(e.target.value)} 
+                          placeholder="Enter your email" 
+                          className="input flex-1 bg-surface border border-border rounded-xl text-xs py-2.5 px-3 text-ink font-mono focus:ring-2 focus:ring-emerald-500/50" 
+                        />
+                        <div className="flex items-center gap-2 w-full sm:w-auto">
+                          <input 
+                            type="text" 
+                            readOnly
+                            value="FREEPRO" 
+                            className="w-24 bg-emerald-500/20 border border-emerald-500/50 text-emerald-800 dark:text-emerald-300 text-center rounded-xl text-xs font-mono font-black py-2.5 px-2" 
+                          />
+                          <button type="submit" className="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-md transition-all flex-1 sm:flex-none">
+                            Apply ⚡
+                          </button>
+                        </div>
+                      </form>
+                    )}
+                  </div>
                 </motion.form>
 
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }} className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-4 w-full">

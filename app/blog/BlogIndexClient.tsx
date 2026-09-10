@@ -10,6 +10,14 @@ export default function BlogIndexClient() {
 
   const articles = [
     {
+      slug: "ai-seo-audit-checklist",
+      title: "AI SEO Audit Checklist: 50+ Things to Check for Google, ChatGPT & AI Search",
+      desc: "Complete 50-point AI SEO audit checklist for 2026. Audit technical SEO, AI crawler accessibility, AEO, GEO, structured data, llms.txt, and agents.json.",
+      category: "Primary Supporting Pillar",
+      readTime: "15 min read",
+      date: "Sept 10, 2026"
+    },
+    {
       slug: "ai-search-optimization-beginners",
       title: "AI Search Optimization for Beginners: Rank in ChatGPT, Claude & SearchGPT",
       desc: "Master Answer Engine Optimization (AEO) and Generative Engine Optimization (GEO). Complete beginner guide with first-party proof and zero fluff.",

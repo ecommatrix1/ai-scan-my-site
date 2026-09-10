@@ -39,6 +39,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
+      url: 'https://aiscanmysite.com/blog/ai-seo-audit-checklist',
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
       url: 'https://aiscanmysite.com/blog/why-isnt-my-website-showing-up-in-chatgpt',
       lastModified: new Date(),
       changeFrequency: 'weekly',

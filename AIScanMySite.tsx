@@ -1057,8 +1057,8 @@ export default function AIScanMySite() {
                 </motion.div>
 
                 <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="text-5xl sm:text-6xl font-heading font-extrabold tracking-tight leading-[1.1] mb-6 text-ink">
-                  Instant AI SEO Checker &<br />
-                  <span className="text-accent">Free Website Audit Tool</span>
+                  Free AI SEO Audit &amp;<br />
+                  <span className="text-accent">Website Checker</span>
                 </motion.h1>
 
                 <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="text-lg sm:text-xl font-normal leading-relaxed mb-10 text-ink-2">
@@ -2520,20 +2520,40 @@ export default function AIScanMySite() {
             </div>
           </div>
           {/* FAQ */}
-          <div id="faq" className="mt-20 border-t border-border pt-16 max-w-3xl mx-auto text-left">
-            <h3 className="text-xl font-heading font-bold text-ink mb-6">Frequently Asked Questions</h3>
-            <div className="space-y-6 text-sm text-ink-2">
-              <div>
-                <h4 className="font-semibold text-ink">What is an AI website readiness audit?</h4>
-                <p className="mt-1.5 leading-relaxed text-ink-3">An AI website readiness audit checks if your website is optimized for AI search agents and answer engines like ChatGPT Search, Perplexity, Gemini, and ClaudeBot. We scan your website robots.txt rules, check for the emerging standard llms.txt context specifications, validate JSON-LD structured schema schemas, and audit image vision ALT tags.</p>
+          <div id="faq" className="mt-20 border-t border-border pt-16 max-w-4xl mx-auto text-left">
+            <h3 className="text-2xl font-heading font-extrabold text-ink mb-8 text-center sm:text-left">Frequently Asked Questions</h3>
+            <div className="grid md:grid-cols-2 gap-6 text-sm text-ink-2">
+              <div className="p-4 rounded-xl border border-border bg-surface">
+                <h4 className="font-bold text-ink text-base mb-1.5">1. What is an AI SEO audit?</h4>
+                <p className="text-xs leading-relaxed text-ink-3">An AI SEO audit evaluates how effectively search engines and artificial intelligence platforms (such as ChatGPT Search, Perplexity, Google Gemini, and Claude) can crawl, render, interpret, and cite your website alongside traditional Google search crawlers.</p>
               </div>
-              <div>
-                <h4 className="font-semibold text-ink">Why do I need a schema.org validation?</h4>
-                <p className="mt-1.5 leading-relaxed text-ink-3">Structured data (JSON-LD) enables search models to correctly interpret details about your application, pricing structures, products, and services. Without incomplete structured data schemas, AI search bots might make wrong assumptions or omit your platform entirely when presenting query answers to prospective customers.</p>
+              <div className="p-4 rounded-xl border border-border bg-surface">
+                <h4 className="font-bold text-ink text-base mb-1.5">2. Is AI Scan My Site free?</h4>
+                <p className="text-xs leading-relaxed text-ink-3">Yes, AI Scan My Site offers 5 free website audits every day with zero credit card required. You can also claim free unlimited scans using promo code FREEPRO.</p>
               </div>
-              <div>
-                <h4 className="font-semibold text-ink">What is the purpose of the llms.txt standard?</h4>
-                <p className="mt-1.5 leading-relaxed text-ink-3">The llms.txt standard provides clean markdown context pages specifically optimized for LLM crawlers. By serving structured information in a lightweight format, you make it significantly easier for AI indexing engines to understand the exact scope and functionality of your site.</p>
+              <div className="p-4 rounded-xl border border-border bg-surface">
+                <h4 className="font-bold text-ink text-base mb-1.5">3. What does an AI SEO audit check?</h4>
+                <p className="text-xs leading-relaxed text-ink-3">It inspects AI bot permissions in robots.txt (GPTBot, PerplexityBot, ClaudeBot), checks for llms.txt context manifests, verifies JSON-LD schema entity graphs, audits vision AI alt text, and evaluates PageSpeed Core Web Vitals.</p>
+              </div>
+              <div className="p-4 rounded-xl border border-border bg-surface">
+                <h4 className="font-bold text-ink text-base mb-1.5">4. How is AI Scan My Site different from PageSpeed Insights?</h4>
+                <p className="text-xs leading-relaxed text-ink-3">Google PageSpeed Insights focuses on frontend performance metrics (LCP, CLS, INP). AI Scan My Site integrates official PageSpeed performance data with dedicated AI bot crawlability, Answer Engine Optimization (AEO), and Generative Engine Optimization (GEO).</p>
+              </div>
+              <div className="p-4 rounded-xl border border-border bg-surface">
+                <h4 className="font-bold text-ink text-base mb-1.5">5. What is AEO?</h4>
+                <p className="text-xs leading-relaxed text-ink-3">Answer Engine Optimization (AEO) is the practice of optimizing content, direct answers, and FAQ schemas for conversational voice assistants and AI answer engines like ChatGPT and Perplexity.</p>
+              </div>
+              <div className="p-4 rounded-xl border border-border bg-surface">
+                <h4 className="font-bold text-ink text-base mb-1.5">6. What is GEO?</h4>
+                <p className="text-xs leading-relaxed text-ink-3">Generative Engine Optimization (GEO) ensures your brand entities, structured schemas, vector context, and authoritative citations are recognized across LLM search indexes and AI overviews.</p>
+              </div>
+              <div className="p-4 rounded-xl border border-border bg-surface">
+                <h4 className="font-bold text-ink text-base mb-1.5">7. Can AI Scan My Site check AI crawler accessibility?</h4>
+                <p className="text-xs leading-relaxed text-ink-3">Yes. Our scanner checks whether AI user-agents (including GPTBot, ChatGPT-User, PerplexityBot, ClaudeBot, and Google-Extended) are allowed or blocked in your robots.txt configuration.</p>
+              </div>
+              <div className="p-4 rounded-xl border border-border bg-surface">
+                <h4 className="font-bold text-ink text-base mb-1.5">8. What is llms.txt?</h4>
+                <p className="text-xs leading-relaxed text-ink-3">llms.txt is an emerging web standard that provides clean markdown context summaries of your website's key pages, purpose, and APIs specifically formatted for Large Language Model indexing.</p>
               </div>
             </div>
           </div>
@@ -2869,7 +2889,7 @@ export default function AIScanMySite() {
             </div>
 
             {/* 8K COMPETITOR COMPARISON GRID MOCKUP */}
-            <div className="pt-6">
+            <div className="pt-6 space-y-8">
               <div className="p-3 rounded-3xl bg-surface border-2 border-accent/40 shadow-2xl space-y-3">
                 <div className="flex items-center justify-between border-b border-border pb-2 px-2">
                   <span className="text-xs font-mono font-bold text-ink">Figure 6.1: AI Scan My Site vs. Legacy SEO Tools Grid</span>
@@ -2887,6 +2907,81 @@ export default function AIScanMySite() {
                   <strong>Figure 6.1:</strong> Multi-tool comparison matrix displaying dedicated AI bot permissions, llms.txt context generators, and instant schema fixes vs. legacy desktop crawlers.
                 </p>
               </div>
+
+              {/* PAGESPEED INSIGHTS VS AI SCAN MY SITE COMPARISON TABLE */}
+              <div className="pt-4">
+                <h3 className="text-xl font-heading font-bold text-ink mb-4">
+                  Feature Comparison: PageSpeed Insights vs. AI Scan My Site
+                </h3>
+                <div className="overflow-x-auto rounded-2xl border border-border bg-surface shadow-xl scrollbar-thin">
+                  <table className="w-full text-left text-xs border-collapse">
+                    <thead>
+                      <tr className="bg-surface-2 border-b border-border text-ink font-mono font-bold uppercase tracking-wider">
+                        <th className="p-3.5">Diagnostic Dimension</th>
+                        <th className="p-3.5">Google PageSpeed Insights</th>
+                        <th className="p-3.5 text-accent">AI Scan My Site</th>
+                        <th className="p-3.5">Traditional SEO Crawlers</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-border text-ink-2">
+                      <tr>
+                        <td className="p-3.5 font-bold text-ink">Page Performance &amp; Load Speed</td>
+                        <td className="p-3.5 text-success font-semibold">Primary Focus (Lighthouse API)</td>
+                        <td className="p-3.5 text-success font-bold">Included (Official PSI API)</td>
+                        <td className="p-3.5">Basic HTML Load Time</td>
+                      </tr>
+                      <tr>
+                        <td className="p-3.5 font-bold text-ink">Core Web Vitals (LCP, CLS, INP)</td>
+                        <td className="p-3.5 text-success font-semibold">Primary Focus</td>
+                        <td className="p-3.5 text-success font-bold">Included</td>
+                        <td className="p-3.5">Limited / External API required</td>
+                      </tr>
+                      <tr>
+                        <td className="p-3.5 font-bold text-ink">Technical SEO (Canonical, Robots, Sitemap)</td>
+                        <td className="p-3.5">Basic Audits</td>
+                        <td className="p-3.5 text-success font-bold">Included (Deep Inspection)</td>
+                        <td className="p-3.5 text-success font-semibold">Primary Focus</td>
+                      </tr>
+                      <tr>
+                        <td className="p-3.5 font-bold text-ink">AI Crawler Accessibility (GPTBot, PerplexityBot)</td>
+                        <td className="p-3.5 text-ink-3">Not Evaluated</td>
+                        <td className="p-3.5 text-success font-bold">Dedicated Audit &amp; Rules Check</td>
+                        <td className="p-3.5 text-ink-3">Not Evaluated</td>
+                      </tr>
+                      <tr>
+                        <td className="p-3.5 font-bold text-ink">Answer Engine Optimization (AEO)</td>
+                        <td className="p-3.5 text-ink-3">Not Evaluated</td>
+                        <td className="p-3.5 text-success font-bold">Dedicated AEO Grader</td>
+                        <td className="p-3.5 text-ink-3">Not Evaluated</td>
+                      </tr>
+                      <tr>
+                        <td className="p-3.5 font-bold text-ink">Generative Engine Optimization (GEO)</td>
+                        <td className="p-3.5 text-ink-3">Not Evaluated</td>
+                        <td className="p-3.5 text-success font-bold">Dedicated GEO Entity Grader</td>
+                        <td className="p-3.5 text-ink-3">Not Evaluated</td>
+                      </tr>
+                      <tr>
+                        <td className="p-3.5 font-bold text-ink">AI Search Readiness &amp; Citation Score</td>
+                        <td className="p-3.5 text-ink-3">Not Evaluated</td>
+                        <td className="p-3.5 text-success font-bold">Included (0-100% Score)</td>
+                        <td className="p-3.5 text-ink-3">Not Evaluated</td>
+                      </tr>
+                      <tr>
+                        <td className="p-3.5 font-bold text-ink">Schema.org JSON-LD Validation</td>
+                        <td className="p-3.5">Basic Structured Data Audit</td>
+                        <td className="p-3.5 text-success font-bold">Included + Auto Fix Code Generator</td>
+                        <td className="p-3.5">Basic Markup Check</td>
+                      </tr>
+                      <tr>
+                        <td className="p-3.5 font-bold text-ink">llms.txt &amp; agents.json Manifest Generator</td>
+                        <td className="p-3.5 text-ink-3">Not Evaluated</td>
+                        <td className="p-3.5 text-success font-bold">Instant 1-Click Code Builder</td>
+                        <td className="p-3.5 text-ink-3">Not Evaluated</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -2903,20 +2998,20 @@ export default function AIScanMySite() {
             <div className="p-6 rounded-2xl bg-gradient-to-r from-accent/20 via-surface to-accent/10 border-2 border-accent/40 shadow-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
               <div className="space-y-2 max-w-2xl">
                 <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent-weak border border-accent/40 text-accent text-xs font-mono font-bold">
-                  ★ Featured Pillar Article
+                  ★ Master Technical Pillar Article
                 </div>
                 <h3 className="text-xl sm:text-2xl font-heading font-bold text-ink">
-                  AI Search Optimization for Beginners: Rank in ChatGPT, Claude &amp; Beyond
+                  AI SEO Audit Checklist: 50+ Things to Check for Google, ChatGPT &amp; Perplexity
                 </h3>
                 <p className="text-xs sm:text-sm text-ink-3 leading-relaxed">
-                  Learn how AI engines crawl, retrieve, rerank, and cite web pages. Complete 2026 guide with first-party proof and zero fluff.
+                  Complete technical SEO, AI crawler access, AEO, GEO, schema markup, and llms.txt context audit guide.
                 </p>
               </div>
               <a
-                href="/blog/ai-search-optimization-beginners"
+                href="/blog/ai-seo-audit-checklist"
                 className="btn-primary py-3 px-6 text-sm font-bold shrink-0 shadow-lg hover:scale-105 transition-all"
               >
-                Read Complete Guide →
+                Read 50-Point Checklist →
               </a>
             </div>
           </div>
@@ -2972,7 +3067,7 @@ export default function AIScanMySite() {
             <div className="space-y-3">
               <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-ink">Articles & Guides</h4>
               <ul className="space-y-2 text-xs">
-                <li><a href="/blog" className="font-bold text-accent hover:underline">All Articles & Guides →</a></li>
+                <li><a href="/blog/ai-seo-audit-checklist" className="font-bold text-accent hover:underline">AI SEO Audit Checklist (2026) →</a></li>
                 <li><a href="/blog/why-isnt-my-website-showing-up-in-chatgpt" className="hover:text-accent transition-colors">Why Isn't My Site in ChatGPT?</a></li>
                 <li><a href="/blog/is-your-website-visible-to-chatgpt-how-to-check" className="hover:text-accent transition-colors">Is Your Site Visible to ChatGPT?</a></li>
                 <li><a href="/blog/what-is-aeo-answer-engine-optimization" className="hover:text-accent transition-colors">What is AEO?</a></li>

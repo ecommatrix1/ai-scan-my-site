@@ -94,6 +94,30 @@ const articleJsonLd = {
         },
       ],
     },
+    {
+      '@type': 'BreadcrumbList',
+      '@id': 'https://aiscanmysite.com/blog/ai-seo-audit-checklist#breadcrumb',
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: 'Home',
+          item: 'https://aiscanmysite.com',
+        },
+        {
+          '@type': 'ListItem',
+          position: 2,
+          name: 'Blog',
+          item: 'https://aiscanmysite.com/blog',
+        },
+        {
+          '@type': 'ListItem',
+          position: 3,
+          name: 'AI SEO Audit Checklist',
+          item: 'https://aiscanmysite.com/blog/ai-seo-audit-checklist',
+        },
+      ],
+    },
   ],
 };
 
@@ -463,19 +487,40 @@ export default function AISEOAuditChecklistArticle() {
 
         {/* Supporting Cluster Internal Navigation */}
         <div className="mt-16 pt-8 border-t border-emerald-900/40 space-y-4">
-          <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-400">Related Topical Cluster Guides:</h3>
-          <div className="grid sm:grid-cols-2 gap-3 text-xs">
+          <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-400">Complete AI SEO Cluster Articles &amp; Guides:</h3>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 text-xs">
             <Link href="/blog/ai-search-optimization-beginners" className="p-3 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-emerald-500/40 text-slate-300 hover:text-emerald-400 transition-all">
-              ← AI Search Optimization for Beginners
+              AI Search Optimization for Beginners
+            </Link>
+            <Link href="/blog/ai-seo-vs-traditional-seo" className="p-3 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-emerald-500/40 text-slate-300 hover:text-emerald-400 transition-all">
+              AI SEO vs. Traditional SEO
+            </Link>
+            <Link href="/blog/can-ai-crawlers-read-javascript-websites" className="p-3 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-emerald-500/40 text-slate-300 hover:text-emerald-400 transition-all">
+              Can AI Crawlers Read JavaScript Websites?
             </Link>
             <Link href="/blog/what-is-aeo-answer-engine-optimization" className="p-3 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-emerald-500/40 text-slate-300 hover:text-emerald-400 transition-all">
-              What is Answer Engine Optimization (AEO)? →
+              What is Answer Engine Optimization (AEO)?
             </Link>
             <Link href="/blog/what-is-geo-generative-engine-optimization" className="p-3 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-emerald-500/40 text-slate-300 hover:text-emerald-400 transition-all">
-              What is Generative Engine Optimization (GEO)? →
+              What is Generative Engine Optimization (GEO)?
             </Link>
             <Link href="/blog/does-robotstxt-block-chatgpt" className="p-3 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-emerald-500/40 text-slate-300 hover:text-emerald-400 transition-all">
-              Does robots.txt Block ChatGPT? →
+              Does robots.txt Block ChatGPT?
+            </Link>
+            <Link href="/blog/does-llmstxt-actually-help-with-ai-search" className="p-3 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-emerald-500/40 text-slate-300 hover:text-emerald-400 transition-all">
+              Does llms.txt Help AI Search?
+            </Link>
+            <Link href="/blog/does-schema-help-ai-search" className="p-3 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-emerald-500/40 text-slate-300 hover:text-emerald-400 transition-all">
+              Does Schema Markup Help AI Search?
+            </Link>
+            <Link href="/blog/how-to-check-if-website-visible-to-chatgpt" className="p-3 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-emerald-500/40 text-slate-300 hover:text-emerald-400 transition-all">
+              How to Check ChatGPT Website Visibility
+            </Link>
+            <Link href="/blog/is-your-website-visible-to-chatgpt-how-to-check" className="p-3 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-emerald-500/40 text-slate-300 hover:text-emerald-400 transition-all">
+              Is Your Site Visible to ChatGPT?
+            </Link>
+            <Link href="/blog/why-isnt-my-website-showing-up-in-chatgpt" className="p-3 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-emerald-500/40 text-slate-300 hover:text-emerald-400 transition-all">
+              Why Isn't My Website Showing Up in ChatGPT?
             </Link>
           </div>
         </div>

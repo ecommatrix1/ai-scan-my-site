@@ -1427,44 +1427,44 @@ export default function AIScanMySite() {
                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
                         {/* Overall Score */}
                         <div className="metric-card p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-surface border border-border/80 shadow-md">
-                          <div className="text-xs sm:text-base font-black uppercase tracking-wider text-slate-900 dark:text-white">Overall AI Score</div>
+                          <div className="text-xs sm:text-base font-black uppercase tracking-wider text-ink">Overall AI Score</div>
                           <div className={`text-3xl sm:text-5xl lg:text-6xl font-black font-mono tracking-tight ${computedOverall >= 80 ? "text-success" : computedOverall >= 60 ? "text-warning" : "text-danger"} mt-1 sm:mt-2`}>
                             {computedOverall} / 100
                           </div>
-                          <div className="text-xs sm:text-base mt-1.5 sm:mt-2.5 font-extrabold text-slate-900 dark:text-slate-100">
-                            Status: <span className="font-black">{computedOverall >= 80 ? "Good" : computedOverall >= 60 ? "Needs Work" : "At Risk"}</span>
+                          <div className="text-xs sm:text-base mt-1.5 sm:mt-2.5 font-extrabold text-ink-2">
+                            Status: <span className="font-black text-ink">{computedOverall >= 80 ? "Good" : computedOverall >= 60 ? "Needs Work" : "At Risk"}</span>
                           </div>
                         </div>
 
                         {/* Issues Found */}
                         <div className="metric-card p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-surface border border-border/80 shadow-md">
-                          <div className="text-xs sm:text-base font-black uppercase tracking-wider text-slate-900 dark:text-white">Issues Found</div>
+                          <div className="text-xs sm:text-base font-black uppercase tracking-wider text-ink">Issues Found</div>
                           <div className={`text-3xl sm:text-5xl lg:text-6xl font-black font-mono tracking-tight ${totalFailed > 0 ? "text-danger" : "text-success"} mt-1 sm:mt-2`}>
                             {liveAuditItems.length > 0 ? totalFailed : 0}
                           </div>
-                          <div className="text-xs sm:text-base mt-1.5 sm:mt-2.5 font-extrabold text-slate-900 dark:text-slate-100">
+                          <div className="text-xs sm:text-base mt-1.5 sm:mt-2.5 font-extrabold text-ink-2">
                             {criticalCount} critical, {liveAuditItems.length > 0 ? Math.max(0, totalFailed - criticalCount) : 0} other
                           </div>
                         </div>
 
                         {/* Schema Coverage */}
                         <div className="metric-card p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-surface border border-border/80 shadow-md">
-                          <div className="text-xs sm:text-base font-black uppercase tracking-wider text-slate-900 dark:text-white">Schema Coverage</div>
+                          <div className="text-xs sm:text-base font-black uppercase tracking-wider text-ink">Schema Coverage</div>
                           <div className={`text-3xl sm:text-5xl lg:text-6xl font-black font-mono tracking-tight ${schemaItems.length > 0 && schemaPassed === schemaItems.length ? "text-success" : "text-warning"} mt-1 sm:mt-2`}>
                             {schemaItems.length > 0 ? `${Math.round((schemaPassed / schemaItems.length) * 100)}%` : "0%"}
                           </div>
-                          <div className="text-xs sm:text-base mt-1.5 sm:mt-2.5 font-extrabold text-slate-900 dark:text-slate-100">
+                          <div className="text-xs sm:text-base mt-1.5 sm:mt-2.5 font-extrabold text-ink-2">
                             {schemaItems.length > 0 ? `${schemaPassed}/${schemaItems.length} schema checks pass` : "0/2 schema checks pass"}
                           </div>
                         </div>
 
                         {/* Image ALT Coverage */}
                         <div className="metric-card p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-surface border border-border/80 shadow-md">
-                          <div className="text-xs sm:text-base font-black uppercase tracking-wider text-slate-900 dark:text-white">Image ALT Coverage</div>
+                          <div className="text-xs sm:text-base font-black uppercase tracking-wider text-ink">Image ALT Coverage</div>
                           <div className="text-3xl sm:text-5xl lg:text-6xl font-black font-mono tracking-tight text-success mt-1 sm:mt-2">
                             Good
                           </div>
-                          <div className="text-xs sm:text-base mt-1.5 sm:mt-2.5 font-extrabold text-slate-900 dark:text-slate-100">
+                          <div className="text-xs sm:text-base mt-1.5 sm:mt-2.5 font-extrabold text-ink-2">
                             Vision AI ALT Tag Coverage
                           </div>
                         </div>
@@ -1481,7 +1481,7 @@ export default function AIScanMySite() {
                           {/* SEO BAR */}
                           <div className="p-3.5 sm:p-5 rounded-xl border border-border bg-surface-2 space-y-2">
                             <div className="flex items-center justify-between">
-                              <span className="text-xs sm:text-base font-mono font-extrabold uppercase text-slate-900 dark:text-white flex items-center gap-2">
+                              <span className="text-xs sm:text-base font-mono font-extrabold uppercase text-ink flex items-center gap-2">
                                 <Search className="w-4 h-4 text-emerald-500" />
                                 <span>SEO (Traditional)</span>
                               </span>
@@ -1490,13 +1490,13 @@ export default function AIScanMySite() {
                             <div className="w-full bg-border/80 h-2.5 sm:h-3 rounded-full overflow-hidden">
                               <div className="bg-emerald-500 h-full rounded-full transition-all duration-1000" style={{ width: `${computedSeo}%` }} />
                             </div>
-                            <p className="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200">Google &amp; Bing title, canonical, and indexing rules.</p>
+                            <p className="text-xs sm:text-sm font-bold text-ink-2">Google &amp; Bing title, canonical, and indexing rules.</p>
                           </div>
 
                           {/* AEO BAR */}
                           <div className="p-3.5 sm:p-5 rounded-xl border border-border bg-surface-2 space-y-2">
                             <div className="flex items-center justify-between">
-                              <span className="text-xs sm:text-base font-mono font-extrabold uppercase text-slate-900 dark:text-white flex items-center gap-2">
+                              <span className="text-xs sm:text-base font-mono font-extrabold uppercase text-ink flex items-center gap-2">
                                 <Bot className="w-4 h-4 text-rose-500" />
                                 <span>AEO (Answer Engines)</span>
                               </span>
@@ -1505,13 +1505,13 @@ export default function AIScanMySite() {
                             <div className="w-full bg-border/80 h-2.5 sm:h-3 rounded-full overflow-hidden">
                               <div className="bg-rose-500 h-full rounded-full transition-all duration-1000" style={{ width: `${computedAeo}%` }} />
                             </div>
-                            <p className="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200">ChatGPT &amp; Claude GPTBot permissions &amp; llms.txt.</p>
+                            <p className="text-xs sm:text-sm font-bold text-ink-2">ChatGPT &amp; Claude GPTBot permissions &amp; llms.txt.</p>
                           </div>
 
                           {/* GEO BAR */}
                           <div className="p-3.5 sm:p-5 rounded-xl border border-border bg-surface-2 space-y-2">
                             <div className="flex items-center justify-between">
-                              <span className="text-xs sm:text-base font-mono font-extrabold uppercase text-slate-900 dark:text-white flex items-center gap-2">
+                              <span className="text-xs sm:text-base font-mono font-extrabold uppercase text-ink flex items-center gap-2">
                                 <Brain className="w-4 h-4 text-amber-500" />
                                 <span>GEO (Generative Search)</span>
                               </span>
@@ -1520,7 +1520,7 @@ export default function AIScanMySite() {
                             <div className="w-full bg-border/80 h-2.5 sm:h-3 rounded-full overflow-hidden">
                               <div className="bg-amber-500 h-full rounded-full transition-all duration-1000" style={{ width: `${computedGeo}%` }} />
                             </div>
-                            <p className="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200">Google AI Overviews &amp; Perplexity entity density.</p>
+                            <p className="text-xs sm:text-sm font-bold text-ink-2">Google AI Overviews &amp; Perplexity entity density.</p>
                           </div>
                         </div>
                       </div>

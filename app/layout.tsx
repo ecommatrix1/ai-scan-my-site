@@ -19,7 +19,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: 'AI SEO Audit Tool: AEO, GEO & AI Crawlability Checker | AI Scan My Site',
+  title: 'Free AI SEO Audit Tool | ChatGPT & Gemini Visibility Check',
   description: 'Free AI readiness audit for ChatGPT, Gemini & Perplexity. Check AI bot crawlability, generate llms.txt, audit schema & boost AEO instantly.',
   icons: {
     icon: '/favicon.svg',
@@ -136,26 +136,66 @@ const faqJsonLd = {
   mainEntity: [
     {
       '@type': 'Question',
-      name: 'What is an AI website readiness audit?',
+      name: 'What is an AI SEO audit?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'An AI website readiness audit checks if your website is optimized for AI search agents and answer engines like ChatGPT Search, Perplexity, Gemini, and ClaudeBot. We scan your website robots.txt rules, check for the emerging standard llms.txt context specifications, validate JSON-LD structured schema schemas, and audit image vision ALT tags.',
+        text: 'An AI SEO audit evaluates how effectively search engines and artificial intelligence platforms (such as ChatGPT Search, Perplexity, Google Gemini, and Claude) can crawl, render, interpret, and cite your website alongside traditional Google search crawlers.',
       },
     },
     {
       '@type': 'Question',
-      name: 'Why do I need schema.org validation?',
+      name: 'Is AI Scan My Site free?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Structured data (JSON-LD) enables search models to correctly interpret details about your application, pricing structures, products, and services. Without complete structured data schemas, AI search bots might make wrong assumptions or omit your platform entirely when presenting query answers to prospective customers.',
+        text: 'Yes, AI Scan My Site offers 5 free website audits every day with zero credit card required. You can also claim free unlimited scans using promo code FREEPRO.',
       },
     },
     {
       '@type': 'Question',
-      name: 'What is the purpose of the llms.txt standard?',
+      name: 'What does an AI SEO audit check?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'The llms.txt standard provides clean markdown context pages specifically optimized for LLM crawlers. By serving structured information in a lightweight format, you make it significantly easier for AI indexing engines to understand the exact scope and functionality of your site.',
+        text: 'It inspects AI bot permissions in robots.txt (GPTBot, PerplexityBot, ClaudeBot), checks for llms.txt context manifests, verifies JSON-LD schema entity graphs, audits vision AI alt text, and evaluates PageSpeed Core Web Vitals.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'How is AI Scan My Site different from PageSpeed Insights?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Google PageSpeed Insights focuses on frontend performance metrics (LCP, CLS, INP). AI Scan My Site integrates official PageSpeed performance data with dedicated AI bot crawlability, Answer Engine Optimization (AEO), and Generative Engine Optimization (GEO).',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'What is AEO?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Answer Engine Optimization (AEO) is the practice of optimizing content, direct answers, and FAQ schemas for conversational voice assistants and AI answer engines like ChatGPT and Perplexity.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'What is GEO?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Generative Engine Optimization (GEO) ensures your brand entities, structured schemas, vector context, and authoritative citations are recognized across LLM search indexes and AI overviews.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Can AI Scan My Site check AI crawler accessibility?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Yes. Our scanner checks whether AI user-agents (including GPTBot, ChatGPT-User, PerplexityBot, ClaudeBot, and Google-Extended) are allowed or blocked in your robots.txt configuration.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'What is llms.txt?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'llms.txt is an emerging web standard that provides clean markdown context summaries of your website\'s key pages, purpose, and APIs specifically formatted for Large Language Model indexing.',
       },
     },
   ],
@@ -165,6 +205,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" data-theme="dark" suppressHydrationWarning className={inter.variable}>
       <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="apple-touch-icon" href="/favicon.svg" />
         <link rel="alternate" type="application/rss+xml" title="AI Scan My Site RSS Feed" href="https://aiscanmysite.com/feed.xml" />

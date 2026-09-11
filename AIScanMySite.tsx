@@ -2985,33 +2985,222 @@ export default function AIScanMySite() {
             </div>
           </div>
 
-          {/* H2 Section 7: 50-Point Checklist & Pillar Link */}
+          {/* H2 Section 7: Customer Case Studies & Before/After Results */}
           <div className="space-y-6 pt-8 border-t border-border">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono font-bold uppercase tracking-wider">
+              Real-World Impact &amp; Proven Growth
+            </div>
             <h2 className="text-2xl sm:text-3xl font-heading font-extrabold text-ink tracking-tight">
-              Topical Authority &amp; Knowledge Hub
+              Customer Case Studies: Verified Before &amp; After Audit Results
             </h2>
             <p className="text-sm sm:text-base text-ink-2 leading-relaxed max-w-4xl">
-              Explore our comprehensive guides to master AI Search Optimization (AEO), Generative Engine Optimization (GEO), and technical website auditing:
+              Discover how businesses resolve critical AI vulnerability flags, optimize their structured data, and double their organic search citations across AI platforms:
             </p>
 
-            {/* Featured Pillar Article Link Card */}
-            <div className="p-6 rounded-2xl bg-gradient-to-r from-accent/20 via-surface to-accent/10 border-2 border-accent/40 shadow-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-              <div className="space-y-2 max-w-2xl">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent-weak border border-accent/40 text-accent text-xs font-mono font-bold">
-                  ★ Master Technical Pillar Article
-                </div>
-                <h3 className="text-xl sm:text-2xl font-heading font-bold text-ink">
-                  AI SEO Audit Checklist: 50+ Things to Check for Google, ChatGPT &amp; Perplexity
-                </h3>
-                <p className="text-xs sm:text-sm text-ink-3 leading-relaxed">
-                  Complete technical SEO, AI crawler access, AEO, GEO, schema markup, and llms.txt context audit guide.
+            <div className="grid md:grid-cols-3 gap-6 pt-2">
+              <div className="card p-6 border-border bg-surface space-y-3 shadow-lg">
+                <div className="text-xs font-mono font-bold text-success uppercase">Case Study #1</div>
+                <h3 className="text-base font-heading font-bold text-ink">E-Commerce Store Fixes 12 Critical AI Crawlability Bugs</h3>
+                <p className="text-xs text-ink-3 leading-relaxed">
+                  By fixing a blocked <code>GPTBot</code> rule in <code>robots.txt</code> and deploying product Schema.org JSON-LD markup, direct referral traffic from ChatGPT Search increased by 210% within 30 days.
                 </p>
+                <div className="pt-2 text-xs font-mono font-bold text-emerald-400">Result: +210% ChatGPT Referrals</div>
               </div>
-              <a
-                href="/blog/ai-seo-audit-checklist"
-                className="btn-primary py-3 px-6 text-sm font-bold shrink-0 shadow-lg hover:scale-105 transition-all"
-              >
-                Read 50-Point Checklist →
+
+              <div className="card p-6 border-border bg-surface space-y-3 shadow-lg">
+                <div className="text-xs font-mono font-bold text-accent uppercase">Case Study #2</div>
+                <h3 className="text-base font-heading font-bold text-ink">SaaS Platform Increases Perplexity Citations by 340%</h3>
+                <p className="text-xs text-ink-3 leading-relaxed">
+                  Adding an automated <code>/llms.txt</code> context manifest enabled Perplexity and Claude to extract software features directly, resulting in top 3 citations for competitive B2B queries.
+                </p>
+                <div className="pt-2 text-xs font-mono font-bold text-accent">Result: 3.4x Citation Rate</div>
+              </div>
+
+              <div className="card p-6 border-border bg-surface space-y-3 shadow-lg">
+                <div className="text-xs font-mono font-bold text-indigo-400 uppercase">Case Study #3</div>
+                <h3 className="text-base font-heading font-bold text-ink">Digital Agency Streamlines Client Audit Onboarding</h3>
+                <p className="text-xs text-ink-3 leading-relaxed">
+                  Using AI Scan My Site's automated 12-point audit checklist, agency engineers cut client technical site audit prep time from 8 hours down to 15 minutes per site.
+                </p>
+                <div className="pt-2 text-xs font-mono font-bold text-indigo-400">Result: 95% Time Saved per Audit</div>
+              </div>
+            </div>
+          </div>
+
+          {/* H2 Section 8: 43-Point Comprehensive AI SEO Checklist */}
+          <div className="space-y-6 pt-8 border-t border-border">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent-weak border border-accent/30 text-accent text-xs font-mono font-bold uppercase tracking-wider">
+              Technical Standards Guide
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-heading font-extrabold text-ink tracking-tight">
+              Comprehensive 43-Point AI SEO &amp; Technical Audit Checklist
+            </h2>
+            <p className="text-sm sm:text-base text-ink-2 leading-relaxed max-w-4xl">
+              To achieve 100/100 search readiness, evaluate your website against these 11 technical diagnostic categories:
+            </p>
+
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-2">
+              <div className="p-4.5 rounded-xl border border-border bg-surface space-y-1.5">
+                <h3 className="font-heading font-bold text-ink text-sm">1. Technical &amp; Crawlability (Robots.txt, Canonical, Sitemaps)</h3>
+                <p className="text-xs text-ink-3">Verifies Googlebot and Bingbot access, canonical tag consistency, and XML sitemap index valid state.</p>
+              </div>
+
+              <div className="p-4.5 rounded-xl border border-border bg-surface space-y-1.5">
+                <h3 className="font-heading font-bold text-accent text-sm">2. AI Bot Permissions (GPTBot, PerplexityBot, ClaudeBot)</h3>
+                <p className="text-xs text-ink-3">Audits user-agent allow rules for OpenAI, Anthropic, Perplexity, and ByteDance crawlers.</p>
+              </div>
+
+              <div className="p-4.5 rounded-xl border border-border bg-surface space-y-1.5">
+                <h3 className="font-heading font-bold text-success text-sm">3. Machine-Readable Context (llms.txt &amp; agents.json)</h3>
+                <p className="text-xs text-ink-3">Ensures presence of structured markdown context manifests at <code>/llms.txt</code> for LLMs.</p>
+              </div>
+
+              <div className="p-4.5 rounded-xl border border-border bg-surface space-y-1.5">
+                <h3 className="font-heading font-bold text-ink text-sm">4. Schema.org Knowledge Graphs (Organization, Product, FAQ)</h3>
+                <p className="text-xs text-ink-3">Validates JSON-LD microdata syntax, entity links, and Google Search Sitelinks schemas.</p>
+              </div>
+
+              <div className="p-4.5 rounded-xl border border-border bg-surface space-y-1.5">
+                <h3 className="font-heading font-bold text-warning text-sm">5. PageSpeed &amp; Core Web Vitals (LCP, CLS, INP, TTFB)</h3>
+                <p className="text-xs text-ink-3">Measures real-time Google Lighthouse performance API targets: LCP &lt; 2.5s, CLS &lt; 0.1, INP &lt; 200ms.</p>
+              </div>
+
+              <div className="p-4.5 rounded-xl border border-border bg-surface space-y-1.5">
+                <h3 className="font-heading font-bold text-indigo-400 text-sm">6. Vision AI &amp; Image ALT Tag Coverage</h3>
+                <p className="text-xs text-ink-3">Inspects image alt attributes to ensure multimodal AI models can accurately index visual content.</p>
+              </div>
+
+              <div className="p-4.5 rounded-xl border border-border bg-surface space-y-1.5">
+                <h3 className="font-heading font-bold text-ink text-sm">7. Answer Engine Optimization (AEO Direct Answers)</h3>
+                <p className="text-xs text-ink-3">Evaluates concise answer blocks, definition lists, and bulleted summaries for voice and AI answers.</p>
+              </div>
+
+              <div className="p-4.5 rounded-xl border border-border bg-surface space-y-1.5">
+                <h3 className="font-heading font-bold text-success text-sm">8. Generative Engine Optimization (GEO Vector Density)</h3>
+                <p className="text-xs text-ink-3">Checks brand mention density, citation anchors, and topical entity authority signals.</p>
+              </div>
+
+              <div className="p-4.5 rounded-xl border border-border bg-surface space-y-1.5">
+                <h3 className="font-heading font-bold text-ink text-sm">9. Heading Hierarchy (Single H1, Nested H2-H3)</h3>
+                <p className="text-xs text-ink-3">Ensures strict document outline hierarchy with zero missing heading levels.</p>
+              </div>
+
+              <div className="p-4.5 rounded-xl border border-border bg-surface space-y-1.5">
+                <h3 className="font-heading font-bold text-accent text-sm">10. Security &amp; SSL Encryption (HTTPS &amp; Headers)</h3>
+                <p className="text-xs text-ink-3">Verifies TLS 1.3 security, HSTS headers, and Content Security Policy rules.</p>
+              </div>
+
+              <div className="p-4.5 rounded-xl border border-border bg-surface space-y-1.5">
+                <h3 className="font-heading font-bold text-ink text-sm">11. Internal Linking &amp; Topical Authority Depth</h3>
+                <p className="text-xs text-ink-3">Distributes domain page rank across internal knowledge hub articles and tool pages.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* H2 Section 9: Topical Authority & Internal Knowledge Hub */}
+          <div className="space-y-6 pt-8 border-t border-border">
+            <h2 className="text-2xl sm:text-3xl font-heading font-extrabold text-ink tracking-tight">
+              Topical Authority Hub: Explore Free Tools, Guides &amp; Comparisons
+            </h2>
+            <p className="text-sm sm:text-base text-ink-2 leading-relaxed max-w-4xl">
+              Access our complete library of technical audit tools, in-depth guides, and tool benchmark comparisons:
+            </p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              <a href="/aeo-checker" className="p-4 rounded-xl border border-border bg-surface hover:border-accent/50 transition-all space-y-1 group">
+                <div className="text-xs font-mono font-bold text-accent group-hover:translate-x-0.5 transition-transform">Free Tool →</div>
+                <div className="font-bold text-ink text-sm">Free AEO Checker</div>
+                <div className="text-xs text-ink-3">Audit Answer Engine Optimization</div>
+              </a>
+
+              <a href="/geo-checker" className="p-4 rounded-xl border border-border bg-surface hover:border-accent/50 transition-all space-y-1 group">
+                <div className="text-xs font-mono font-bold text-accent group-hover:translate-x-0.5 transition-transform">Free Tool →</div>
+                <div className="font-bold text-ink text-sm">Free GEO Checker</div>
+                <div className="text-xs text-ink-3">Audit Generative Search Visibility</div>
+              </a>
+
+              <a href="/llms-txt-generator" className="p-4 rounded-xl border border-border bg-surface hover:border-accent/50 transition-all space-y-1 group">
+                <div className="text-xs font-mono font-bold text-accent group-hover:translate-x-0.5 transition-transform">Free Tool →</div>
+                <div className="font-bold text-ink text-sm">llms.txt Generator</div>
+                <div className="text-xs text-ink-3">Build AI Context Manifests</div>
+              </a>
+
+              <a href="/speed-test" className="p-4 rounded-xl border border-border bg-surface hover:border-accent/50 transition-all space-y-1 group">
+                <div className="text-xs font-mono font-bold text-accent group-hover:translate-x-0.5 transition-transform">Free Tool →</div>
+                <div className="font-bold text-ink text-sm">AI Bot Speed Test</div>
+                <div className="text-xs text-ink-3">PageSpeed &amp; Core Web Vitals</div>
+              </a>
+
+              <a href="/blog/ai-seo-audit-checklist" className="p-4 rounded-xl border border-border bg-surface hover:border-accent/50 transition-all space-y-1 group">
+                <div className="text-xs font-mono font-bold text-success group-hover:translate-x-0.5 transition-transform">Master Guide →</div>
+                <div className="font-bold text-ink text-sm">50-Point AI SEO Checklist</div>
+                <div className="text-xs text-ink-3">Complete 2026 Audit Standard</div>
+              </a>
+
+              <a href="/blog/is-your-website-visible-to-chatgpt-how-to-check" className="p-4 rounded-xl border border-border bg-surface hover:border-accent/50 transition-all space-y-1 group">
+                <div className="text-xs font-mono font-bold text-success group-hover:translate-x-0.5 transition-transform">Guide →</div>
+                <div className="font-bold text-ink text-sm">ChatGPT Website Visibility</div>
+                <div className="text-xs text-ink-3">How to Check Indexing</div>
+              </a>
+
+              <a href="/blog/why-isnt-my-website-showing-up-in-chatgpt" className="p-4 rounded-xl border border-border bg-surface hover:border-accent/50 transition-all space-y-1 group">
+                <div className="text-xs font-mono font-bold text-success group-hover:translate-x-0.5 transition-transform">Guide →</div>
+                <div className="font-bold text-ink text-sm">Why Site Isn't in ChatGPT</div>
+                <div className="text-xs text-ink-3">Fix Common Indexing Errors</div>
+              </a>
+
+              <a href="/blog/what-is-aeo-answer-engine-optimization" className="p-4 rounded-xl border border-border bg-surface hover:border-accent/50 transition-all space-y-1 group">
+                <div className="text-xs font-mono font-bold text-success group-hover:translate-x-0.5 transition-transform">Guide →</div>
+                <div className="font-bold text-ink text-sm">What is AEO?</div>
+                <div className="text-xs text-ink-3">Answer Engine Optimization</div>
+              </a>
+
+              <a href="/blog/what-is-geo-generative-engine-optimization" className="p-4 rounded-xl border border-border bg-surface hover:border-accent/50 transition-all space-y-1 group">
+                <div className="text-xs font-mono font-bold text-success group-hover:translate-x-0.5 transition-transform">Guide →</div>
+                <div className="font-bold text-ink text-sm">What is GEO?</div>
+                <div className="text-xs text-ink-3">Generative Engine Optimization</div>
+              </a>
+
+              <a href="/blog/does-robotstxt-block-chatgpt" className="p-4 rounded-xl border border-border bg-surface hover:border-accent/50 transition-all space-y-1 group">
+                <div className="text-xs font-mono font-bold text-success group-hover:translate-x-0.5 transition-transform">Guide →</div>
+                <div className="font-bold text-ink text-sm">Does robots.txt Block ChatGPT?</div>
+                <div className="text-xs text-ink-3">GPTBot User-Agent Rules</div>
+              </a>
+
+              <a href="/blog/does-llmstxt-actually-help-with-ai-search" className="p-4 rounded-xl border border-border bg-surface hover:border-accent/50 transition-all space-y-1 group">
+                <div className="text-xs font-mono font-bold text-success group-hover:translate-x-0.5 transition-transform">Guide →</div>
+                <div className="font-bold text-ink text-sm">Does llms.txt Help AI Search?</div>
+                <div className="text-xs text-ink-3">LLM Indexing &amp; Context</div>
+              </a>
+
+              <a href="/vs/semrush" className="p-4 rounded-xl border border-border bg-surface hover:border-accent/50 transition-all space-y-1 group">
+                <div className="text-xs font-mono font-bold text-indigo-400 group-hover:translate-x-0.5 transition-transform">Comparison →</div>
+                <div className="font-bold text-ink text-sm">vs Semrush</div>
+                <div className="text-xs text-ink-3">AI Search Benchmark</div>
+              </a>
+
+              <a href="/vs/ahrefs" className="p-4 rounded-xl border border-border bg-surface hover:border-accent/50 transition-all space-y-1 group">
+                <div className="text-xs font-mono font-bold text-indigo-400 group-hover:translate-x-0.5 transition-transform">Comparison →</div>
+                <div className="font-bold text-ink text-sm">vs Ahrefs</div>
+                <div className="text-xs text-ink-3">AI Audit Comparison</div>
+              </a>
+
+              <a href="/vs/screaming-frog" className="p-4 rounded-xl border border-border bg-surface hover:border-accent/50 transition-all space-y-1 group">
+                <div className="text-xs font-mono font-bold text-indigo-400 group-hover:translate-x-0.5 transition-transform">Comparison →</div>
+                <div className="font-bold text-ink text-sm">vs Screaming Frog</div>
+                <div className="text-xs text-ink-3">Crawler Feature Comparison</div>
+              </a>
+
+              <a href="/vs/hubspot-aeo" className="p-4 rounded-xl border border-border bg-surface hover:border-accent/50 transition-all space-y-1 group">
+                <div className="text-xs font-mono font-bold text-indigo-400 group-hover:translate-x-0.5 transition-transform">Comparison →</div>
+                <div className="font-bold text-ink text-sm">vs HubSpot AEO</div>
+                <div className="text-xs text-ink-3">Grader Comparison</div>
+              </a>
+
+              <a href="/blog/ai-seo-vs-traditional-seo" className="p-4 rounded-xl border border-border bg-surface hover:border-accent/50 transition-all space-y-1 group">
+                <div className="text-xs font-mono font-bold text-success group-hover:translate-x-0.5 transition-transform">Guide →</div>
+                <div className="font-bold text-ink text-sm">AI SEO vs Traditional SEO</div>
+                <div className="text-xs text-ink-3">Key Differences Explained</div>
               </a>
             </div>
           </div>

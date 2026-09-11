@@ -1078,7 +1078,7 @@ export default function AIScanMySite() {
                   <div className={`card p-2 rounded-2xl ${!lightTheme ? "input-glowing-neon bg-[#070b14]/90" : ""}`}>
                     <div className="flex flex-col sm:flex-row items-center gap-2">
                       <Globe className="hidden sm:block w-6 h-6 text-accent ml-4" />
-                      <input type="text" value={urlInput} onChange={(e) => { setUrlInput(e.target.value); if (inputError) setInputError(""); }} placeholder="e.g. yourwebsite.com" className="input flex-1 bg-transparent border-none focus:outline-none focus:ring-0 text-lg py-3 px-4 font-mono" />
+                      <input type="text" id="scan-input" value={urlInput} onChange={(e) => { setUrlInput(e.target.value); if (inputError) setInputError(""); }} placeholder="e.g. yourwebsite.com" className="input flex-1 bg-transparent border-none focus:outline-none focus:ring-0 text-lg py-3 px-4 font-mono" />
                       <button type="submit" className="btn-primary w-full sm:w-auto px-8 py-4 text-lg font-bold">
                         Run AI Scan 🚀
                       </button>
@@ -3379,10 +3379,15 @@ export default function AIScanMySite() {
               <button
                 onClick={() => {
                   setShowActivationSuccessModal(false);
-                  const scanInput = document.getElementById("scan-input");
+                  const scanInput = document.getElementById("scan-input") as HTMLInputElement | null;
                   if (scanInput) {
-                    scanInput.focus();
-                    window.scrollTo({ top: 0, behavior: "smooth" });
+                    scanInput.scrollIntoView({ behavior: "smooth", block: "center" });
+                    setTimeout(() => {
+                      scanInput.focus();
+                      if (urlInput && urlInput.trim().length > 3 && !urlInput.includes("@")) {
+                        startScanProcess(urlInput);
+                      }
+                    }, 300);
                   } else {
                     window.scrollTo({ top: 0, behavior: "smooth" });
                   }

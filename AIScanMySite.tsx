@@ -562,6 +562,14 @@ export default function AIScanMySite() {
     const startScanProcess = (rawUrl: string) => {
       const trimmed = rawUrl.trim();
       if (!trimmed) { setInputError("Please enter a website URL (e.g. yourwebsite.com)"); return; }
+
+      if (trimmed.includes("@") && trimmed.includes(".")) {
+        unlockUnlimitedPro(trimmed);
+        setInputError("⚡ Unlimited Pro Access Activated! Now enter a website domain below to run your free AI scan.");
+        setHeroEmailInput(trimmed);
+        return;
+      }
+
       const domainPattern = /^([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/.*)?$/;
       const cleanCandidate = trimmed.replace(/^(https?:\/\/)?(www\.)?/, "");
       if (!domainPattern.test(cleanCandidate)) { setInputError("Invalid domain format. Try e.g. yourwebsite.com"); return; }
@@ -2025,22 +2033,22 @@ export default function AIScanMySite() {
                           <div className="p-4 sm:p-5 space-y-4 text-left border-t border-border bg-[#000000]/10">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                               <div>
-                                <h4 className="text-base font-mono font-extrabold uppercase tracking-wider mb-2 text-accent">Issue Description</h4>
+                                <div className="text-base font-mono font-extrabold uppercase tracking-wider mb-2 text-accent">Issue Description</div>
                                 <p className={`text-base leading-relaxed font-semibold text-ink`}>{item.description}</p>
                                 {item.evidence && (
                                   <div className="mt-4">
-                                    <h4 className="text-sm font-mono font-bold uppercase tracking-wider mb-1.5 text-ink-3">Evidence Detected</h4>
+                                    <div className="text-sm font-mono font-bold uppercase tracking-wider mb-1.5 text-ink-3">Evidence Detected</div>
                                     <pre className="p-3 rounded-lg border text-sm font-mono whitespace-pre-wrap break-all bg-surface border-border text-ink-2">{item.evidence}</pre>
                                   </div>
                                 )}
                               </div>
                               <div>
-                                <h4 className="text-base font-mono font-extrabold uppercase tracking-wider mb-2 text-success">How to Fix It</h4>
+                                <div className="text-base font-mono font-extrabold uppercase tracking-wider mb-2 text-success">How to Fix It</div>
                                 <p className={`text-base leading-relaxed font-semibold text-ink`}>{item.solutionSummary}</p>
                                 {item.fixCode && (
                                   <div className="mt-3">
                                     <div className="flex items-center justify-between mb-1.5">
-                                      <h4 className="text-xs font-mono font-bold text-ink-3 uppercase tracking-wider">Suggested Snippet</h4>
+                                      <div className="text-xs font-mono font-bold text-ink-3 uppercase tracking-wider">Suggested Snippet</div>
                                       <button onClick={(e) => { e.stopPropagation(); safeCopyToClipboard(item.fixCode || ""); alert("Snippet copied to clipboard!"); }} className="text-xs text-accent hover:text-accent-strong font-mono">Copy Code</button>
                                     </div>
                                     <pre className="p-2.5 rounded-lg bg-surface-2 border border-border text-xs font-mono text-ink-2 overflow-x-auto"><code>{item.fixCode}</code></pre>
@@ -2521,38 +2529,38 @@ export default function AIScanMySite() {
           </div>
           {/* FAQ */}
           <div id="faq" className="mt-20 border-t border-border pt-16 max-w-4xl mx-auto text-left">
-            <h3 className="text-2xl font-heading font-extrabold text-ink mb-8 text-center sm:text-left">Frequently Asked Questions</h3>
+            <h2 className="text-2xl font-heading font-extrabold text-ink mb-8 text-center sm:text-left">Frequently Asked Questions</h2>
             <div className="grid md:grid-cols-2 gap-6 text-sm text-ink-2">
               <div className="p-4 rounded-xl border border-border bg-surface">
-                <h4 className="font-bold text-ink text-base mb-1.5">1. What is an AI SEO audit?</h4>
+                <h3 className="font-bold text-ink text-base mb-1.5">1. What is an AI SEO audit?</h3>
                 <p className="text-xs leading-relaxed text-ink-3">An AI SEO audit evaluates how effectively search engines and artificial intelligence platforms (such as ChatGPT Search, Perplexity, Google Gemini, and Claude) can crawl, render, interpret, and cite your website alongside traditional Google search crawlers.</p>
               </div>
               <div className="p-4 rounded-xl border border-border bg-surface">
-                <h4 className="font-bold text-ink text-base mb-1.5">2. Is AI Scan My Site free?</h4>
+                <h3 className="font-bold text-ink text-base mb-1.5">2. Is AI Scan My Site free?</h3>
                 <p className="text-xs leading-relaxed text-ink-3">Yes, AI Scan My Site offers 5 free website audits every day with zero credit card required. You can also claim free unlimited scans using promo code FREEPRO.</p>
               </div>
               <div className="p-4 rounded-xl border border-border bg-surface">
-                <h4 className="font-bold text-ink text-base mb-1.5">3. What does an AI SEO audit check?</h4>
+                <h3 className="font-bold text-ink text-base mb-1.5">3. What does an AI SEO audit check?</h3>
                 <p className="text-xs leading-relaxed text-ink-3">It inspects AI bot permissions in robots.txt (GPTBot, PerplexityBot, ClaudeBot), checks for llms.txt context manifests, verifies JSON-LD schema entity graphs, audits vision AI alt text, and evaluates PageSpeed Core Web Vitals.</p>
               </div>
               <div className="p-4 rounded-xl border border-border bg-surface">
-                <h4 className="font-bold text-ink text-base mb-1.5">4. How is AI Scan My Site different from PageSpeed Insights?</h4>
+                <h3 className="font-bold text-ink text-base mb-1.5">4. How is AI Scan My Site different from PageSpeed Insights?</h3>
                 <p className="text-xs leading-relaxed text-ink-3">Google PageSpeed Insights focuses on frontend performance metrics (LCP, CLS, INP). AI Scan My Site integrates official PageSpeed performance data with dedicated AI bot crawlability, Answer Engine Optimization (AEO), and Generative Engine Optimization (GEO).</p>
               </div>
               <div className="p-4 rounded-xl border border-border bg-surface">
-                <h4 className="font-bold text-ink text-base mb-1.5">5. What is AEO?</h4>
+                <h3 className="font-bold text-ink text-base mb-1.5">5. What is AEO?</h3>
                 <p className="text-xs leading-relaxed text-ink-3">Answer Engine Optimization (AEO) is the practice of optimizing content, direct answers, and FAQ schemas for conversational voice assistants and AI answer engines like ChatGPT and Perplexity.</p>
               </div>
               <div className="p-4 rounded-xl border border-border bg-surface">
-                <h4 className="font-bold text-ink text-base mb-1.5">6. What is GEO?</h4>
+                <h3 className="font-bold text-ink text-base mb-1.5">6. What is GEO?</h3>
                 <p className="text-xs leading-relaxed text-ink-3">Generative Engine Optimization (GEO) ensures your brand entities, structured schemas, vector context, and authoritative citations are recognized across LLM search indexes and AI overviews.</p>
               </div>
               <div className="p-4 rounded-xl border border-border bg-surface">
-                <h4 className="font-bold text-ink text-base mb-1.5">7. Can AI Scan My Site check AI crawler accessibility?</h4>
+                <h3 className="font-bold text-ink text-base mb-1.5">7. Can AI Scan My Site check AI crawler accessibility?</h3>
                 <p className="text-xs leading-relaxed text-ink-3">Yes. Our scanner checks whether AI user-agents (including GPTBot, ChatGPT-User, PerplexityBot, ClaudeBot, and Google-Extended) are allowed or blocked in your robots.txt configuration.</p>
               </div>
               <div className="p-4 rounded-xl border border-border bg-surface">
-                <h4 className="font-bold text-ink text-base mb-1.5">8. What is llms.txt?</h4>
+                <h3 className="font-bold text-ink text-base mb-1.5">8. What is llms.txt?</h3>
                 <p className="text-xs leading-relaxed text-ink-3">llms.txt is an emerging web standard that provides clean markdown context summaries of your website's key pages, purpose, and APIs specifically formatted for Large Language Model indexing.</p>
               </div>
             </div>
@@ -2591,6 +2599,7 @@ export default function AIScanMySite() {
                     alt="AI Vulnerability Dashboard showing overall 100/100 AI readiness score, schema coverage, and bot permissions"
                     className="w-full h-auto object-cover hover:scale-105 transition-transform duration-300"
                     loading="lazy"
+                    onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = '/screenshots/ai-seo-audit-hero.jpg'; }}
                   />
                 </div>
                 <p className="text-xs text-ink-3">
@@ -2610,6 +2619,7 @@ export default function AIScanMySite() {
                     alt="Live AI SEO audit scanner interface performing real-time HTTP checks and readiness calculations"
                     className="w-full h-auto object-cover hover:scale-105 transition-transform duration-300"
                     loading="lazy"
+                    onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = '/screenshots/ai-vulnerability-dashboard.png'; }}
                   />
                 </div>
                 <p className="text-xs text-ink-3">
@@ -2669,6 +2679,7 @@ export default function AIScanMySite() {
                     alt="Google PageSpeed Insights API performance diagnostic showing LCP, CLS, FCP, and TTFB scores"
                     className="w-full h-auto object-cover hover:scale-105 transition-transform duration-300"
                     loading="lazy"
+                    onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = '/screenshots/speed-test-analyzer.png'; }}
                   />
                 </div>
                 <p className="text-xs text-ink-3">
@@ -2688,6 +2699,7 @@ export default function AIScanMySite() {
                     alt="Free website speed test analyzer evaluating mobile and desktop performance metrics"
                     className="w-full h-auto object-cover hover:scale-105 transition-transform duration-300"
                     loading="lazy"
+                    onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = '/screenshots/pagespeed-core-vitals.png'; }}
                   />
                 </div>
                 <p className="text-xs text-ink-3">
@@ -2720,6 +2732,7 @@ export default function AIScanMySite() {
                     alt="Free llms.txt and agents.json generator interface creating machine-readable AI context manifests"
                     className="w-full h-auto object-cover hover:scale-105 transition-transform duration-300"
                     loading="lazy"
+                    onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = '/screenshots/geo-checker-audit.png'; }}
                   />
                 </div>
                 <p className="text-xs text-ink-3">
@@ -2739,6 +2752,7 @@ export default function AIScanMySite() {
                     alt="Generative Engine Optimization (GEO) audit page comparing SEO vs AEO vs GEO search discovery layers"
                     className="w-full h-auto object-cover hover:scale-105 transition-transform duration-300"
                     loading="lazy"
+                    onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = '/screenshots/llmstxt-generator-manifest.png'; }}
                   />
                 </div>
                 <p className="text-xs text-ink-3">

@@ -504,6 +504,7 @@ export default function AIScanMySite() {
   });
 
   const [heroEmailInput, setHeroEmailInput] = useState("");
+  const [pricingEmailInput, setPricingEmailInput] = useState("");
 
   const [dailyScansCount, setDailyScansCount] = useState<number>(() => {
     if (typeof window !== "undefined") {
@@ -576,7 +577,7 @@ export default function AIScanMySite() {
       
       if (!isUnlimitedPro && dailyScansCount >= 5) {
         setInputError("You've reached your daily limit of 5 free scans for today. Enter your email with promo code FREEPRO below for Unlimited Pro Access!");
-        const proEmailEl = document.getElementById("pro-email");
+        const proEmailEl = document.getElementById("hero-email-input");
         if (proEmailEl) {
           proEmailEl.scrollIntoView({ behavior: "smooth", block: "center" });
           proEmailEl.focus();
@@ -1086,7 +1087,7 @@ export default function AIScanMySite() {
                   {inputError && <p className="mt-2 text-sm text-danger font-mono pl-4">{inputError}</p>}
 
                   {/* PROMO CODE FREEPRO UNLOCK BOX */}
-                  <div id="pro-email" className="mt-4 p-4 rounded-xl border border-emerald-500/50 bg-emerald-500/10 backdrop-blur-sm shadow-md">
+                  <div id="hero-pro-email-box" className="mt-4 p-4 rounded-xl border border-emerald-500/50 bg-emerald-500/10 backdrop-blur-sm shadow-md">
                     <div className="flex items-center gap-2 text-xs font-mono font-bold text-emerald-800 dark:text-emerald-300 mb-2">
                       <Sparkles className="w-4 h-4 text-emerald-500 animate-pulse" />
                       <span>Apply Promo Code <span className="underline decoration-emerald-400 font-extrabold">FREEPRO</span> for 100% Free Unlimited Scans</span>
@@ -1100,6 +1101,7 @@ export default function AIScanMySite() {
                       <form onSubmit={(e) => { e.preventDefault(); if (heroEmailInput.includes("@")) { unlockUnlimitedPro(heroEmailInput); setInputError(""); } }} className="flex flex-col sm:flex-row items-center gap-2">
                         <input 
                           type="email" 
+                          id="hero-email-input"
                           required
                           value={heroEmailInput} 
                           onChange={(e) => setHeroEmailInput(e.target.value)} 
@@ -2317,7 +2319,19 @@ export default function AIScanMySite() {
                   <div className="absolute top-0 right-6 -translate-y-1/2 bg-accent text-ink text-xs uppercase font-mono font-bold px-2.5 py-0.5 rounded-full shadow">PRO ACTIVATION</div>
                   <h3 className="text-lg font-heading font-bold text-ink flex items-center gap-2 mb-2"><ShieldCheck className="w-5 h-5 text-accent" /><span>Unlock Unlimited Pro Scan Access</span></h3>
                   <p className="text-sm text-ink-3 mb-6 leading-relaxed">Enter your email and claim your free launch promo code to unlock lifetime access to unlimited scans, schema guides, and PDF report downloads.</p>
-                  <div className="space-y-4">
+                  <form 
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      const emailVal = pricingEmailInput.trim();
+                      if (emailVal && emailVal.includes("@")) { 
+                        setIsProActive(true); 
+                        unlockUnlimitedPro(emailVal);
+                      } else {
+                        alert("Please enter a valid email address."); 
+                      }
+                    }} 
+                    className="space-y-4"
+                  >
                     <div>
                       <div className="flex items-center justify-between mb-2">
                         <label className="block text-sm font-bold font-mono uppercase text-ink tracking-wider">Promo Code</label>
@@ -2330,26 +2344,25 @@ export default function AIScanMySite() {
                     </div>
                     <div>
                       <label className="block text-sm font-bold font-mono uppercase text-ink tracking-wider mb-2">Work Email Address</label>
-                      <input type="email" id="pro-email" placeholder="name@company.com" className="input text-base font-semibold" required />
+                      <input 
+                        type="email" 
+                        id="pro-email-input" 
+                        value={pricingEmailInput}
+                        onChange={(e) => setPricingEmailInput(e.target.value)}
+                        placeholder="name@company.com" 
+                        className="input text-base font-semibold" 
+                        required 
+                      />
                     </div>
                     <button 
-                      onClick={async () => { 
-                        const emailInputEl = document.getElementById("pro-email") as HTMLInputElement; 
-                        const emailVal = emailInputEl?.value?.trim();
-                        if (emailVal && emailVal.includes("@")) { 
-                          setIsProActive(true); 
-                          unlockUnlimitedPro(emailVal);
-                        } else {
-                          alert("Please enter a valid email address."); 
-                        }
-                      }} 
+                      type="submit"
                       className={`w-full py-4 rounded-xl text-white text-base font-extrabold tracking-wide transition-all shadow-xl flex items-center justify-center gap-2 cursor-pointer ${isProActive ? "bg-emerald-600 hover:bg-emerald-500 shadow-emerald-500/30" : "bg-gradient-to-r from-blue-600 via-blue-500 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 shadow-blue-500/40 hover:shadow-blue-500/60 hover:scale-[1.01] active:scale-[0.99]"}`}
                     >
                       <span>{isProActive ? "Pro Account Activated 🚀" : "Activate Free Pro Access Now 🚀"}</span>
                       <ArrowRight className="w-5 h-5" />
                     </button>
                     {isProActive && <p className="text-emerald-400 text-center text-xs font-mono font-bold mt-3">✓ Pro activation successful! Unlimited scans and downloads are now enabled.</p>}
-                  </div>
+                  </form>
                 </div>
               </div>
         </div>

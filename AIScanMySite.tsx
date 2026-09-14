@@ -1929,9 +1929,9 @@ export default function AIScanMySite() {
                       <Bell className="w-3.5 h-3.5 text-emerald-500 animate-bounce" />
                       <span>AUTOMATED HEALTH ALERTS</span>
                     </div>
-                    <h3 className="text-xl sm:text-2xl font-heading font-extrabold text-ink leading-snug">
+                    <h2 className="text-xl sm:text-2xl font-heading font-extrabold text-ink leading-snug">
                       ⚡ Want weekly automated alerts if your Google PageSpeed or AI Crawler score drops?
-                    </h3>
+                    </h2>
                     <p className="text-sm text-ink-3 leading-relaxed">
                       Stay ahead of Google Lighthouse updates and AI search crawler changes (ChatGPT, Perplexity, Claude). Get instant weekly email digests when performance issues arise for <span className="font-mono font-bold text-accent">{cleanedDomain}</span>.
                     </p>
@@ -1969,9 +1969,9 @@ export default function AIScanMySite() {
               <div className="card p-6 sm:p-8">
                 <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-6 mb-8">
                   <div>
-                    <h3 className="text-2xl sm:text-3xl font-heading font-extrabold tracking-tight text-ink">
+                    <h2 className="text-2xl sm:text-3xl font-heading font-extrabold tracking-tight text-ink">
                       Full 12-Point Audit Checklist
-                    </h3>
+                    </h2>
                     <p className="text-base font-semibold text-ink-2 mt-1">
                       Click any issue to see why it matters, step-by-step fix guides, and copyable code templates.
                     </p>

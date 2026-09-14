@@ -82,6 +82,9 @@ export const metadata: Metadata = {
       'application/rss+xml': [{ url: 'https://aiscanmysite.com/feed.xml', title: 'AI Scan My Site RSS Feed' }],
     },
   },
+  verification: {
+    google: 'googlea29659356c9d6994',
+  },
 };
 
 const organizationJsonLd = {

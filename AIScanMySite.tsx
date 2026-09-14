@@ -1098,13 +1098,23 @@ export default function AIScanMySite() {
                         <span>⚡ Promo Code FREEPRO Active — Unlimited Audits Unlocked!</span>
                       </div>
                     ) : (
-                      <form onSubmit={(e) => { e.preventDefault(); if (heroEmailInput.includes("@")) { unlockUnlimitedPro(heroEmailInput); setInputError(""); } }} className="flex flex-col sm:flex-row items-center gap-2">
+                      <div className="flex flex-col sm:flex-row items-center gap-2">
                         <input 
                           type="email" 
                           id="hero-email-input"
                           required
                           value={heroEmailInput} 
                           onChange={(e) => setHeroEmailInput(e.target.value)} 
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              if (heroEmailInput.includes("@")) {
+                                unlockUnlimitedPro(heroEmailInput);
+                                setInputError("");
+                              }
+                            }
+                          }}
                           placeholder="Enter your email" 
                           className="input flex-1 bg-surface border border-border rounded-xl text-xs py-2.5 px-3 text-ink font-mono focus:ring-2 focus:ring-emerald-500/50" 
                         />
@@ -1115,11 +1125,22 @@ export default function AIScanMySite() {
                             value="FREEPRO" 
                             className="w-24 bg-emerald-500/20 border border-emerald-500/50 text-emerald-800 dark:text-emerald-300 text-center rounded-xl text-xs font-mono font-black py-2.5 px-2" 
                           />
-                          <button type="submit" className="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-md transition-all flex-1 sm:flex-none">
+                          <button 
+                            type="button" 
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              if (heroEmailInput.includes("@")) {
+                                unlockUnlimitedPro(heroEmailInput);
+                                setInputError("");
+                              }
+                            }} 
+                            className="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-md transition-all flex-1 sm:flex-none cursor-pointer"
+                          >
                             Apply ⚡
                           </button>
                         </div>
-                      </form>
+                      </div>
                     )}
                   </div>
                 </motion.form>

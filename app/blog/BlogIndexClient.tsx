@@ -10,6 +10,14 @@ export default function BlogIndexClient() {
 
   const articles = [
     {
+      slug: "how-to-run-a-website-audit-in-5-steps",
+      title: "How to Run a Website Audit in 5 Steps (2026 AI & Technical Guide)",
+      desc: "Learn how to perform a full technical and AI website audit in 5 steps. Check ChatGPT visibility, PageSpeed Core Web Vitals, Schema graphs, and robots.txt.",
+      category: "Featured Technical Guide",
+      readTime: "7 min read",
+      date: "Sept 16, 2026"
+    },
+    {
       slug: "ai-seo-audit-checklist",
       title: "AI SEO Audit Checklist: 50+ Things to Check for Google, ChatGPT & AI Search",
       desc: "Complete 50-point AI SEO audit checklist for 2026. Audit technical SEO, AI crawler accessibility, AEO, GEO, structured data, llms.txt, and agents.json.",

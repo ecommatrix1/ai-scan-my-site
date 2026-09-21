@@ -1,4 +1,4 @@
-// File: C:\Users\ASUS\Downloads\omni P\ai ready\app\api\admin\settings\route.ts
+// File: E:\Users\ASUS\Downloads\omni P\ai ready\app\api\admin\settings\route.ts
 import * as entry from '../../../../../../app/api/admin/settings/route.js'
 import type { NextRequest } from 'next/server.js'
 

@@ -1,4 +1,4 @@
-// File: C:\Users\ASUS\Downloads\omni P\ai ready\app\page.tsx
+// File: E:\Users\ASUS\Downloads\omni P\ai ready\app\page.tsx
 import * as entry from '../../../app/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

@@ -1,4 +1,4 @@
-// File: C:\Users\ASUS\Downloads\omni P\ai ready\app\api\ai-visibility\route.ts
+// File: E:\Users\ASUS\Downloads\omni P\ai ready\app\api\ai-visibility\route.ts
 import * as entry from '../../../../../app/api/ai-visibility/route.js'
 import type { NextRequest } from 'next/server.js'
 

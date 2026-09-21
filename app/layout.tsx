@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
+import Script from 'next/script';
 import './globals.css';
 
 const inter = Inter({
@@ -19,14 +20,19 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: 'Free AI SEO Audit Tool | ChatGPT & Gemini Visibility Check',
-  description: 'Free AI readiness audit for ChatGPT, Gemini & Perplexity. Check AI bot crawlability, generate llms.txt, audit schema & boost AEO instantly.',
+  title: 'Free AI SEO Checker & Website Grader | Rate My Website',
+  description: 'Free AI readiness audit, website grader & SEO score checker. Rate my website for free—check ChatGPT visibility, PageSpeed, schema & AEO instantly.',
   icons: {
     icon: '/favicon.svg',
     shortcut: '/favicon.svg',
     apple: '/favicon.svg',
   },
   keywords: [
+    'rate my website',
+    'website grader',
+    'website score checker',
+    'seo checker',
+    'rate my site',
     'AI SEO Checker',
     'free seo audit',
     'seo audit tool',
@@ -218,6 +224,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9283169427062874"
           crossOrigin="anonymous"
         />
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-5BLCDSQT31"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-5BLCDSQT31');
+          `}
+        </Script>
       </head>
       <body className="bg-background text-ink antialiased">
         <script

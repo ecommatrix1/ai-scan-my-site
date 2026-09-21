@@ -9,6 +9,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1.0,
     },
     {
+      url: 'https://aiscanmysite.com/seo-checker',
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 0.9,
+    },
+    {
       url: 'https://aiscanmysite.com/aeo-checker',
       lastModified: new Date(),
       changeFrequency: 'daily',
@@ -36,6 +42,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: 'https://aiscanmysite.com/blog',
       lastModified: new Date(),
       changeFrequency: 'daily',
+      priority: 0.9,
+    },
+    {
+      url: 'https://aiscanmysite.com/blog/how-to-run-a-website-audit-in-5-steps',
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
       priority: 0.9,
     },
     {
@@ -127,6 +139,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.8,
+    },
+    {
+      url: 'https://aiscanmysite.com/privacy',
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.3,
+    },
+    {
+      url: 'https://aiscanmysite.com/terms',
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.3,
     },
   ];
 }

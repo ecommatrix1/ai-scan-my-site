@@ -1066,8 +1066,8 @@ export default function AIScanMySite() {
                 </motion.div>
 
                 <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="text-5xl sm:text-6xl font-heading font-extrabold tracking-tight leading-[1.1] mb-6 text-ink">
-                  Free AI SEO Audit &amp;<br />
-                  <span className="text-accent">Website Checker</span>
+                  llms.txt Generator &amp;<br />
+                  <span className="text-accent">AI Search Readiness Checker</span>
                 </motion.h1>
 
                 <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="text-lg sm:text-xl font-normal leading-relaxed mb-10 text-ink-2">

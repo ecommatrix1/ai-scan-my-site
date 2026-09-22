@@ -20,8 +20,8 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: 'Free AI SEO Checker & Website Grader | Rate My Website',
-  description: 'Free AI readiness audit, website grader & SEO score checker. Rate my website for free—check ChatGPT visibility, PageSpeed, schema & AEO instantly.',
+  title: 'AI SEO & llms.txt Generator | Free Website Audit | Rate My Website',
+  description: 'Free AI readiness audit, website grader & llms.txt generator. Rate my website for free—check ChatGPT visibility, PageSpeed, schema & AEO instantly.',
   icons: {
     icon: '/favicon.svg',
     shortcut: '/favicon.svg',
@@ -48,8 +48,8 @@ export const metadata: Metadata = {
   ].join(', '),
   metadataBase: new URL('https://aiscanmysite.com'),
   openGraph: {
-    title: 'AI SEO Checker & Free Website Audit Tool | AI Scan My Site',
-    description: 'Instant AI SEO Audit & Technical Analysis. Check website SEO, speed, security, and AI search readiness for free.',
+    title: 'AI SEO & llms.txt Generator | Free Website Audit Tool',
+    description: 'Instant AI SEO Audit & Technical Analysis. Generate llms.txt, check website speed, security, and AI search readiness for free.',
     url: 'https://aiscanmysite.com',
     siteName: 'AI Scan My Site',
     images: [
@@ -224,15 +224,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9283169427062874"
           crossOrigin="anonymous"
         />
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-G60XQGT29T" />
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-P5DGMGL7E2" />
         <script
           dangerouslySetInnerHTML={{
             __html: `
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
-              gtag('config', 'G-G60XQGT29T');
-              gtag('config', 'G-5BLCDSQT31');
+              gtag('config', 'G-P5DGMGL7E2');
             `,
           }}
         />

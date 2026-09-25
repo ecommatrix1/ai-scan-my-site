@@ -172,7 +172,7 @@ export default function ScreamingFrogVsClient() {
             </div>
             <div className="overflow-hidden rounded-xl border border-border">
               <img
-                src="/screenshots/full-system-overview.png"
+                src="/screenshots/ai-vulnerability-dashboard.png"
                 alt="AI Scan My Site full system overview dashboard displaying technical discovery and core vitals"
                 className="w-full h-auto object-cover hover:scale-105 transition-transform duration-300"
               />

@@ -51,6 +51,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
+      url: 'https://aiscanmysite.com/blog/state-of-ai-seo-2026',
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: 'https://aiscanmysite.com/blog/llmstxt-adoption-study-2026',
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: 'https://aiscanmysite.com/blog/chatgpt-readiness-by-industry',
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
       url: 'https://aiscanmysite.com/blog/ai-seo-audit-checklist',
       lastModified: new Date(),
       changeFrequency: 'weekly',

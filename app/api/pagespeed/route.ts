@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
+export const maxDuration = 60;
 
 // Shape contract consumed by AIScanMySite.tsx (pageSpeedMetrics state).
 export interface PageSpeedMetrics {
@@ -11,6 +12,7 @@ export interface PageSpeedMetrics {
   inp: string;               // Interaction to Next Paint, ms
   ttfb: string;              // Time to First Byte, ms
   isLiveGoogleData: boolean; // true when served from the real Google PSI API
+  warning?: string;          // Explanation when fallback metrics are used
 }
 
 export async function GET(request: NextRequest) {
@@ -34,7 +36,7 @@ export async function GET(request: NextRequest) {
     const apiKey = process.env.GOOGLE_PSI_API_KEY;
 
     // Helper for deterministic estimated metrics fallback
-    const getFallbackMetrics = (): PageSpeedMetrics => {
+    const getFallbackMetrics = (reason?: string): PageSpeedMetrics => {
       const hash = Array.from(targetUrl).reduce((acc, char) => acc + char.charCodeAt(0), 0);
       return {
         score: 78 + (hash % 16),
@@ -44,26 +46,31 @@ export async function GET(request: NextRequest) {
         inp: (50 + (hash % 35)).toString(),
         ttfb: (140 + (hash % 60)).toString(),
         isLiveGoogleData: false,
+        warning: reason || 'Estimated data (Google PSI API key unconfigured or request timed out)',
       };
     };
 
     if (!apiKey || apiKey.trim() === '') {
-      return NextResponse.json({ success: true, data: getFallbackMetrics() });
+      return NextResponse.json({ success: true, data: getFallbackMetrics('Google PSI API key is not configured in environment variables.') });
     }
 
     // Call Google PageSpeed Insights API
     const psiUrl = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(targetUrl)}&key=${apiKey}&strategy=mobile&category=performance`;
 
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 30000);
+    const timeoutId = setTimeout(() => controller.abort(), 25000);
 
     let psiResponse: Response;
     try {
       psiResponse = await fetch(psiUrl, { signal: controller.signal });
       clearTimeout(timeoutId);
-    } catch (err) {
+    } catch (err: any) {
       clearTimeout(timeoutId);
-      return NextResponse.json({ success: true, data: getFallbackMetrics() });
+      const isAbort = err?.name === 'AbortError';
+      return NextResponse.json({ 
+        success: true, 
+        data: getFallbackMetrics(isAbort ? 'Google PSI API request timed out after 25s.' : 'Google PSI network fetch failed.') 
+      });
     }
 
     if (!psiResponse.ok) {
@@ -73,8 +80,7 @@ export async function GET(request: NextRequest) {
         if (errJson?.error?.message) statusText += `: ${errJson.error.message}`;
       } catch {}
       console.warn(`Google PSI API issue on Vercel: ${statusText}`);
-      const fallback = getFallbackMetrics();
-      (fallback as any).debugReason = statusText;
+      const fallback = getFallbackMetrics(`Google PSI API error (${statusText})`);
       return NextResponse.json({ success: true, data: fallback });
     }
 

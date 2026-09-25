@@ -7,8 +7,18 @@ let settingsStore = {
   bingSearchApiKey: '',
 };
 
-export async function GET() {
+function isAuthorized(request: NextRequest): boolean {
+  const secretKey = process.env.ADMIN_SECRET_KEY;
+  if (!secretKey) return true; // Default allow in local dev if no key configured
+  const authHeader = request.headers.get('authorization');
+  return authHeader === `Bearer ${secretKey}`;
+}
+
+export async function GET(request: NextRequest) {
   try {
+    if (!isAuthorized(request)) {
+      return NextResponse.json({ success: false, error: 'Unauthorized access' }, { status: 401 });
+    }
     return NextResponse.json({
       success: true,
       data: settingsStore,
@@ -24,6 +34,9 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
+    if (!isAuthorized(request)) {
+      return NextResponse.json({ success: false, error: 'Unauthorized access' }, { status: 401 });
+    }
     const body = await request.json();
     const { pagespeedApiKey, bingSearchApiKey } = body;
 

@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { downloadFixGuide } from "@/lib/fix-guide-generator";
 import { GooglePreferredTrustBlock } from "@/components/GooglePreferredTrustBlock";
+import { ShareReportWidget } from "@/components/ShareReportWidget";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Sparkles,
@@ -370,11 +371,16 @@ export function GooglePreferredWidget({ domain = "aiscanmysite.com" }: { domain?
   );
 }
 
-export default function AIScanMySite() {
+interface AIScanMySiteProps {
+  initialDomain?: string;
+  initialAutostart?: boolean;
+}
+
+export default function AIScanMySite({ initialDomain, initialAutostart }: AIScanMySiteProps = {}) {
   const [appState, setAppState] = useState<AppState>("HERO");
   const [activeToolMode, setActiveToolMode] = useState<"full" | "aeo" | "geo" | "speed">("full");
-  const [urlInput, setUrlInput] = useState("");
-  const [scannedDomain, setScannedDomain] = useState("mystore.com");
+  const [urlInput, setUrlInput] = useState(initialDomain || "");
+  const [scannedDomain, setScannedDomain] = useState(initialDomain || "mystore.com");
   const [emailInput, setEmailInput] = useState("");
   const [scanProgress, setScanProgress] = useState(0);
   const [currentStageIndex, setCurrentStageIndex] = useState(0);
@@ -610,9 +616,9 @@ export default function AIScanMySite() {
     useEffect(() => {
       if (typeof window === "undefined") return;
       const params = new URLSearchParams(window.location.search);
-      const urlParam = params.get("url");
+      const urlParam = initialDomain || params.get("url");
       const themeParam = params.get("theme");
-      const autostart = params.get("autostart");
+      const autostart = initialAutostart ? "true" : params.get("autostart");
       const toolParam = params.get("tool");
 
       if (toolParam && ["full", "aeo", "geo", "speed"].includes(toolParam)) {
@@ -699,6 +705,10 @@ export default function AIScanMySite() {
             if (isRequestDone) {
               clearInterval(checkCompletion);
               setAppState("UNLOCKED_DASHBOARD");
+              if (typeof window !== "undefined") {
+                const targetPath = `/report/${encodeURIComponent(domain)}`;
+                window.history.replaceState(null, "", targetPath);
+              }
             }
           }, 100);
           return 100;
@@ -1783,6 +1793,9 @@ export default function AIScanMySite() {
 
                       {/* PREFERRED GOOGLE SOURCE CARD & FUNNEL CONTINUATION */}
                       <GooglePreferredTrustBlock onNewAudit={() => setAppState("HERO")} />
+
+                      {/* VIRAL SHARE & EMBEDDABLE BADGE WIDGET */}
+                      <ShareReportWidget domain={cleanedDomain} score={liveScanScore} />
 
                       {/* PAGE STATS TECHNICAL DATA GRID (HIGH CONTRAST & READABLE) */}
                       <div className="p-4 sm:p-6 rounded-xl sm:rounded-2xl border border-border bg-surface shadow-sm space-y-3 sm:space-y-4">

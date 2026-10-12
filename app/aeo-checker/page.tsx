@@ -2,22 +2,22 @@ import type { Metadata } from 'next';
 import AEOCheckerClient from './AEOCheckerClient';
 
 export const metadata: Metadata = {
-  title: 'Free AEO Checker & AI Search Readiness Grader | AI Scan',
-  description: 'Run a free AEO check to test your website for ChatGPT, Gemini, Claude, and Perplexity visibility. Get instant AEO reports, AEO grading, and llms.txt fix guides.',
+  title: 'Free AEO Checker & Answer Engine Optimizer | ChatGPT & Perplexity Visibility',
+  description: 'Run a free AEO audit to test your website for Answer Engine Optimization. Check how ChatGPT, Gemini, Claude, and Perplexity parse and cite your pages.',
   keywords: [
     'Free AEO checker',
+    'Answer Engine Optimization',
     'AEO report',
     'AEO Grader',
     'AEO tracker',
     'AEO SEO',
-    'SEO AEO GEO Checker extension',
     'AI SEO Checker',
     'ChatGPT indexing',
     'llms.txt generator'
   ].join(', '),
   openGraph: {
-    title: 'Free AEO Checker & AI Search Readiness Grader',
-    description: 'Discover how AI engines (ChatGPT, Gemini, Perplexity) see and cite your website. Get a free AEO report.',
+    title: 'Free AEO Checker & Answer Engine Optimizer Tool',
+    description: 'Discover how AI engines (ChatGPT, Gemini, Perplexity) see and cite your website. Get an instant, actionable AEO report.',
     url: 'https://aiscanmysite.com/aeo-checker',
     siteName: 'AI Scan My Site',
     type: 'website',

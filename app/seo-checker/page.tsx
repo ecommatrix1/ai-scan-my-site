@@ -2,22 +2,22 @@ import type { Metadata } from 'next';
 import SEOCheckerClient from './SEOCheckerClient';
 
 export const metadata: Metadata = {
-  title: 'Free AI SEO Checker & Website Grader | Rate My Website',
-  description: 'Run a free AI SEO audit to rate your website for ChatGPT, Gemini, Perplexity, and Google. Test robots.txt, PageSpeed, schema, and llms.txt instantly.',
+  title: 'Free AI SEO Checker & Technical Audit Tool | Test AI Search Readiness',
+  description: 'Run a free AI SEO audit to test if ChatGPT, Perplexity, Claude, and Gemini can crawl and cite your website. Test robots.txt AI bots, PageSpeed, schema, and llms.txt instantly.',
   keywords: [
     'AI SEO Checker',
     'Free AI SEO Checker',
-    'website grader',
-    'rate my website',
-    'seo audit tool free',
-    'check website seo',
     'AI website audit',
+    'test website for chatgpt',
     'AEO checker',
-    'llms.txt validator'
+    'llms.txt validator',
+    'AI crawler audit',
+    'robots.txt AI bots checker',
+    'GEO audit tool'
   ].join(', '),
   openGraph: {
     title: 'Free AI SEO Checker & Technical Website Audit Tool',
-    description: 'Instant AI SEO Audit & Technical Analysis. Check website SEO, speed, security, and AI search readiness for free.',
+    description: 'Instant AI SEO Audit & Technical Analysis. Test AI search engine visibility, PageSpeed, schema graphs, and AI crawler permissions.',
     url: 'https://aiscanmysite.com/seo-checker',
     siteName: 'AI Scan My Site',
     type: 'website',

@@ -2,21 +2,22 @@ import type { Metadata } from 'next';
 import LlmsTxtGeneratorClient from './LlmsTxtGeneratorClient';
 
 export const metadata: Metadata = {
-  title: 'Free llms.txt & agents.json Generator | AI Scan My Site',
-  description: 'Generate and validate a free llms.txt manifest and agents.json file for your website. Optimize your site for ChatGPT, Perplexity, Gemini & Claude crawlers.',
+  title: 'Free llms.txt Generator & Validator | AI Context Manifest Builder',
+  description: 'Generate, validate, and inspect your website llms.txt and agents.json files. Help ChatGPT, Perplexity, Gemini, and Claude ingest your documentation and pages accurately.',
   keywords: [
     'llms.txt generator',
     'llms.txt validator',
     'agents.json generator',
-    'website AI readiness checker',
-    'AI crawler file',
-    'ChatGPT indexing file',
+    'create llms.txt file',
     'llms.txt specification',
+    'AI context manifest',
+    'AI crawler file generator',
+    'ChatGPT indexing file',
     'AI SEO tool'
   ].join(', '),
   openGraph: {
-    title: 'Free llms.txt & agents.json Generator Tool',
-    description: 'Create a machine-readable llms.txt file in seconds to guide AI search engine crawlers across your site.',
+    title: 'Free llms.txt Generator & Validator | AI Context Manifest Tool',
+    description: 'Build a standard-compliant llms.txt and agents.json file in seconds. Guide AI crawlers across your core documentation and products.',
     url: 'https://aiscanmysite.com/llms-txt-generator',
     siteName: 'AI Scan My Site',
     type: 'website',
